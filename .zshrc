@@ -98,4 +98,4 @@ alias j='job -l'
 
 
 ## local zshrc
-#[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
