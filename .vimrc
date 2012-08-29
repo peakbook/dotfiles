@@ -42,11 +42,14 @@ NeoBundle 'git@github.com:vim-scripts/c.vim'
 NeoBundle 'git@github.com:vim-scripts/DrawIt'
 NeoBundle 'git@github.com:vim-scripts/doxygen-support.vim'
 NeoBundle 'git@github.com:vim-scripts/DoxygenToolkit.vim'
+NeoBundle 'git@github.com:vim-scripts/quickhl.vim'
 NeoBundle 'git@github.com:tsaleh/vim-align'
-" NeoBundle 'git@github.com:vim-scripts/errormarker.vim'
 NeoBundle 'git@github.com:jceb/vim-hier'
 NeoBundle 'git@github.com:dannyob/quickfixstatus'
 NeoBundle 'git@github.com:shemerey/vim-project'
+NeoBundle 'git@github.com:Slashbunny/vim-colorsamplerpack'
+NeoBundle 'git@github.com:Slashbunny/vim-colorsamplerpack'
+" NeoBundle 'git@github.com:vim-scripts/errormarker.vim'
 
 filetype plugin indent on
 
@@ -186,10 +189,19 @@ nnoremap <silent> <F6> :Project<CR>
 "
 let g:yankring_history_dir = expand('$HOME')
 let g:yankring_history_file = '.yankring_history'
-let g:yankring_max_history = 15
+let g:yankring_max_history = 30
 let g:yankring_window_height = 13
 nnoremap <silent> <F7> :YRShow<CR>
 
+
+"
+" quickhl.vim
+"
+nmap <Space>m <Plug>(quickhl-toggle)
+xmap <Space>m <Plug>(quickhl-toggle)
+nmap <Space>M <Plug>(quickhl-reset)
+xmap <Space>M <Plug>(quickhl-reset)
+nmap <Space>j <Plug>(quickhl-match)
 
 "
 " settings
