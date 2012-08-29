@@ -49,6 +49,7 @@ NeoBundle 'git@github.com:dannyob/quickfixstatus'
 NeoBundle 'git@github.com:shemerey/vim-project'
 NeoBundle 'git@github.com:Slashbunny/vim-colorsamplerpack'
 NeoBundle 'git@github.com:Slashbunny/vim-colorsamplerpack'
+NeoBundle 'git@github.com:kana/vim-grex'
 " NeoBundle 'git@github.com:vim-scripts/errormarker.vim'
 
 filetype plugin indent on
@@ -175,14 +176,10 @@ endfunction
 " quickrun に outputter を登録
 call quickrun#register_outputter("my_outputter", my_outputter)
 
-" <leader>r を再定義
-nmap <silent> <leader>r :QuickRun -outputter my_outputter<CR>
-
 
 " project
 "
 let g:proj_flags ="imstc"
-nnoremap <silent> <F6> :Project<CR>
 
 "
 " YankRing
@@ -191,17 +188,34 @@ let g:yankring_history_dir = expand('$HOME')
 let g:yankring_history_file = '.yankring_history'
 let g:yankring_max_history = 30
 let g:yankring_window_height = 13
+
+"
+" key bind
+"
+nmap <silent> <leader>r :QuickRun -outputter my_outputter<CR>
+nnoremap <silent> <F6> :Project<CR>
 nnoremap <silent> <F7> :YRShow<CR>
-
-
-"
-" quickhl.vim
-"
 nmap <Space>m <Plug>(quickhl-toggle)
 xmap <Space>m <Plug>(quickhl-toggle)
 nmap <Space>M <Plug>(quickhl-reset)
 xmap <Space>M <Plug>(quickhl-reset)
 nmap <Space>j <Plug>(quickhl-match)
+nnoremap <C-t> <Nop>
+nnoremap <C-t>n :<C-u>tabnew<CR>
+nnoremap <C-t>q :<C-u>tabclose<CR>
+nnoremap <C-t>o :<C-u>tabonly<CR>
+map <C-Tab> :tabn<CR>
+map <S-Tab> :tabp<CR>
+nnoremap t  <Nop>
+nnoremap tt <C-]>         
+nnoremap tj :<C-u>tag<CR> 
+nnoremap tk :<C-u>pop<CR> 
+nnoremap tl :<C-u>tags<CR>  
+
+" 
+" command
+"
+command! ReloadVimrc source $MYVIMRC
 
 "
 " settings

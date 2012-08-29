@@ -22,8 +22,6 @@ colorscheme desert
 
 set showtabline=2
 set guioptions-=T
-map <C-Tab> :tabn<CR>
-map <S-Tab> :tabp<CR>
 
 highlight Pmenu guibg=DarkMagenta guifg=darkgray
 
