@@ -5,6 +5,7 @@ let s:is_unix = has('unix')
 " shell
 if s:is_win 
 	set shell=c:\\cygwin\\bin\\zsh.exe
+	"set shell=zsh.exe
 	"set shell=/bin/zsh.exe
 	"set shell=/cygdrive/c/cygwin/bin/zsh.exe
 	"set shell=c:\WINDOWS\system32\cmd.exe
@@ -24,7 +25,7 @@ endif
 
 NeoBundle 'git@github.com:Shougo/neobundle.vim'
 NeoBundle 'git@github.com:Shougo/neocomplcache'
-NeoBundle 'git@github.com:Shougo/neocomplcache-snippets-complete'
+NeoBundle 'git@github.com:Shougo/neosnippet'
 NeoBundle 'git@github.com:Shougo/neocomplcache-clang_complete'
 NeoBundle 'git@github.com:Shougo/vimproc'
 NeoBundle 'git@github.com:Shougo/vimshell'
@@ -34,22 +35,25 @@ NeoBundle 'git@github.com:thinca/vim-quickrun'
 NeoBundle 'git@github.com:thinca/vim-localrc'
 NeoBundle 'git@github.com:tsukkee/unite-tag'
 NeoBundle 'git@github.com:tsukkee/unite-help'
+NeoBundle 'git@github.com:h1mesuke/unite-outline'
 NeoBundle 'git@github.com:tomtom/tcomment_vim'
 NeoBundle 'git@github.com:vim-scripts/YankRing.vim'
 NeoBundle 'git@github.com:vim-scripts/gtags.vim'
 NeoBundle 'git@github.com:vim-scripts/taglist.vim'
-NeoBundle 'git@github.com:vim-scripts/c.vim'
+"NeoBundle 'git@github.com:vim-scripts/c.vim'
 NeoBundle 'git@github.com:vim-scripts/DrawIt'
 NeoBundle 'git@github.com:vim-scripts/doxygen-support.vim'
 NeoBundle 'git@github.com:vim-scripts/DoxygenToolkit.vim'
 NeoBundle 'git@github.com:vim-scripts/quickhl.vim'
+NeoBundle 'git@github.com:vim-scripts/Color-Sampler-Pack'
 NeoBundle 'git@github.com:tsaleh/vim-align'
 NeoBundle 'git@github.com:jceb/vim-hier'
 NeoBundle 'git@github.com:dannyob/quickfixstatus'
 NeoBundle 'git@github.com:shemerey/vim-project'
-NeoBundle 'git@github.com:Slashbunny/vim-colorsamplerpack'
-NeoBundle 'git@github.com:Slashbunny/vim-colorsamplerpack'
 NeoBundle 'git@github.com:kana/vim-grex'
+NeoBundle 'git@github.com:tyru/skk.vim'
+NeoBundle 'git@github.com:tpope/vim-fugitive'
+NeoBundle 'git@github.com:Sixeight/unite-grep'
 " NeoBundle 'git@github.com:vim-scripts/errormarker.vim'
 
 filetype plugin indent on
@@ -79,8 +83,11 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+"imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+"smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 inoremap <expr><C-g>     neocomplcache#undo_completion()
 inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
@@ -115,11 +122,11 @@ let g:neocomplcache_snippets_dir = $HOME.'/.vim/snippets'
 let g:neocomplcache_include_paths = {
 	\ 'c' : 'C:\WindRiver\vxworks-6.8\target\h,C:\WindRiver\vxworks-6.8\target\h\wrn\coreip,C:\MELSEC\CCPU4\Q24DHCCPU-V\Include',
 	\}
-"
-"add header path
-"
-"set path+='/usr/share/vxworks/vx68h'
-"set path+='C:\WindRiver\vxworks-6.8\target\h'
+
+" For snippet_complete marker.
+if has('conceal')
+	set conceallevel=2 concealcursor=i
+endif
 
 "
 "taglist
@@ -212,10 +219,29 @@ nnoremap tj :<C-u>tag<CR>
 nnoremap tk :<C-u>pop<CR> 
 nnoremap tl :<C-u>tags<CR>  
 
+" move screen down
+noremap <Space>j <C-f>
+" move screen up
+noremap <Space>k <C-b>
+
+" show file list of current directory
+"noremap <C-u><C-f> :UniteWithCurrentDir -buffer-name=files file<CR>
+noremap <C-u><C-f> :VimFiler -split -simple -winwidth=30 -no-quit<CR>
+
+" show recently used file list
+noremap <C-u><C-r> :Unite file_mru<CR>
+
+" show register list
+noremap <C-u><C-y> :Unite -buffer-name=register register<CR>
+
+" show buffer list
+noremap <C-u><C-b> :Unite buffer<CR>
+
 " 
 " command
 "
 command! ReloadVimrc source $MYVIMRC
+
 
 "
 " settings
@@ -251,6 +277,6 @@ set listchars=tab:>-
 set noswapfile
 set nobackup
 
-colorscheme desert
+colorscheme desert256
 
 
