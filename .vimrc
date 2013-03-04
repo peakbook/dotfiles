@@ -5,6 +5,7 @@ let s:is_unix = has('unix')
 " shell
 if s:is_win 
 	set shell=c:\\cygwin\\bin\\zsh.exe
+	set csprg=cswrapper
 	"set shell=zsh.exe
 	"set shell=/bin/zsh.exe
 	"set shell=/cygdrive/c/cygwin/bin/zsh.exe
@@ -51,9 +52,12 @@ NeoBundle 'git@github.com:jceb/vim-hier'
 NeoBundle 'git@github.com:dannyob/quickfixstatus'
 NeoBundle 'git@github.com:shemerey/vim-project'
 NeoBundle 'git@github.com:kana/vim-grex'
-NeoBundle 'git@github.com:tyru/skk.vim'
+"NeoBundle 'git@github.com:tyru/skk.vim'
 NeoBundle 'git@github.com:tpope/vim-fugitive'
 NeoBundle 'git@github.com:Sixeight/unite-grep'
+NeoBundle 'git@github.com:kana/vim-tabpagecd'
+NeoBundle 'git@github.com:gregsexton/VimCalc'
+NeoBundle 'git@github.com:vim-scripts/autoload_cscope.vim'
 " NeoBundle 'git@github.com:vim-scripts/errormarker.vim'
 
 filetype plugin indent on
@@ -172,7 +176,7 @@ endfunction
 
 function! my_outputter.finish(session)
     call call(quickrun#outputter#multi#new().finish, [a:session], self)
-    " 出力バッファの削除
+    " delete output buffer
     bwipeout [quickrun
     " vim-hier を使用している場合は、ハイライトを更新
     :HierUpdate
@@ -218,6 +222,10 @@ nnoremap tt <C-]>
 nnoremap tj :<C-u>tag<CR> 
 nnoremap tk :<C-u>pop<CR> 
 nnoremap tl :<C-u>tags<CR>  
+map <C-j> :cn<CR>
+map <C-k> :cp<CR>
+map <C-g> :Gtags 
+
 
 " move screen down
 noremap <Space>j <C-f>
@@ -226,6 +234,7 @@ noremap <Space>k <C-b>
 
 " show file list of current directory
 "noremap <C-u><C-f> :UniteWithCurrentDir -buffer-name=files file<CR>
+"noremap <C-u><C-f> :VimFilerExplorer<CR>
 noremap <C-u><C-f> :VimFiler -split -simple -winwidth=30 -no-quit<CR>
 
 " show recently used file list
@@ -277,6 +286,18 @@ set listchars=tab:>-
 set noswapfile
 set nobackup
 
-colorscheme desert256
+scriptencoding utf-8
+
+augroup highligntJpSpace
+	autocmd!
+	autocmd Colorscheme * highlight JpSpace term=underline ctermbg=DarkGreen guibg=White
+	autocmd! VimEnter,WinEnter * match JpSpace /　/
+augroup END
+
+set cscopetag
+set cscopetagorder=1
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+colorscheme desert
 
 

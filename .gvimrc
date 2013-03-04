@@ -12,11 +12,11 @@ elseif s:is_unix
 endif
 
 
-augroup hack234
-	autocmd!
-	autocmd FocusGained * set transparency=240
-	autocmd FocusLost * set transparency=200
-augroup END
+" augroup hack234
+" 	autocmd!
+" 	autocmd FocusGained * set transparency=240
+" 	autocmd FocusLost * set transparency=200
+" augroup END
 
 colorscheme desert
 
