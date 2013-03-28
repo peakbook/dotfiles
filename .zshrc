@@ -9,6 +9,8 @@ case "${OSTYPE}" in
 		export LANG=ja_JP.SJIS
 		export JLESSCHARSET=japanese-sjis
 		export OUTPUT_CHARSET=sjis
+		export TMP=/tmp/
+		export TEMP=/tmp/
 		;;
 esac
 case ${UID} in
@@ -92,6 +94,7 @@ alias ll='ls -l'
 alias la='ls -a'
 alias where='command -v'
 alias j='job -l'
+alias zh='cat ~/.zsh_history | grep'
 
 
 ## proxy
