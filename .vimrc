@@ -6,6 +6,10 @@ let s:is_unix = has('unix')
 if s:is_win 
 	set shell=c:\\cygwin\\bin\\zsh.exe
 	set csprg=cswrapper
+	set grepprg=jvgrep
+	" w3m vim
+	let g:w3m#command = 'C:\\cygwin\\bin\\w3m.exe'
+	let g:w3m#wget_command = 'C:\\cygwin\\usr\\bin\\wget.exe' 
 	"set shell=zsh.exe
 	"set shell=/bin/zsh.exe
 	"set shell=/cygdrive/c/cygwin/bin/zsh.exe
@@ -32,6 +36,7 @@ NeoBundle 'git@github.com:Shougo/vimproc'
 NeoBundle 'git@github.com:Shougo/vimshell'
 NeoBundle 'git@github.com:Shougo/vimfiler'
 NeoBundle 'git@github.com:Shougo/unite.vim'
+NeoBundle 'git@github.com:Shougo/vinarise'
 NeoBundle 'git@github.com:thinca/vim-quickrun'
 NeoBundle 'git@github.com:thinca/vim-localrc'
 NeoBundle 'git@github.com:tsukkee/unite-tag'
@@ -46,19 +51,25 @@ NeoBundle 'git@github.com:vim-scripts/DrawIt'
 NeoBundle 'git@github.com:vim-scripts/doxygen-support.vim'
 NeoBundle 'git@github.com:vim-scripts/DoxygenToolkit.vim'
 NeoBundle 'git@github.com:vim-scripts/quickhl.vim'
-NeoBundle 'git@github.com:vim-scripts/Color-Sampler-Pack'
+"NeoBundle 'git@github.com:vim-scripts/Color-Sampler-Pack'
+NeoBundle 'git@github.com:flazz/vim-colorschemes'
 NeoBundle 'git@github.com:tsaleh/vim-align'
 NeoBundle 'git@github.com:jceb/vim-hier'
-NeoBundle 'git@github.com:dannyob/quickfixstatus'
+"NeoBundle 'git@github.com:dannyob/quickfixstatus'
 NeoBundle 'git@github.com:shemerey/vim-project'
 NeoBundle 'git@github.com:kana/vim-grex'
 "NeoBundle 'git@github.com:tyru/skk.vim'
 NeoBundle 'git@github.com:tpope/vim-fugitive'
-NeoBundle 'git@github.com:Sixeight/unite-grep'
+"NeoBundle 'git@github.com:Sixeight/unite-grep'
 NeoBundle 'git@github.com:kana/vim-tabpagecd'
-NeoBundle 'git@github.com:gregsexton/VimCalc'
-NeoBundle 'git@github.com:vim-scripts/autoload_cscope.vim'
+"NeoBundle 'git@github.com:gregsexton/VimCalc'
+"NeoBundle 'git@github.com:vim-scripts/cscope.vim'
+" NeoBundle 'git@github.com:scrooloose/syntastic'
+NeoBundle 'git@github.com:airblade/vim-rooter'
+NeoBundle 'git@github.com:yuratomo/w3m.vim'
 " NeoBundle 'git@github.com:vim-scripts/errormarker.vim'
+NeoBundle 'git@github.com:tpope/vim-fugitive'
+NeoBundle 'git@github.com:hewes/unite-gtags'
 
 filetype plugin indent on
 
@@ -124,7 +135,7 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 let g:neocomplcache_snippets_dir = $HOME.'/.vim/snippets'
 
 let g:neocomplcache_include_paths = {
-	\ 'c' : 'C:\WindRiver\vxworks-6.8\target\h,C:\WindRiver\vxworks-6.8\target\h\wrn\coreip,C:\MELSEC\CCPU4\Q24DHCCPU-V\Include',
+	\ 'c' : 'C:\WindRiver\vxworks-6.8\target\h,C:\WindRiver\vxworks-6.8\target\h\wrn\coreip',
 	\}
 
 " For snippet_complete marker.
@@ -162,30 +173,6 @@ let g:quickrun_config = {
     \ }
 set splitbelow
 set splitright
-
-
-let my_outputter = quickrun#outputter#multi#new()
-let my_outputter.config.targets = ["buffer", "quickfix"]
-
-function! my_outputter.init(session)
-    " quickfix を閉じる
-    :cclose
-    " 元の処理を呼び出す
-    call call(quickrun#outputter#multi#new().init, [a:session], self)
-endfunction
-
-function! my_outputter.finish(session)
-    call call(quickrun#outputter#multi#new().finish, [a:session], self)
-    " delete output buffer
-    bwipeout [quickrun
-    " vim-hier を使用している場合は、ハイライトを更新
-    :HierUpdate
-    " quickfix への出力後に quickfixstatus を有効に
-    :QuickfixStatusEnable
-endfunction
-
-" quickrun に outputter を登録
-call quickrun#register_outputter("my_outputter", my_outputter)
 
 
 " project
@@ -246,6 +233,16 @@ noremap <C-u><C-y> :Unite -buffer-name=register register<CR>
 " show buffer list
 noremap <C-u><C-b> :Unite buffer<CR>
 
+" unite-grep
+noremap <C-u><C-g> :Unite -buffer-name=unitegrep grep:::<CR>
+noremap <C-u><C-p> :UniteResume<CR>
+let g:unite_source_grep_command = "jvgrep"
+let g:unite_source_grep_default_opts = "-in"
+
+" custom unite action
+call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
+let g:vimfiler_as_default_explorer = 1
+
 " 
 " command
 "
@@ -290,14 +287,54 @@ scriptencoding utf-8
 
 augroup highligntJpSpace
 	autocmd!
-	autocmd Colorscheme * highlight JpSpace term=underline ctermbg=DarkGreen guibg=White
+	autocmd Colorscheme * highlight JpSpace term=underline ctermbg=DarkGreen guibg=DarkGray
 	autocmd! VimEnter,WinEnter * match JpSpace /　/
 augroup END
 
+" cscope
 set cscopetag
 set cscopetagorder=1
 set cscopequickfix=s-,c-,d-,i-,t-,e-
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
-colorscheme desert
+" add cscope.out automatically
+function! LoadCscope()
+	let db = findfile("cscope.out",".;")
+	if(!empty(db))
+		let path = strpart(db, 0, match(db, "cscope.out") - 1)
+		"echomsg "cs add " . db . " " . path 
+		set nocscopeverbose " suppress 'duplicate connection' error
+		exe "cs add " . db . " " . path
+		set cscopeverbose
+	endif
+endfunction
+au BufEnter * call LoadCscope()
+
+" rooter
+let g:rooter_patterns = ['GTAGS','tags','.git/']
+let g:rooter_use_lcd = 1
+
+" syntastic
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_enable_signs = 1
+let g:syntastic_enable_highlighting = 1
+let g:syntastic_c_check_header = 1
+
+" w3m vim
+let g:w3m#search_engine = 'http://www.google.co.jp/search?hl=ja&lr=lang_ja&q=' 
+
+" vinarize
+let g:vinarise_enable_auto_detect = 1
+
+
+syntax on
+colorscheme gentooish
 
 

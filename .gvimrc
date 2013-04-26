@@ -11,6 +11,7 @@ elseif s:is_unix
     set guifont=Ricty\ 12
 endif
 
+colorscheme gentooish
 
 " augroup hack234
 " 	autocmd!
@@ -18,10 +19,9 @@ endif
 " 	autocmd FocusLost * set transparency=200
 " augroup END
 
-colorscheme desert
-
 set showtabline=2
-set guioptions-=T
+set guioptions-=T " remove toolbar
+set guioptions-=m " remove menu bar
 
 highlight Pmenu guibg=DarkMagenta guifg=darkgray
 
