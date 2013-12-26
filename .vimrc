@@ -74,7 +74,6 @@ NeoBundle 'git@github.com:hewes/unite-gtags'
 filetype plugin indent on
 
 
-" 
 " neocomplcache
 "
 let g:neocomplcache_enable_at_startup = 1
@@ -236,8 +235,6 @@ noremap <C-u><C-b> :Unite buffer<CR>
 " unite-grep
 noremap <C-u><C-g> :Unite -buffer-name=unitegrep grep:::<CR>
 noremap <C-u><C-p> :UniteResume<CR>
-let g:unite_source_grep_command = "jvgrep"
-let g:unite_source_grep_default_opts = "-in"
 
 " custom unite action
 call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
@@ -328,7 +325,6 @@ let g:syntastic_enable_highlighting = 1
 let g:syntastic_c_check_header = 1
 
 " w3m vim
-let g:w3m#search_engine = 'http://www.google.co.jp/search?hl=ja&lr=lang_ja&q=' 
 
 " vinarize
 let g:vinarise_enable_auto_detect = 1
