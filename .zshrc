@@ -4,13 +4,14 @@
 case "${OSTYPE}" in
 	linux*)
 		export LANG=ja_JP.UTF-8
+		export TERM=xterm-256color
         ;;
 	cygwin*)
-		export LANG=ja_JP.SJIS
-		export JLESSCHARSET=japanese-sjis
-		export OUTPUT_CHARSET=sjis
-		export TMP=/tmp/
+		# export LANG=ja_JP.SJIS
+		# export JLESSCHARSET=japanese-sjis
+		# export OUTPUT_CHARSET=sjis
 		export TEMP=/tmp/
+		export TMP=/tmp/
 		;;
 esac
 case ${UID} in
