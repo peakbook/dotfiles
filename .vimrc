@@ -1,6 +1,7 @@
 ﻿let s:is_win = has('win32') || has('win64')
 let s:is_unix = has('unix')
 
+scriptencoding utf-8
 
 " shell
 if s:is_win 
@@ -52,7 +53,7 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite-build'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler'
+NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/unite-outline'
@@ -79,7 +80,8 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'tsaleh/vim-align'
+" NeoBundle 'tsaleh/vim-align'
+NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'tsukkee/unite-help'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'ujihisa/unite-colorscheme'
@@ -88,7 +90,7 @@ NeoBundle 'vim-scripts/DoxygenToolkit.vim'
 NeoBundle 'vim-scripts/DrawIt'
 NeoBundle 'vim-scripts/TagHighlight'
 NeoBundle 'vim-scripts/YankRing.vim'
-NeoBundle 'vim-scripts/doxygen-support.vim'
+" NeoBundle 'vim-scripts/doxygen-support.vim'
 NeoBundle 'vim-scripts/gtags.vim'
 NeoBundle 'vim-scripts/ifdef-highlighting'
 "NeoBundle 'vim-scripts/quickhl.vim'
@@ -105,6 +107,7 @@ NeoBundle 'sgur/unite-qf'
 NeoBundle 'hrsh7th/vim-unite-vcs'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'kana/vim-submode'
+NeoBundle 'fuenor/im_control.vim'
 "}}}
 
 filetype plugin indent on
@@ -173,6 +176,7 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
 endif
 let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.tex = '\v\\\a*cite\a*\{([^}]*,)?''}'
 
 
 " Plugin key-mappings.
@@ -233,8 +237,9 @@ let g:quickrun_config['tex'] = {
 			\ 'command' : 'latexmk',
 			\ 'outputter' : 'error',
 			\ 'outputter/error/error' : 'quickfix',
-			\ 'exec' : ['%c %o %s','zathura %s:r.pdf'],
+			\ 'exec' : ['%c -pv %o %s'],
 			\}
+" ,'zathura %s:r.pdf'
 set splitbelow
 set splitright
 
@@ -286,8 +291,8 @@ map <C-g> :Gtags
 
 " nerdcommenter
 let NERDSpaceDelims = 1
-nmap <Leader>c <Plug>NERDCommenterToggle
-vmap <Leader>c <Plug>NERDCommenterToggle
+nmap <Leader>cc <Plug>NERDCommenterToggle
+vmap <Leader>cc <Plug>NERDCommenterToggle
 
 " move screen down
 noremap <Space>j <C-f>
@@ -331,6 +336,7 @@ let g:vimfiler_as_default_explorer = 1
 " Set "-no-quit" automatically in grep unite source.
 call unite#custom#profile('source/grep', 'context',
 			\ {'no_quit' : 1})
+
 " 
 " command
 "
@@ -375,25 +381,23 @@ set nobackup
 " grep
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
-" if executable('ag')
-" 	set grepprg=ag
-" 	let g:unite_source_grep_command = 'ag'
-" 	let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-" 	let g:unite_source_grep_recursive_opt = ''
-" elseif executable('jvgrep')
-if executable('jvgrep')
+if executable('ag')
+	set grepprg=ag
+	let g:unite_source_grep_command = 'ag'
+	let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+	let g:unite_source_grep_recursive_opt = ''
+elseif executable('jvgrep')
 	set grepprg=jvgrep
 	let g:unite_source_grep_command = 'jvgrep'
 	let g:unite_source_grep_default_opts = "--exclude '\.(git|svn|hg|bzr|metadata|neocomplcache)'"
 	let g:unite_source_grep_recursive_opt = '-R'
 endif
 
-scriptencoding utf-8
 
 augroup highligntJpSpace
 	autocmd!
 	autocmd Colorscheme * highlight JpSpace term=underline ctermbg=DarkGreen guibg=DarkGray
-	autocmd! VimEnter,WinEnter * match JpSpace /@/
+	autocmd! VimEnter,WinEnter * match JpSpace /　/
 augroup END
 
 " cscope
@@ -431,7 +435,7 @@ nmap <C-\>d :CCTreeTraceForward <C-R>=expand("<cword>")<CR><CR>
 " au BufEnter * call LoadCscope()
 
 " rooter
-let g:rooter_patterns = ['GTAGS','tags','.git/','cscope.out']
+let g:rooter_patterns = ['GTAGS','tags','.git/','cscope.out','.latexmkrc']
 let g:rooter_use_lcd = 1
 
 " syntastic
@@ -550,6 +554,14 @@ call submode#map('winsize', 'n', '', '<', '<C-w><')
 call submode#map('winsize', 'n', '', '+', '<C-w>-')
 call submode#map('winsize', 'n', '', '-', '<C-w>+')
 
+" japanese ime
+let IM_CtrlIBusPython = 1
+let g:IM_CtrlBufLocalMode = 1
+
+" disable tex conceal
+let g:tex_conceal = ""
+
+set backspace=indent,eol,start
 set foldmethod=syntax
 set foldlevel=1
 set foldnestmax=2
@@ -559,4 +571,5 @@ syntax on
 autocmd ColorScheme * highlight SpellBad term=bold ctermfg=15 ctermbg=203 guifg=#353535 guibg=#e5786d
 colorscheme wombat256mod
 filetype plugin on
+
 
