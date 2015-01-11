@@ -1,0 +1,18 @@
+# proxy
+# export http_proxy=
+# export https_proxy=
+# export ftp_proxy=
+# export socks_proxy=
+# export no_proxy=
+
+# tex
+# export PATH=$HOME/.texlive/20XX/bin/x86_64-linux:$PATH
+# export INFOPATH=$HOME/.texlive/20XX/texmf-dist/doc/info:$INFOPATH
+# export MANPATH=$HOME/.texlive/20XX/texmf-dist/doc/man:$MANPATH
+
+# home local
+# export PATH=$HOME/usr/local/bin/:$PATH
+
+# julia
+# export JULIA_LOAD_PATH=~/.julia/mypkgs
+

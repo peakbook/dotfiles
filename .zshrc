@@ -3,15 +3,12 @@
 ##
 case "${OSTYPE}" in
 	linux*)
-		export LANG=ja_JP.UTF-8
+		export LANG=en_US.UTF-8
 		export TERM=xterm-256color
         ;;
 	cygwin*)
-		# export LANG=ja_JP.SJIS
-		# export JLESSCHARSET=japanese-sjis
-		# export OUTPUT_CHARSET=sjis
-		export TEMP=/tmp/
-		export TMP=/tmp/
+		export LANG=ja_JP.UTF-8
+		export TERM=xterm-256color
 		;;
 esac
 case ${UID} in
@@ -27,6 +24,7 @@ autoload colors; colors
 #autoload predict-on; predict-on
 autoload -Uz compinit; compinit
 autoload zed
+zmodload zsh/mathfunc
 
 
 ##
@@ -93,6 +91,7 @@ setopt correct
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
+alias lla='ls -la'
 alias where='command -v'
 alias j='job -l'
 alias zh='cat ~/.zsh_history | grep'
@@ -103,3 +102,4 @@ alias zh='cat ~/.zsh_history | grep'
 
 ## local zshrc
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
