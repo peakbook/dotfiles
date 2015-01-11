@@ -114,6 +114,7 @@ NeoBundle 'kana/vim-submode'
 " NeoBundle 'fuenor/im_control.vim'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
+NeoBundle 'matze/vim-tex-fold'
 "}}}
 
 call neobundle#end()
@@ -256,6 +257,11 @@ let g:quickrun_config['tex'] = {
             \ 'outputter/buffer/split': 'vertical',
             \ 'outputter/buffer/error' : 'quickfix',
             \ 'cmdopt': '-pvc',
+            \ 'exec' : ['%c %s']
+            \ }
+let g:quickrun_config['jl'] = {
+            \ 'command' : '/usr/bin/julia',
+            \ 'cmdopt': '',
             \ 'exec' : ['%c %s']
             \ }
 " \ 'outputter' : 'error',
@@ -534,6 +540,8 @@ let g:IM_CtrlBufLocalMode = 1
 " disable tex conceal
 let g:tex_conceal = ""
 
+" tex-folds
+let g:tex_fold_override_foldtext = 1
 
 set backspace=indent,eol,start
 set foldmethod=syntax
