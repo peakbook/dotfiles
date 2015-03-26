@@ -94,7 +94,6 @@ NeoBundle 'vim-scripts/C-fold'
 NeoBundle 'vim-scripts/DoxygenToolkit.vim'
 NeoBundle 'vim-scripts/DrawIt'
 NeoBundle 'vim-scripts/TagHighlight'
-NeoBundle 'vim-scripts/YankRing.vim'
 " NeoBundle 'vim-scripts/doxygen-support.vim'
 NeoBundle 'vim-scripts/gtags.vim'
 NeoBundle 'vim-scripts/ifdef-highlighting'
@@ -254,8 +253,8 @@ let g:quickrun_config._ = {
             \ }
 let g:quickrun_config['tex'] = {
             \ 'command' : 'latexmk',
-            \ 'outputter/buffer/split': 'vertical',
             \ 'outputter/buffer/error' : 'quickfix',
+            \ 'outputter/buffer/split': 'vertical',
             \ 'cmdopt': '-pvc',
             \ 'exec' : ['%c %s']
             \ }
@@ -273,13 +272,6 @@ set splitright
 "
 let g:proj_flags ="imstc"
 
-"
-" YankRing
-"
-let g:yankring_history_dir = expand('$HOME')
-let g:yankring_history_file = '.yankring_history'
-let g:yankring_max_history = 30
-let g:yankring_window_height = 13
 
 "
 " key bind
@@ -314,6 +306,7 @@ nnoremap tl :<C-u>tags<CR>
 map <C-j> :cn<CR>
 map <C-k> :cp<CR>
 map <C-g> :Gtags 
+nnoremap / /\v
 
 " nerdcommenter
 let NERDSpaceDelims = 1
@@ -332,7 +325,8 @@ noremap <C-u><C-f> :VimFilerBufferDir -split -simple -winwidth=30 -no-quit<CR>
 noremap <C-u><C-r> :Unite file_mru<CR>
 
 " show register list
-noremap <C-u><C-y> :Unite -buffer-name=register register<CR>
+" noremap <C-u><C-y> :Unite -buffer-name=register register<CR>
+noremap <C-u><C-y> :Unite yankround<CR>
 
 " show buffer list
 noremap <C-u><C-h> :Unite buffer<CR>
@@ -542,6 +536,20 @@ let g:tex_conceal = ""
 
 " tex-folds
 let g:tex_fold_override_foldtext = 1
+
+" yankround
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+let g:yankround_max_history = 50
+let g:yankround_use_region_hl = 1
+autocmd ColorScheme *   call s:define_region_hl()
+function! s:define_region_hl()
+    highlight default YankRoundRegion   guibg=DarkGreen ctermbg=DarkGreen term=reverse
+endfunction
 
 set backspace=indent,eol,start
 set foldmethod=syntax
