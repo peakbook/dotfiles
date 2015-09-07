@@ -17,6 +17,26 @@ case ${UID} in
 		;;
 esac
 
+# load zgen
+source "$HOME/.zsh/zgen/zgen.zsh"
+
+if ! zgen saved; then
+    echo "Creating a zgen save"
+
+    # plugins
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load zsh-users/zsh-completions src
+    zgen load zsh-users/zaw
+
+    # bulk load
+    zgen loadall <<EOPLUGINS
+EOPLUGINS
+
+    # save all to init script
+    zgen save
+fi
+
+
 ## 
 ## modules
 ##
@@ -31,7 +51,7 @@ zmodload zsh/mathfunc
 ## key bind
 ##
 bindkey -v
-bindkey "^R" history-incremental-search-backward
+bindkey "^R" zaw-history
 
 ##
 ## show current directory in title
@@ -96,10 +116,7 @@ alias where='command -v'
 alias j='job -l'
 alias zh='cat ~/.zsh_history | grep'
 
-
-## proxy
-
-
 ## local zshrc
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
 
