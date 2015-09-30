@@ -1,5 +1,5 @@
 ##
-## charaset
+## term, charaset, ...
 ##
 case "${OSTYPE}" in
 	linux*)
@@ -17,41 +17,17 @@ case ${UID} in
 		;;
 esac
 
-# load zgen
+##
+## load local .zshrc
+##
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+
+##
+## load zgen
+##
 source "$HOME/.zsh/zgen/zgen.zsh"
 
-if ! zgen saved; then
-    echo "Creating a zgen save"
-
-    # plugins
-    zgen load zsh-users/zsh-syntax-highlighting
-    zgen load zsh-users/zsh-completions src
-    zgen load zsh-users/zaw
-
-    # bulk load
-    zgen loadall <<EOPLUGINS
-EOPLUGINS
-
-    # save all to init script
-    zgen save
-fi
-
-
-## 
-## modules
-##
-autoload colors; colors
-#autoload predict-on; predict-on
-autoload -Uz compinit; compinit
-autoload zed
-zmodload zsh/mathfunc
-
-
-##
-## key bind
-##
-bindkey -v
-bindkey "^R" zaw-history
 
 ##
 ## show current directory in title
@@ -63,7 +39,6 @@ kterm*|xterm*)
     }
     ;;
 esac
-
 
 
 ##
@@ -84,6 +59,39 @@ case ${UID} in
 esac
 
 
+## 
+## modules
+##
+autoload colors; colors
+#autoload predict-on; predict-on
+autoload -Uz compinit; compinit
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+autoload zed
+zmodload zsh/mathfunc
+
+
+if ! zgen saved; then
+    echo "Creating a zgen save"
+
+    # zgen oh-my-zsh
+
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load zsh-users/zsh-completions
+    zgen load zsh-users/zaw
+    # zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+
+    zgen save
+fi
+
+
+##
+## key bind
+##
+bindkey -v
+bindkey "^R" zaw-history
+bindkey "^@" zaw-cdr
+
+
 ##
 ## command history
 ##
@@ -94,7 +102,18 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 
+##
+## dir history
+##
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ":chpwd:*" recent-dirs-max 5000
+zstyle ":chpwd:*" recent-dirs-default true
+zstyle ":completion:*" recent-dirs-insert both
+
+
+##
 ## setopt 
+##
 setopt no_beep
 setopt auto_param_keys
 setopt hist_ignore_dups
@@ -107,7 +126,9 @@ setopt auto_cd
 setopt correct
 
 
+##
 ## aliases
+##
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
@@ -116,7 +137,19 @@ alias where='command -v'
 alias j='job -l'
 alias zh='cat ~/.zsh_history | grep'
 
-## local zshrc
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
+##
+## colored man
+##
+man() {
+    env \
+        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+        LESS_TERMCAP_md=$(printf "\e[1;31m") \
+        LESS_TERMCAP_me=$(printf "\e[0m") \
+        LESS_TERMCAP_se=$(printf "\e[0m") \
+        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+        LESS_TERMCAP_ue=$(printf "\e[0m") \
+        LESS_TERMCAP_us=$(printf "\e[1;32m") \
+        man "$@"
+}
 
