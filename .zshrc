@@ -23,42 +23,6 @@ esac
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 
-##
-## load zgen
-##
-source "$HOME/.zsh/zgen/zgen.zsh"
-
-
-##
-## show current directory in title
-##
-case "${TERM}" in
-kterm*|xterm*)
-    precmd() {
-        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-    }
-    ;;
-esac
-
-
-##
-## prompt
-##
-PROMPT="
-%{${fg[green]}%}${USER}%{${fg[red]}%}@%{${fg[green]}%}${HOST%%.*} %{${fg[yellow]}%}%~%{${reset_color}%}
-"
-PROMPT2='> '
-
-case ${UID} in
-0)
-	PROMPT="${PROMPT}# "
-    ;;
-*)
-	PROMPT="${PROMPT}$ "
-	;;
-esac
-
-
 ## 
 ## modules
 ##
@@ -70,6 +34,10 @@ autoload zed
 zmodload zsh/mathfunc
 
 
+##
+## load zgen
+##
+source "$HOME/.zsh/zgen/zgen.zsh"
 if ! zgen saved; then
     echo "Creating a zgen save"
 
@@ -152,4 +120,34 @@ man() {
         LESS_TERMCAP_us=$(printf "\e[1;32m") \
         man "$@"
 }
+
+
+##
+## show current directory in title
+##
+case "${TERM}" in
+kterm*|xterm*)
+    precmd() {
+        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+    }
+    ;;
+esac
+
+
+##
+## prompt
+##
+PROMPT="
+%{${fg[green]}%}${USER}%{${fg[red]}%}@%{${fg[green]}%}${HOST%%.*} %{${fg[yellow]}%}%~%{${reset_color}%}
+"
+PROMPT2='> '
+
+case ${UID} in
+0)
+	PROMPT="${PROMPT}# "
+    ;;
+*)
+	PROMPT="${PROMPT}$ "
+	;;
+esac
 
