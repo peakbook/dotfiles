@@ -30,6 +30,7 @@ autoload colors; colors
 #autoload predict-on; predict-on
 autoload -Uz compinit; compinit
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+autoload -Uz vcs_info
 autoload zed
 zmodload zsh/mathfunc
 
@@ -92,6 +93,7 @@ setopt list_packed
 setopt auto_pushd
 setopt auto_cd
 setopt correct
+setopt prompt_subst
 
 
 ##
@@ -123,22 +125,19 @@ man() {
 
 
 ##
-## show current directory in title
-##
-case "${TERM}" in
-kterm*|xterm*)
-    precmd() {
-        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-    }
-    ;;
-esac
-
-
-##
 ## prompt
 ##
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+
+precmd() { vcs_info }
+
 PROMPT="
-%{${fg[green]}%}${USER}%{${fg[red]}%}@%{${fg[green]}%}${HOST%%.*} %{${fg[yellow]}%}%~%{${reset_color}%}
+%{${fg[green]}%}${USER}%{${fg[red]}%}@%{${fg[green]}%}${HOST%%.*} %{${fg[yellow]}%}%~%{${reset_color}%} "'${vcs_info_msg_0_}'"
 "
 PROMPT2='> '
 
