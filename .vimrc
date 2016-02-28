@@ -23,17 +23,24 @@ set nocompatible
 filetype off
 filetype plugin indent off
 
+if 0 | endif
+
 if has('vim_starting')
+    if &compatible
+        set nocompatible
+    endif
+
     set runtimepath+=~/.vim/after
     set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
-let g:neobundle#types#git#default_protocol = 'http'
+" let g:neobundle#types#git#default_protocol = 'http'
 call neobundle#begin(expand('~/.vim/bundle/'))
 
+NeoBundleFetch 'Shougo/neobundle.vim'
+
 " plugins {{{
-NeoBundle 'Shougo/neobundle.vim'
-" NeoBundle 'Shougo/vinarise'
+NeoBundle 'Shougo/vinarise'
 " NeoBundle 'scrooloose/syntastic'
 " NeoBundle 'scrooloose/snipmate-snppets'
 " NeoBundle 'vim-scripts/errormarker.vim'
@@ -114,6 +121,9 @@ NeoBundle 'kana/vim-submode'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
 NeoBundle 'matze/vim-tex-fold'
+NeoBundle 'benekastah/neomake'
+NeoBundle 'zyedidia/julialint.vim'
+NeoBundle 'itchyny/calendar.vim'
 "}}}
 
 call neobundle#end()
@@ -214,9 +224,9 @@ endif
 " neosnippet
 let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory = [
-    \'~/.vim/snippets',
-    \'~/.vim/bundle/vim-snippets/UltiSnips',
-    \'~/.vim/bundle/vim-snipets/snippets',
+    \$HOME.'/.vim/snippets',
+    \$HOME.'/.vim/bundle/vim-snippets/UltiSnips',
+    \$HOME.'/.vim/bundle/vim-snipets/snippets',
     \]
 
 "
@@ -259,7 +269,7 @@ let g:quickrun_config['tex'] = {
             \ 'exec' : ['%c %s']
             \ }
 let g:quickrun_config['jl'] = {
-            \ 'command' : '/usr/bin/julia',
+            \ 'command' : 'julia',
             \ 'cmdopt': '',
             \ 'exec' : ['%c %s']
             \ }
@@ -307,6 +317,9 @@ map <C-j> :cn<CR>
 map <C-k> :cp<CR>
 map <C-g> :Gtags 
 nnoremap / /\v
+nnoremap Q <Nop> " disable ex mode keymap
+noremap <S-h> ^
+noremap <S-l> $
 
 " nerdcommenter
 let NERDSpaceDelims = 1
@@ -341,11 +354,20 @@ noremap <C-u><C-e> :Unite resume<CR>
 noremap <C-u><C-g> :Unite -buffer-name=unite_grep grep::: -no-quit<CR>
 let g:unite_source_grep_max_candidates = 50000
 
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
+
+
 " unite-outline
 noremap <C-u><C-o> :Unite outline<CR>
 
 " unite-mark
 noremap <C-u><C-m> :Unite -buffer-name=unite_mark mark<CR>
+
+" neomake
+noremap <C-u><C-l> :Neomake<CR>
+
 
 " custom unite action
 call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
@@ -551,6 +573,12 @@ function! s:define_region_hl()
     highlight default YankRoundRegion   guibg=DarkGreen ctermbg=DarkGreen term=reverse
 endfunction
 
+if has('nvim')
+    set rtp+=$HOME."/.julia/v0.4/Neovim"
+    " neomake
+    autocmd! BufWritePost * Neomake
+endif
+
 set backspace=indent,eol,start
 set foldmethod=syntax
 set foldlevel=1
@@ -560,11 +588,11 @@ set switchbuf=usetab
 set expandtab
 set tabstop=4
 set shiftwidth=4
+set noerrorbells
+set vb t_vb=
 
 syntax on
 autocmd ColorScheme * highlight SpellBad term=bold ctermfg=15 ctermbg=203 guifg=#353535 guibg=#e5786d
 colorscheme wombat256mod
 filetype plugin on
-
-
 
