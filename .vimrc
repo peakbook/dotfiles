@@ -124,6 +124,7 @@ NeoBundle 'matze/vim-tex-fold'
 NeoBundle 'benekastah/neomake'
 NeoBundle 'zyedidia/julialint.vim'
 NeoBundle 'itchyny/calendar.vim'
+NeoBundle 'lervag/vimtex'
 "}}}
 
 call neobundle#end()
