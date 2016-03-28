@@ -125,6 +125,7 @@ NeoBundle 'benekastah/neomake'
 NeoBundle 'zyedidia/julialint.vim'
 NeoBundle 'itchyny/calendar.vim'
 NeoBundle 'lervag/vimtex'
+NeoBundle 'ujihisa/neco-look'
 "}}}
 
 call neobundle#end()
@@ -226,8 +227,8 @@ endif
 let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory = [
     \$HOME.'/.vim/snippets',
-    \$HOME.'/.vim/bundle/vim-snippets/UltiSnips',
-    \$HOME.'/.vim/bundle/vim-snipets/snippets',
+    \$HOME.'/.vim/bundle/neosnippet-snippets/neosnippets',
+    \$HOME.'/.vim/bundle/vim-snippets/snippets',
     \]
 
 "
@@ -581,7 +582,7 @@ if has('nvim')
 endif
 
 set backspace=indent,eol,start
-set foldmethod=syntax
+" set foldmethod=syntax
 set foldlevel=1
 set foldnestmax=2
 set shellslash
@@ -597,3 +598,5 @@ autocmd ColorScheme * highlight SpellBad term=bold ctermfg=15 ctermbg=203 guifg=
 colorscheme wombat256mod
 filetype plugin on
 
+
+" vim:set foldmethod=marker:
