@@ -1,0 +1,25 @@
+snippet function
+abbr    func
+options word
+	function ${1:#:function_name}(${2:#:argument})
+		${0:TARGET}
+	end
+
+snippet docopt
+abbr    docopt 
+options indent
+	progname=basename(@__FILE___)
+	progver=v"0.0.1"
+	doc = """
+		$(progname) ${1:TARGET}
+	"""
+	
+	using DocOpt
+	
+	function main()
+		args = docopt(doc, version=progver)
+		${0:TARGET}
+	end
+	
+	main()
+
