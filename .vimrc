@@ -430,6 +430,7 @@ set nowrap
 set list
 set listchars=tab:>-
 set cursorline
+set cursorcolumn
 
 " swap
 set noswapfile
