@@ -608,6 +608,7 @@ set tabstop=4
 set shiftwidth=4
 set noerrorbells
 set vb t_vb=
+set ambiwidth=double
 
 syntax on
 autocmd ColorScheme * highlight SpellBad term=bold ctermfg=15 ctermbg=203 guifg=#353535 guibg=#e5786d
