@@ -126,6 +126,7 @@ NeoBundle 'zyedidia/julialint.vim'
 NeoBundle 'itchyny/calendar.vim'
 NeoBundle 'lervag/vimtex'
 NeoBundle 'ujihisa/neco-look'
+NeoBundle 'rhysd/vim-grammarous'
 "}}}
 
 call neobundle#end()
@@ -589,6 +590,18 @@ let g:yankround_use_region_hl = 1
 autocmd ColorScheme *   call s:define_region_hl()
 function! s:define_region_hl()
     highlight default YankRoundRegion   guibg=DarkGreen ctermbg=DarkGreen term=reverse
+endfunction
+
+" grammarous
+let g:grammarous#hooks = {}
+function! g:grammarous#hooks.on_check(errs)
+    nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
+    nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
+endfunction
+
+function! g:grammarous#hooks.on_reset(errs)
+    nunmap <buffer><C-n>
+    nunmap <buffer><C-p>
 endfunction
 
 if has('nvim')
