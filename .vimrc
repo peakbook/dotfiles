@@ -4,15 +4,7 @@ let s:is_win = has('win32') || has('win64')
 let s:is_unix = has('unix')
 "let s:is_mac...  I'm not a Mac user.
 
-" shell
 if s:is_win 
-    set shell=/bin/zsh.exe
-    set shellcmdflag=-c 
-    set csprg=cswrapper
-    " w3m vim
-    let g:w3m#command = '/bin/w3m.exe'
-    let g:w3m#wget_command = '/bin/wget.exe'
-    "let g:w3m#external_browser = '/chrome'
 endif
 
 if has("gui_running") 
@@ -604,6 +596,10 @@ function! g:grammarous#hooks.on_reset(errs)
     nunmap <buffer><C-p>
 endfunction
 
+" vimtex
+let g:vimtex_view_method='zathura'
+
+
 if has('nvim')
     set rtp+=$HOME."/.julia/v0.4/Neovim"
     " neomake
@@ -620,7 +616,8 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 set noerrorbells
-set vb t_vb=
+set visualbell t_vb=
+set noerrorbells
 set ambiwidth=double
 
 syntax on
