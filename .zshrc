@@ -66,6 +66,11 @@ fi
 bindkey -v
 bindkey "^R" zaw-history
 bindkey "^@" zaw-cdr
+bindkey "^T" zaw-tmux
+bindkey '^P' zaw-process
+bindkey '^G^F' zaw-git-files
+bindkey '^G^B' zaw-git-branches
+bindkey '^G^L' zaw-git-log
 
 
 ##
