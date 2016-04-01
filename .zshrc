@@ -38,7 +38,14 @@ zmodload zsh/mathfunc
 ##
 ## load zgen
 ##
-source "$HOME/.zsh/zgen/zgen.zsh"
+if [ -e ~/.zsh/zgen/zgen.zsh ]; then
+    source ~/.zsh/zgen/zgen.zsh
+else
+    echo "zgen is not found, fetch it now..." 
+    git clone https://github.com/tarjoilija/zgen ~/.zsh/zgen
+    source ~/.zsh/zgen/zgen.zsh
+    echo "done!"
+fi
 if ! zgen saved; then
     echo "Creating a zgen save"
 
@@ -106,6 +113,9 @@ alias lla='ls -la'
 alias where='command -v'
 alias j='job -l'
 alias zh='cat ~/.zsh_history | grep'
+if which trash-put &> /dev/null; then
+    alias rm='trash-put'
+fi
 
 
 ##
@@ -149,4 +159,6 @@ case ${UID} in
 	PROMPT="${PROMPT}$ "
 	;;
 esac
+
+
 
