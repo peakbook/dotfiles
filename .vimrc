@@ -134,6 +134,7 @@ endif
 
 set path+='~/usr/local/include','/usr/include','/usr/local/include'
 
+" neocomplete {{{
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -213,8 +214,11 @@ let g:neocomplete#text_mode_filetypes = {
             \ 'tex': 1,
             \ }
 
+" }}}
 
-" Plugin key-mappings.
+
+" neosnippet {{{
+" key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
@@ -232,32 +236,30 @@ if has('conceal')
     set conceallevel=2 concealcursor=i
 endif
 
-" neosnippet
+" others
 let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory = [
     \$HOME.'/.vim/snippets',
     \$HOME.'/.vim/bundle/neosnippet-snippets/neosnippets',
     \$HOME.'/.vim/bundle/vim-snippets/snippets',
     \]
+" }}}
 
-"
-"taglist
-"
+
+" taglist
 nnoremap <silent> <F8> :TlistToggle<CR>
 
 
-"
 " quickfix
-"
 augroup quickfixopen
     autocmd!
     autocmd QuickFixCmdPost make,vimgrep cw
 augroup END
 
 
-" 
-" quickrun
-"
+" quickrun {{{
+nmap <silent> <leader>r :QuickRun<CR>
+
 let g:quickrun_config = {}
 
 let g:quickrun_config._ = {
@@ -280,6 +282,7 @@ let g:quickrun_config['jl'] = {
 " \ 'outputter' : 'error',
 set splitbelow
 set splitright
+" }}}
 
 
 " project
@@ -287,25 +290,31 @@ set splitright
 let g:proj_flags ="imstc"
 
 
-"
-" key bind
-"
-" nmap <silent> <leader>r :QuickRun -outputter quickfix<CR>
-nmap <silent> <leader>r :QuickRun<CR>
+" leader 
+let mapleader = "\<Space>"
+
+" project
 nnoremap <silent> <F6> :Project<CR>
-nmap <Space>m <Plug>(quickhl-manual-this)
-xmap <Space>m <Plug>(quickhl-manual-this)
-nmap <Space>M <Plug>(quickhl-manual-reset)
-xmap <Space>M <Plug>(quickhl-manual-reset)
-nmap <Space>j <Plug>(quickhl-cword-toggle)
-nmap <Space>] <Plug>(quickhl-tag-toggle)
+
+" quickhl {{{
+nmap <leader>m <Plug>(quickhl-manual-this)
+xmap <leader>m <Plug>(quickhl-manual-this)
+nmap <leader>M <Plug>(quickhl-manual-reset)
+xmap <leader>M <Plug>(quickhl-manual-reset)
+nmap <leader>j <Plug>(quickhl-cword-toggle)
+nmap <leader>] <Plug>(quickhl-tag-toggle)
 map H <Plug>(operator-quickhl-manual-this-motion)
-nnoremap <C-t> <Nop>
-nnoremap <C-t>n :<C-u>tabnew<CR>
-nnoremap <C-t>q :<C-u>tabclose<CR>
-nnoremap <C-t>o :<C-u>tabonly<CR>
+" }}}
+
+" tab operations {{{
+nnoremap <leader>t <Nop>
+nnoremap <leader>tn :<C-u>tabnew<CR>
+nnoremap <leader>tq :<C-u>tabclose<CR>
+nnoremap <leader>to :<C-u>tabonly<CR>
 map <C-Tab> :tabn<CR>
 map <S-Tab> :tabp<CR>
+" }}}
+
 nnoremap t  <Nop>
 nnoremap tt <C-]>         
 nnoremap tj :<C-u>tag<CR> 
@@ -313,21 +322,26 @@ nnoremap tk :<C-u>pop<CR>
 nnoremap tl :<C-u>tags<CR>  
 map <C-j> :cn<CR>
 map <C-k> :cp<CR>
-map <C-g> :Gtags 
 nnoremap / /\v
-nnoremap Q <Nop>
-nnoremap ZZ <Nop>
-nnoremap ZQ <Nop>
 noremap <S-h> ^
 noremap <S-l> $
 
-" nerdcommenter
-let NERDSpaceDelims = 1
+" avoid annoying {{{
+nnoremap Q <Nop>
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
+" }}}
 
-" move screen down
+" screen up/down {{{
 noremap <Space>j <C-f>
-" move screen up
 noremap <Space>k <C-b>
+" }}}
+
+" unite {{{
+"
+" custom unite action
+call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
+let g:vimfiler_as_default_explorer = 1
 
 " show file list of current directory
 "noremap <C-u><C-f> :UniteWithCurrentDir -buffer-name=files file<CR>
@@ -358,36 +372,224 @@ nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
 
-
 " unite-outline
 noremap <C-u><C-o> :Unite outline<CR>
 
 " unite-mark
 noremap <C-u><C-m> :Unite -buffer-name=unite_mark mark<CR>
 
+" }}}
+"
+
 " neomake
 noremap <C-u><C-l> :Neomake<CR>
 
-
-" custom unite action
-call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
-let g:vimfiler_as_default_explorer = 1
+" vp doesn't replace paste buffer {{{
+function! RestoreRegister()
+    let @" = s:restore_reg
+    return ''
+endfunction
+function! s:Repl()
+    let s:restore_reg = @"
+    return "p@=RestoreRegister()\<cr>"
+endfunction
+vmap <silent> <expr> p <sid>Repl()
+" }}}
 
 " Set "-no-quit" automatically in grep unite source.
 call unite#custom#profile('source/grep', 'context',
             \ {'no_quit' : 1})
 
-" 
-" command
-"
+" my commands
 command! ReloadVimrc source $MYVIMRC
 
 
-"
-" settings
-"
+
+" grep command {{{
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+if executable('ag')
+    set grepprg=ag
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+    let g:unite_source_grep_recursive_opt = ''
+elseif executable('jvgrep')
+    set grepprg=jvgrep
+    let g:unite_source_grep_command = 'jvgrep'
+    let g:unite_source_grep_default_opts = "--exclude '\.(git|svn|hg|bzr|metadata|neocomplcache)'"
+    let g:unite_source_grep_recursive_opt = '-R'
+endif
+" }}}
+
+
+" zenkaku space highlight {{{
+augroup highligntJpSpace
+    autocmd!
+    autocmd Colorscheme * highlight JpSpace term=underline ctermbg=DarkGreen guibg=DarkGray
+    autocmd! VimEnter,WinEnter * match JpSpace /　/
+augroup END
+" }}}
+
+
+" gtags {{{
+nmap <leader>g <Nop>
+nmap <leader>gt :Gtags -t <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>gs :Gtags -s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>gg :Gtags -g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>gr :Gtags -r <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>gf :Gtags -f %<CR>
+nmap <leader>gd :CCTreeTraceForward <C-R>=expand("<cword>")<CR><CR>
+map <C-g> :Gtags 
+" }}}
+
+
+" nerdcommenter
+let NERDSpaceDelims = 1
+
+
+" rooter {{{
+let g:rooter_manual_only = 1
+let g:rooter_patterns = ['.latexmkrc','GTAGS','tags','cscope.out','.git/']
+let g:rooter_use_lcd = 1
+" }}}
+
+
+" syntastic {{{
+" let g:syntastic_auto_loc_list = 0 
+" let g:syntastic_enable_signs = 1
+" let g:syntastic_enable_highlighting = 0
+" let g:syntastic_c_check_header = 1
+" }}}
+
+" w3m vim
+"let g:w3m#search_engine = 'http://www.google.co.jp/search?hl=ja&lr=lang_ja&q=' 
+
+
+" vinarize
+let g:vinarise_enable_auto_detect = 1
+
+" vim-multiple-cursol {{{
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+" Map start key separately from next key
+let g:multi_cursor_start_key='<F6>'
+" }}}
+
+
+" vim-choosewin
+nmap - <Plug>(choosewin)
+
+
+" lightline {{{
+let g:lightline = {
+    \ 'colorscheme': 'wombat',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+    \ },
+    \ 'component': {
+    \   'readonly': '%{&filetype=="help"?"":&readonly?"\u2b64":""}',
+    \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+    \   'fugitive': '%{exists("*fugitive#head")&& strlen(fugitive#head())?"\u2b60 ".fugitive#head():""}'
+    \ },
+    \ 'component_visible_condition': {
+    \   'readonly': '(&filetype!="help"&& &readonly)',
+    \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+    \   'fugitive': '(exists("*fugitive#head") && strlen(fugitive#head()))'
+    \ },
+    \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
+    \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
+    \ }
+set laststatus=2
+" }}}
+
+
+" quickhl
+" let g:quickhl_manual_colors = [
+" \ "gui=bold ctermfg=16  ctermbg=153 guifg=#ffffff guibg=#0a7383",
+" \ ]
+
+
+" submode {{{
+call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
+call submode#enter_with('winsize', 'n', '', '<C-w><', '<C-w><')
+call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>-')
+call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>+')
+call submode#map('winsize', 'n', '', '>', '<C-w>>')
+call submode#map('winsize', 'n', '', '<', '<C-w><')
+call submode#map('winsize', 'n', '', '+', '<C-w>-')
+call submode#map('winsize', 'n', '', '-', '<C-w>+')
+" }}}
+
+
+" marching-vim {{{
+let g:marching_enable_neocomplete = 1
+let g:marching_clang_command = '/usr/bin/clang'
+let g:marching_include_paths = [
+            \ $HOME."/usr/local/include/eigen3",
+            \ "/usr/include/boost"
+            \]
+" }}}
+
+" japanese ime
+let IM_CtrlIBusPython = 1
+let g:IM_CtrlBufLocalMode = 1
+
+" disable tex conceal
+let g:tex_conceal = ""
+
+" tex-folds
+let g:tex_fold_override_foldtext = 1
+
+
+" yankround {{{
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+let g:yankround_max_history = 50
+let g:yankround_use_region_hl = 1
+autocmd ColorScheme *   call s:define_region_hl()
+function! s:define_region_hl()
+    highlight default YankRoundRegion   guibg=DarkGreen ctermbg=DarkGreen term=reverse
+endfunction
+" }}}
+
+
+" grammarous {{{
+let g:grammarous#hooks = {}
+function! g:grammarous#hooks.on_check(errs)
+    nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
+    nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
+endfunction
+
+function! g:grammarous#hooks.on_reset(errs)
+    nunmap <buffer><C-n>
+    nunmap <buffer><C-p>
+endfunction
+" }}}
+
+
+" vimtex
+let g:vimtex_view_method='zathura'
+
+
+if has('nvim')
+    set rtp+=$HOME."/.julia/v0.4/Neovim"
+    " neomake
+    autocmd! BufWritePost * Neomake
+endif
+
+" other settings {{{
 " tab
-set tabstop=4 shiftwidth=4 softtabstop=4
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set smartindent
 set history=100
 
@@ -413,163 +615,11 @@ set nowrap
 set list
 set listchars=tab:>-
 set cursorline
-set cursorcolumn
+" set cursorcolumn
 
 " swap
 set noswapfile
 set nobackup
-
-" grep
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-if executable('ag')
-    set grepprg=ag
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('jvgrep')
-    set grepprg=jvgrep
-    let g:unite_source_grep_command = 'jvgrep'
-    let g:unite_source_grep_default_opts = "--exclude '\.(git|svn|hg|bzr|metadata|neocomplcache)'"
-    let g:unite_source_grep_recursive_opt = '-R'
-endif
-
-
-augroup highligntJpSpace
-    autocmd!
-    autocmd Colorscheme * highlight JpSpace term=underline ctermbg=DarkGreen guibg=DarkGray
-    autocmd! VimEnter,WinEnter * match JpSpace /　/
-augroup END
-
-" Global
-nmap <C-\>t :Gtags -t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>s :Gtags -s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>g :Gtags -g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>r :Gtags -r <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>f :Gtags -f %<CR>
-nmap <C-\>d :CCTreeTraceForward <C-R>=expand("<cword>")<CR><CR>
-
-
-" rooter
-let g:rooter_manual_only = 1
-let g:rooter_patterns = ['.latexmkrc','GTAGS','tags','cscope.out','.git/']
-let g:rooter_use_lcd = 1
-
-" syntastic
-" let g:syntastic_auto_loc_list = 0 
-" let g:syntastic_enable_signs = 1
-" let g:syntastic_enable_highlighting = 0
-" let g:syntastic_c_check_header = 1
-
-" w3m vim
-"let g:w3m#search_engine = 'http://www.google.co.jp/search?hl=ja&lr=lang_ja&q=' 
-"
-" vinarize
-let g:vinarise_enable_auto_detect = 1
-
-" vim-multiple-cursol
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-" Map start key separately from next key
-let g:multi_cursor_start_key='<F6>'
-
-" vim-choosewin
-nmap - <Plug>(choosewin)
-
-" lightline
-let g:lightline = {
-    \ 'colorscheme': 'wombat',
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-    \ },
-    \ 'component': {
-    \   'readonly': '%{&filetype=="help"?"":&readonly?"\u2b64":""}',
-    \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-    \   'fugitive': '%{exists("*fugitive#head")&& strlen(fugitive#head())?"\u2b60 ".fugitive#head():""}'
-    \ },
-    \ 'component_visible_condition': {
-    \   'readonly': '(&filetype!="help"&& &readonly)',
-    \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-    \   'fugitive': '(exists("*fugitive#head") && strlen(fugitive#head()))'
-    \ },
-    \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
-    \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
-    \ }
-
-set laststatus=2
-
-" quickhl
-" let g:quickhl_manual_colors = [
-" \ "gui=bold ctermfg=16  ctermbg=153 guifg=#ffffff guibg=#0a7383",
-" \ ]
-
-" submode
-call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
-call submode#enter_with('winsize', 'n', '', '<C-w><', '<C-w><')
-call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>-')
-call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>+')
-call submode#map('winsize', 'n', '', '>', '<C-w>>')
-call submode#map('winsize', 'n', '', '<', '<C-w><')
-call submode#map('winsize', 'n', '', '+', '<C-w>-')
-call submode#map('winsize', 'n', '', '-', '<C-w>+')
-
-" marching-vim
-let g:marching_enable_neocomplete = 1
-let g:marching_clang_command = '/usr/bin/clang'
-let g:marching_include_paths = [
-            \ $HOME."/usr/local/include/eigen3",
-            \ "/usr/include/boost"
-            \]
-
-" japanese ime
-let IM_CtrlIBusPython = 1
-let g:IM_CtrlBufLocalMode = 1
-
-" disable tex conceal
-let g:tex_conceal = ""
-
-" tex-folds
-let g:tex_fold_override_foldtext = 1
-
-" yankround
-nmap p <Plug>(yankround-p)
-nmap P <Plug>(yankround-P)
-nmap gp <Plug>(yankround-gp)
-nmap gP <Plug>(yankround-gP)
-nmap <C-p> <Plug>(yankround-prev)
-nmap <C-n> <Plug>(yankround-next)
-let g:yankround_max_history = 50
-let g:yankround_use_region_hl = 1
-autocmd ColorScheme *   call s:define_region_hl()
-function! s:define_region_hl()
-    highlight default YankRoundRegion   guibg=DarkGreen ctermbg=DarkGreen term=reverse
-endfunction
-
-" grammarous
-let g:grammarous#hooks = {}
-function! g:grammarous#hooks.on_check(errs)
-    nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
-    nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
-endfunction
-
-function! g:grammarous#hooks.on_reset(errs)
-    nunmap <buffer><C-n>
-    nunmap <buffer><C-p>
-endfunction
-
-" vimtex
-let g:vimtex_view_method='zathura'
-
-
-if has('nvim')
-    set rtp+=$HOME."/.julia/v0.4/Neovim"
-    " neomake
-    autocmd! BufWritePost * Neomake
-endif
 
 set backspace=indent,eol,start
 " set foldmethod=syntax
@@ -578,12 +628,11 @@ set foldnestmax=2
 set shellslash
 set switchbuf=usetab
 set expandtab
-set tabstop=4
-set shiftwidth=4
 set noerrorbells
 set visualbell t_vb=
 set noerrorbells
 set ambiwidth=double
+" }}}
 
 syntax on
 autocmd ColorScheme * highlight SpellBad term=bold ctermfg=15 ctermbg=203 guifg=#353535 guibg=#e5786d
