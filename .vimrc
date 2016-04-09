@@ -90,7 +90,7 @@ NeoBundle 'tsukkee/unite-help'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'vim-scripts/C-fold'
-NeoBundle 'vim-scripts/DoxygenToolkit.vim'
+" NeoBundle 'vim-scripts/DoxygenToolkit.vim'
 NeoBundle 'vim-scripts/DrawIt'
 NeoBundle 'vim-scripts/TagHighlight'
 " NeoBundle 'vim-scripts/doxygen-support.vim'
@@ -119,6 +119,7 @@ NeoBundle 'itchyny/calendar.vim'
 NeoBundle 'lervag/vimtex'
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'rhysd/vim-grammarous'
+NeoBundle 'Shougo/neoyank.vim'
 "}}}
 
 call neobundle#end()
@@ -147,7 +148,7 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
             \ 'default' : '',
-            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'vimshell' : $HOME.'/.cache/vimshell/command-history'
             \ }
 
 " Define keyword.
@@ -244,13 +245,6 @@ let g:neosnippet#snippets_directory = [
 "
 nnoremap <silent> <F8> :TlistToggle<CR>
 
-"
-" doxygen support
-"
-let g:Doxy_GlobalTemplateFile = $HOME.'/.vim/bundle/doxygen-support.vim/doxygen-support/templates/doxygen.templates'
-let g:Doxy_LocalTemplateFile = $HOME.'/.vim/templates/doxygen-support/doxygen.templates'
-let g:Doxy_LocalTemplateDirectory = $HOME.'/.vim/templates/doxygen-support/'
-
 
 "
 " quickfix
@@ -299,7 +293,6 @@ let g:proj_flags ="imstc"
 " nmap <silent> <leader>r :QuickRun -outputter quickfix<CR>
 nmap <silent> <leader>r :QuickRun<CR>
 nnoremap <silent> <F6> :Project<CR>
-nnoremap <silent> <F7> :YRShow<CR>
 nmap <Space>m <Plug>(quickhl-manual-this)
 xmap <Space>m <Plug>(quickhl-manual-this)
 nmap <Space>M <Plug>(quickhl-manual-reset)
@@ -307,11 +300,6 @@ xmap <Space>M <Plug>(quickhl-manual-reset)
 nmap <Space>j <Plug>(quickhl-cword-toggle)
 nmap <Space>] <Plug>(quickhl-tag-toggle)
 map H <Plug>(operator-quickhl-manual-this-motion)
-"nmap <Space>m <Plug>(quickhl-toggle)
-"xmap <Space>m <Plug>(quickhl-toggle)
-"nmap <Space>M <Plug>(quickhl-reset)
-"xmap <Space>M <Plug>(quickhl-reset)
-"nmap <Space>j <Plug>(quickhl-match)
 nnoremap <C-t> <Nop>
 nnoremap <C-t>n :<C-u>tabnew<CR>
 nnoremap <C-t>q :<C-u>tabclose<CR>
@@ -327,7 +315,9 @@ map <C-j> :cn<CR>
 map <C-k> :cp<CR>
 map <C-g> :Gtags 
 nnoremap / /\v
-nnoremap Q <Nop> " disable ex mode keymap
+nnoremap Q <Nop>
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
 noremap <S-h> ^
 noremap <S-l> $
 
@@ -349,7 +339,7 @@ noremap <C-u><C-r> :Unite file_mru<CR>
 
 " show register list
 " noremap <C-u><C-y> :Unite -buffer-name=register register<CR>
-noremap <C-u><C-y> :Unite yankround<CR>
+noremap <C-u><C-y> :Unite history/yank -default-action=append<CR>
 
 " show buffer list
 noremap <C-u><C-h> :Unite buffer<CR>
@@ -451,19 +441,7 @@ augroup highligntJpSpace
     autocmd! VimEnter,WinEnter * match JpSpace /　/
 augroup END
 
-" cscope
-" set cscopetag
-" set cscopetagorder=1
-" set cscopequickfix=s-,c-,d-,i-,t-,e-
-" nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-" nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-" nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-" nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-" nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-" nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-" nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-" nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
+" Global
 nmap <C-\>t :Gtags -t <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>s :Gtags -s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>g :Gtags -g <C-R>=expand("<cword>")<CR><CR>
@@ -471,19 +449,6 @@ nmap <C-\>r :Gtags -r <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>f :Gtags -f %<CR>
 nmap <C-\>d :CCTreeTraceForward <C-R>=expand("<cword>")<CR><CR>
 
-
-" " add cscope.out automatically
-" function! LoadCscope()
-"     let db = findfile("cscope.out",".;")
-"     if(!empty(db))
-"         let path = strpart(db, 0, match(db, "cscope.out") - 1)
-"         "echomsg "cs add " . db . " " . path 
-"         set nocscopeverbose " suppress 'duplicate connection' error
-"         exe "cs add " . db . " " . path
-"         set cscopeverbose
-"     endif
-" endfunction
-" au BufEnter * call LoadCscope()
 
 " rooter
 let g:rooter_manual_only = 1
