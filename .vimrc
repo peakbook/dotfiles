@@ -33,7 +33,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " plugins {{{
 NeoBundle 'Shougo/vinarise'
-" NeoBundle 'scrooloose/syntastic'
+NeoBundle 'scrooloose/syntastic'
 " NeoBundle 'scrooloose/snipmate-snppets'
 " NeoBundle 'vim-scripts/errormarker.vim'
 NeoBundle 'Shougo/neocomplete'
@@ -455,10 +455,12 @@ let g:rooter_use_lcd = 1
 
 
 " syntastic {{{
-" let g:syntastic_auto_loc_list = 0 
-" let g:syntastic_enable_signs = 1
-" let g:syntastic_enable_highlighting = 0
-" let g:syntastic_c_check_header = 1
+let g:syntastic_auto_loc_list = 0 
+let g:syntastic_enable_signs = 1
+let g:syntastic_enable_highlighting = 0
+let g:syntastic_c_check_header = 1
+let g:sytnastic_check_on_wq = 0
+let g:sytnastic_check_on_open = 1
 " }}}
 
 " w3m vim
@@ -488,7 +490,14 @@ let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+    \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ],
+    \   'right': [ [ 'lineinfo', 'percent'], [ 'fileformat', 'fileencoding', 'filetype', 'syntastic'] ]
+    \ },
+    \ 'component_expand': {
+    \   'syntastic': 'SyntasticStatuslineFlag',
+    \ },
+    \ 'component_type': {
+    \   'syntastic': 'error',
     \ },
     \ 'component': {
     \   'readonly': '%{&filetype=="help"?"":&readonly?"\u2b64":""}',
@@ -504,6 +513,14 @@ let g:lightline = {
     \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
     \ }
 set laststatus=2
+augroup AutoSyntastic
+    autocmd!
+    autocmd BufWritePost *.c,*.cpp,*.py call s:syntastic()
+augroup END
+function! s:syntastic()
+    SyntasticCheck
+    call lightline#update()
+endfunction
 " }}}
 
 
