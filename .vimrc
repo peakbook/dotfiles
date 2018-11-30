@@ -1,221 +1,102 @@
-scriptencoding utf-8
+call plug#begin('~/.vim/plugged')
 
-let s:is_win = has('win32') || has('win64')
-let s:is_unix = has('unix')
-"let s:is_mac...  I'm not a Mac user.
-
-if s:is_win 
+Plug 'JuliaEditorSupport/julia-vim'
+" Plug 'JuliaEditorSupport/deoplete-julia'
+Plug 'LeafCage/yankround.vim'
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+    Plug 'Shougo/neocomplete.vim'
 endif
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neosnippet'
+" Plug 'Shougo/deoppet.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neoyank.vim'
+Plug 'Shougo/neossh.vim'
+Plug 'Shougo/unite-build'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/denite.nvim'
+Plug 'Shougo/vimfiler.vim'
+Plug 'Shougo/vimproc', {'do': 'make'}
+Plug 'Shougo/vimshell'
+" Plug 'Shougo/vinarise'
+Plug 'airblade/vim-rooter'
+Plug 'benekastah/neomake'
+" Plug 'chrisbra/csv.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'gregsexton/gitv'
+Plug 'h1mesuke/vim-alignta'
+Plug 'junegunn/vim-easy-align'
+Plug 'hewes/unite-gtags'
+Plug 'ozelentok/denite-gtags'
+Plug 'honza/vim-snippets'
+Plug 'hrsh7th/vim-unite-vcs'
+Plug 'itchyny/calendar.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'jceb/vim-hier'
+Plug 'kana/vim-grex'
+Plug 'kana/vim-submode'
+Plug 'kana/vim-tabpagecd'
+" Plug 'kurkale6ka/vim-sequence'
+Plug 'lervag/vimtex'
+Plug 'mattn/learn-vimscript'
+Plug 'matze/vim-tex-fold'
+Plug 'osyo-manga/unite-fold'
+Plug 'osyo-manga/vim-over'
+Plug 'rhysd/vim-grammarous'
+Plug 'scrooloose/nerdcommenter'
+" Plug 'scrooloose/syntastic'
+Plug 'sgur/unite-qf'
+Plug 'shemerey/vim-project'
+Plug 't9md/vim-choosewin'
+Plug 't9md/vim-quickhl'
+Plug 'tacroe/unite-mark'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'thinca/vim-fontzoom'
+Plug 'thinca/vim-qfreplace'
+Plug 'thinca/vim-quickrun'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tsukkee/unite-help'
+Plug 'tsukkee/unite-tag'
+Plug 'ujihisa/neco-look'
+" Plug 'ujihisa/unite-colorscheme'
+Plug 'vim-jp/vimdoc-ja'
+Plug 'vim-scripts/DrawIt'
+Plug 'vim-scripts/TagHighlight'
+Plug 'vim-scripts/gtags.vim'
+Plug 'vim-scripts/ifdef-highlighting'
+Plug 'vim-scripts/taglist.vim'
+" Plug 'yuratomo/w3m.vim'
+" Plug 'zyedidia/julialint.vim'
+Plug 'jpalardy/vim-slime'
+Plug 'airblade/vim-gitgutter'
+Plug 'maverickg/stan.vim'
+" Plug 'kannokanno/previm'
+Plug 'gnperdue/vim-asciidoc'
+Plug 'vim-scripts/ditaa'
+" Plug 'ryanoasis/vim-devicons'
+Plug 'cj/vim-webdevicons'
+Plug 'rust-lang/rust.vim' 
+Plug 'fszymanski/deoplete-emoji'
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'Chiel92/vim-autoformat'
+Plug 'dhruvasagar/vim-table-mode'
 
-if has("gui_running") 
+
+call plug#end()
+
+" deoplete {{{
+if has('nvim')
+    let g:deoplete#enable_at_startup = 1
+else
+    let g:neocomplete#enable_at_startup = 1
 endif
-
-" neobundle {{{
-set nocompatible
-filetype off
-filetype plugin indent off
-
-if 0 | endif
-
-if has('vim_starting')
-    if &compatible
-        set nocompatible
-    endif
-
-    set runtimepath+=~/.vim/after
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-
-" let g:neobundle#types#git#default_protocol = 'http'
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" plugins {{{
-NeoBundle 'Shougo/vinarise'
-NeoBundle 'scrooloose/syntastic'
-" NeoBundle 'scrooloose/snipmate-snppets'
-" NeoBundle 'vim-scripts/errormarker.vim'
-NeoBundle 'Shougo/neocomplete'
-" NeoBundle 'Sixeight/unite-grep'
-" NeoBundle 'dannyob/quickfixstatus'
-NeoBundle 'tyru/eskk.vim'
-NeoBundle 'vim-scripts/CCTree'
-" NeoBundle 'vim-scripts/Color-Sampler-Pack'
-" NeoBundle 'vim-scripts/SrcExpl'
-" NeoBundle 'vim-scripts/c.vim'
-" NeoBundle 'vim-scripts/cscope.vim'
-NeoBundle 'JuliaLang/julia-vim'
-" NeoBundle 'Shougo/neocomplcache'
-" NeoBundle 'Shougo/neocomplcache-clang_complete'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/unite-build'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Shougo/vimproc', {
-    \ 'build' : {
-    \     'cygwin' : 'make -f make_cygwin.mak',
-    \     'linux' : 'make',
-    \    },
-    \ }
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'airblade/vim-rooter'
-NeoBundle 'chrisbra/csv.vim'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'gregsexton/gitv'
-NeoBundle 'hewes/unite-gtags'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'jceb/vim-hier'
-NeoBundle 'kana/vim-grex'
-" NeoBundle 'kana/vim-smartinput'
-NeoBundle 'kana/vim-tabpagecd'
-NeoBundle 'kurkale6ka/vim-sequence'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'shemerey/vim-project'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'thinca/vim-fontzoom'
-" NeoBundle 'thinca/vim-localrc'
-NeoBundle 'thinca/vim-qfreplace'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-surround'
-" NeoBundle 'tsaleh/vim-align'
-NeoBundle 'h1mesuke/vim-alignta'
-NeoBundle 'tsukkee/unite-help'
-NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'vim-scripts/C-fold'
-" NeoBundle 'vim-scripts/DoxygenToolkit.vim'
-NeoBundle 'vim-scripts/DrawIt'
-NeoBundle 'vim-scripts/TagHighlight'
-" NeoBundle 'vim-scripts/doxygen-support.vim'
-NeoBundle 'vim-scripts/gtags.vim'
-NeoBundle 'vim-scripts/ifdef-highlighting'
-NeoBundle 'vim-scripts/taglist.vim'
-NeoBundle 'yuratomo/w3m.vim'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'LeafCage/yankround.vim'
-NeoBundle 't9md/vim-choosewin'
-NeoBundle 'tacroe/unite-mark'
-NeoBundle 't9md/vim-quickhl'
-NeoBundle 'osyo-manga/unite-fold'
-" NeoBundle 'osyo-manga/unite-quickfix'
-NeoBundle 'sgur/unite-qf'
-NeoBundle 'hrsh7th/vim-unite-vcs'
-NeoBundle 'osyo-manga/vim-over'
-NeoBundle 'kana/vim-submode'
-" NeoBundle 'fuenor/im_control.vim'
-NeoBundle 'vim-jp/vimdoc-ja'
-NeoBundle 'mattn/learn-vimscript'
-NeoBundle 'matze/vim-tex-fold'
-NeoBundle 'benekastah/neomake'
-NeoBundle 'zyedidia/julialint.vim'
-NeoBundle 'itchyny/calendar.vim'
-NeoBundle 'lervag/vimtex'
-NeoBundle 'ujihisa/neco-look'
-NeoBundle 'rhysd/vim-grammarous'
-NeoBundle 'Shougo/neoyank.vim'
-"}}}
-
-call neobundle#end()
-filetype plugin indent on
-NeoBundleCheck
-
-if !has('vim_starting')
-    " Call on_source hook when reloading .vimrc.
-    call neobundle#call_hook('on_source')
-endif
-"}}}
-
-set path+='~/usr/local/include','/usr/include','/usr/local/include'
-
-" neocomplete {{{
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-            \ 'default' : '',
-            \ 'vimshell' : $HOME.'/.cache/vimshell/command-history'
-            \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-    return neocomplete#close_popup() . "\<CR>"
-    " For no inserting <CR> key.
-    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-endif
-let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-" let g:neocomplete#sources#omni#input_patterns.tex = '\v\\\a*cite\a*\{([^}]*,)?''}'
-let g:neocomplete#sources#omni#input_patterns.tex = '\v\\\a*(ref|cite)\a*([^]]*\])?\{(|[^}]*,)'
-
-if !exists('g:neocomplete#text_mode_filetypes')
-    let g:neocomplete#text_mode_filetypes = {}
-endif
-let g:neocomplete#text_mode_filetypes = {
-            \ 'rst': 1,
-            \ 'markdown': 1,
-            \ 'gitrebase': 1,
-            \ 'gitcommit': 1,
-            \ 'vcs-commit': 1,
-            \ 'hybrid': 1,
-            \ 'text': 1,
-            \ 'help': 1,
-            \ 'tex': 1,
-            \ }
-
 " }}}
-
 
 " neosnippet {{{
 " key-mappings.
@@ -311,8 +192,11 @@ nnoremap <leader>t <Nop>
 nnoremap <leader>tn :<C-u>tabnew<CR>
 nnoremap <leader>tq :<C-u>tabclose<CR>
 nnoremap <leader>to :<C-u>tabonly<CR>
+nnoremap <leader>tt :<C-u>tabnew<CR>:terminal<CR>
 map <C-Tab> :tabn<CR>
 map <S-Tab> :tabp<CR>
+map <leader>n :tabn<CR>
+map <leader>p :tabp<CR>
 " }}}
 
 nnoremap t  <Nop>
@@ -337,46 +221,56 @@ noremap <Space>j <C-f>
 noremap <Space>k <C-b>
 " }}}
 
+" terminal escape
+if has('nvim')
+    tnoremap <silent> <C-[><C-n> <C-\><C-n>
+endif
+
+
 " unite {{{
 "
 " custom unite action
-call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
+" call denite#custom_default_action('source/bookmark/directory' , 'vimfiler')
 let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_enable_auto_cd = 1
 
 " show file list of current directory
-"noremap <C-u><C-f> :UniteWithCurrentDir -buffer-name=files file<CR>
-"noremap <C-u><C-f> :VimFilerExplorer<CR>
-noremap <C-u><C-f> :VimFilerBufferDir -split -simple -winwidth=30 -no-quit<CR>
+" noremap <C-u><C-f> :DeniteWithCurrentDir -buffer-name=files file<CR>
+" noremap <C-u><C-f> :Denite file_rec<CR>
+noremap <C-u><C-f> :VimFilerBufferDir -simple -auto-cd -split -winwidth=40 -no-quit<CR>
+" noremap <C-u><C-f> :NERDTreeToggle<CR>
 
 " show recently used file list
-noremap <C-u><C-r> :Unite file_mru<CR>
+noremap <C-u><C-r> :Denite file_mru<CR>
+noremap <C-u><C-d> :Denite file_rec<CR>
 
 " show register list
-" noremap <C-u><C-y> :Unite -buffer-name=register register<CR>
-noremap <C-u><C-y> :Unite history/yank -default-action=append<CR>
+" noremap <C-u><C-y> :Denite -buffer-name=register register<CR>
+" noremap <C-u><C-y> :Denite history/yank -default-action=append<CR>
+" noremap <C-u><C-y> :Denite neoyank<CR>
 
 " show buffer list
-noremap <C-u><C-h> :Unite buffer<CR>
+noremap <C-u><C-h> :Denite buffer<CR>
 
 " show bookmark list
 noremap <C-u><C-v> :Unite bookmark<CR>
 
 " resume
-noremap <C-u><C-e> :Unite resume<CR>
+noremap <C-u><C-e> :Denite -resume<CR>
 
 " unite-grep
-noremap <C-u><C-g> :Unite -buffer-name=unite_grep grep::: -no-quit<CR>
-let g:unite_source_grep_max_candidates = 50000
+noremap <C-u><C-g> :Denite -buffer-name=denite_grep grep::: -no-quit<CR>
+let g:denite_source_grep_max_candidates = 50000
 
-nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
+nnoremap <silent> ,g  :<C-u>Denite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> ,cg :<C-u>Denite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+nnoremap <silent> ,r  :<C-u>DeniteResume search-buffer<CR>
 
 " unite-outline
-noremap <C-u><C-o> :Unite outline<CR>
+noremap <C-u><C-o> :Denite outline<CR>
 
 " unite-mark
-noremap <C-u><C-m> :Unite -buffer-name=unite_mark mark<CR>
+noremap <C-u><C-m> :Denite -buffer-name=denite_mark mark<CR>
 
 " }}}
 "
@@ -397,27 +291,31 @@ vmap <silent> <expr> p <sid>Repl()
 " }}}
 
 " Set "-no-quit" automatically in grep unite source.
-call unite#custom#profile('source/grep', 'context',
-            \ {'no_quit' : 1})
+" call denite#custom#profile('source/grep', 'context',
+            " \ {'no_quit' : 1})
 
 " my commands
 command! ReloadVimrc source $MYVIMRC
 
 
-
 " grep command {{{
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-if executable('ag')
+let g:denite_enable_ignore_case = 1
+let g:denite_enable_smart_case = 1
+if executable('pt')
+    set grepprg=pt
+    let g:denite_source_grep_command = 'pt'
+    let g:denite_source_grep_default_opts = '--nogroup --nocolor --column'
+    let g:denite_source_grep_recursive_opt = ''
+elseif executable('ag')
     set grepprg=ag
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-    let g:unite_source_grep_recursive_opt = ''
+    let g:denite_source_grep_command = 'ag'
+    let g:denite_source_grep_default_opts = '--nogroup --nocolor --column'
+    let g:denite_source_grep_recursive_opt = ''
 elseif executable('jvgrep')
     set grepprg=jvgrep
-    let g:unite_source_grep_command = 'jvgrep'
-    let g:unite_source_grep_default_opts = "--exclude '\.(git|svn|hg|bzr|metadata|neocomplcache)'"
-    let g:unite_source_grep_recursive_opt = '-R'
+    let g:denite_source_grep_command = 'jvgrep'
+    let g:denite_source_grep_default_opts = "--exclude '\.(git|svn|hg|bzr|metadata|neocomplcache)'"
+    let g:denite_source_grep_recursive_opt = '-R'
 endif
 " }}}
 
@@ -432,14 +330,22 @@ augroup END
 
 
 " gtags {{{
-nmap <leader>g <Nop>
-nmap <leader>gt :Gtags -t <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>gs :Gtags -s <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>gg :Gtags -g <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>gr :Gtags -r <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>gf :Gtags -f %<CR>
-nmap <leader>gd :CCTreeTraceForward <C-R>=expand("<cword>")<CR><CR>
-map <C-g> :Gtags 
+" nmap <leader>g <Nop>
+" nmap <leader>gt :Gtags -t <C-R>=expand("<cword>")<CR><CR>
+" nmap <leader>gs :Gtags -s <C-R>=expand("<cword>")<CR><CR>
+" nmap <leader>gg :Gtags -g <C-R>=expand("<cword>")<CR><CR>
+" nmap <leader>gr :Gtags -r <C-R>=expand("<cword>")<CR><CR>
+" nmap <leader>gf :Gtags -f %<CR>
+" nmap <leader>gd :CCTreeTraceForward <C-R>=expand("<cword>")<CR><CR>
+" map <C-g> :Gtags 
+nnoremap <leader>g <Nop>
+nnoremap <leader>ga :DeniteCursorWord -buffer-name=gtags_context gtags_context<cr>
+nnoremap <leader>gd :DeniteCursorWord -buffer-name=gtags_def gtags_def<cr>
+nnoremap <leader>gr :DeniteCursorWord -buffer-name=gtags_ref gtags_ref<cr>
+nnoremap <leader>gg :DeniteCursorWord -buffer-name=gtags_grep gtags_grep<cr>
+nnoremap <leader>gf :Denite -buffer-name=gtags_file gtags_file<cr>
+nnoremap <leader>gt :Denite -buffer-name=gtags_completion gtags_completion<cr>
+nnoremap <leader>gp :Denite -buffer-name=gtags_path gtags_path<cr>
 " }}}
 
 
@@ -451,16 +357,23 @@ let NERDSpaceDelims = 1
 let g:rooter_manual_only = 1
 let g:rooter_patterns = ['.latexmkrc','GTAGS','tags','cscope.out','.git/']
 let g:rooter_use_lcd = 1
+let g:rooter_resolve_links = 1
+let g:rooter_change_directory_for_non_project_files = 'current'
 " }}}
 
 
 " syntastic {{{
-let g:syntastic_auto_loc_list = 0 
-let g:syntastic_enable_signs = 1
-let g:syntastic_enable_highlighting = 0
-let g:syntastic_c_check_header = 1
-let g:sytnastic_check_on_wq = 0
-let g:sytnastic_check_on_open = 1
+" let g:syntastic_auto_loc_list = 0 
+" let g:syntastic_enable_signs = 1
+" let g:syntastic_enable_highlighting = 0
+" let g:syntastic_c_check_header = 1
+" let g:sytnastic_check_on_wq = 0
+" let g:sytnastic_check_on_open = 1
+" 
+" let g:syntastic_error_symbol = "❕"
+" let g:syntastic_warning_symbol = "💬"
+" let g:syntastic_style_error_symbol = "❕"
+" let g:syntastic_style_warning_symbol = "💬"
 " }}}
 
 " w3m vim
@@ -483,6 +396,7 @@ let g:multi_cursor_start_key='<F6>'
 
 " vim-choosewin
 nmap - <Plug>(choosewin)
+let g:choosewin_overlay_enable = 1
 
 
 " lightline {{{
@@ -500,26 +414,36 @@ let g:lightline = {
     \   'syntastic': 'error',
     \ },
     \ 'component': {
-    \   'readonly': '%{&filetype=="help"?"":&readonly?"\u2b64":""}',
+    \   'readonly': '%{&filetype=="help"?"":&readonly?"\ue0a2":""}', 
     \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-    \   'fugitive': '%{exists("*fugitive#head")&& strlen(fugitive#head())?"\u2b60 ".fugitive#head():""}'
+    \   'fugitive': '%{exists("*fugitive#head")&& strlen(fugitive#head())?"\ue0a0 ".fugitive#head():""}'
     \ },
     \ 'component_visible_condition': {
     \   'readonly': '(&filetype!="help"&& &readonly)',
     \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
     \   'fugitive': '(exists("*fugitive#head") && strlen(fugitive#head()))'
     \ },
-    \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
-    \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
+    \ 'component_function': {
+    \   'filetype': 'MyFiletype',
+    \   'fileformat': 'MyFileformat',
+    \ },
+    \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+    \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
     \ }
-set laststatus=2
 augroup AutoSyntastic
     autocmd!
     autocmd BufWritePost *.c,*.cpp,*.py call s:syntastic()
 augroup END
 function! s:syntastic()
-    SyntasticCheck
+    " SyntasticCheck
     call lightline#update()
+endfunction
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 " }}}
 
@@ -541,15 +465,6 @@ call submode#map('winsize', 'n', '', '+', '<C-w>-')
 call submode#map('winsize', 'n', '', '-', '<C-w>+')
 " }}}
 
-
-" marching-vim {{{
-let g:marching_enable_neocomplete = 1
-let g:marching_clang_command = '/usr/bin/clang'
-let g:marching_include_paths = [
-            \ $HOME."/usr/local/include/eigen3",
-            \ "/usr/include/boost"
-            \]
-" }}}
 
 " japanese ime
 let IM_CtrlIBusPython = 1
@@ -593,13 +508,82 @@ endfunction
 
 
 " vimtex
-let g:vimtex_view_method='zathura'
+" let g:vimtex_view_general_viewer = 'SumatraPDF'
+let g:vimtex_view_general_options
+            \ = '-reuse-instance -forward-search @tex @line @pdf'
+let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+let g:vimtex_compiler_progname = 'nvr'
+
+" vimslime
+let g:slime_target = "tmux"
+xmap <c-c><c-c> <Plug>SlimeRegionSend
+nmap <c-c><c-c> <Plug>SlimeParagraphSend
+nmap <c-c>v     <Plug>SlimeConfig
+if exists('$TMUX')
+    let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.1"}
+endif
+
+" julia-vim
+" let g:latex_to_unicode_tab = 0
+
+
+" vim-gutguitter
+let g:gitgutter_highlight_lines = 1
+nmap <leader>hh <Plug>GitGuitterToggle
+" let g:gitgutter_sign_added = '➕'
+" let g:gitgutter_sign_modified = '🔨'
+" let g:gitgutter_sign_removed = 'zz'
+" let g:gitgutter_sign_removed_first_line = '^^'
+" let g:gitgutter_sign_modified_removed = 'ww'
+
+" easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+xmap ga <Plug>(EasyAlign)
+
+" previm
+let g:previm_open_cmd = "firefox"
+augroup PrevimSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
+
+"
+let g:syntastic_asciidoc_asciidoc_exec = 'asciidoctor'
+
+" devicons
+let g:webdevicons_enable = 1
+let g:webdevicons_enable_denite = 1
+let g:webdevicons_enable_unite = 1
+let g:webdevicons_enable_vimfiler = 1
+let g:WebDevIconsUnicodeDecorateFileNodes = 1
+
+" vimfiler
+" Like Textmate icons.
+let g:vimfiler_tree_leaf_icon = ' '
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+" let g:vimfiler_file_icon = ' '
+" let g:vimfiler_marked_file_icon = ''
+
+" denite
+call denite#custom#var('file_rec', 'command', ['pt', '--follow', '--nocolor', '--nogroup', '-g', ''])
+call denite#custom#var('grep', 'command', ['pt'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
+
+au BufNewFile,BufRead *.R setl ep=R\ -s\ -e\ 'library(styler);f=file(\"stdin\");style_text(readLines(f));close(f);'
+
+" vimtable
+nnoremap <leader>ta :TableModeToggle<CR>
 
 
 if has('nvim')
-    set rtp+=$HOME."/.julia/v0.4/Neovim"
     " neomake
-    autocmd! BufWritePost * Neomake
+    " autocmd! BufWritePost * Neomake
 endif
 
 " other settings {{{
@@ -649,6 +633,7 @@ set noerrorbells
 set visualbell t_vb=
 set noerrorbells
 set ambiwidth=double
+set synmaxcol=320
 " }}}
 
 syntax on
@@ -656,5 +641,6 @@ autocmd ColorScheme * highlight SpellBad term=bold ctermfg=15 ctermbg=203 guifg=
 colorscheme wombat256mod
 filetype plugin on
 
+" set termguicolors
 
 " vim:set foldmethod=marker:

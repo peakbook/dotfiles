@@ -22,13 +22,12 @@ esac
 ##
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
-
 ## 
 ## modules
 ##
 autoload colors; colors
 #autoload predict-on; predict-on
-autoload -Uz compinit; compinit
+autoload -Uz compinit; compinit -u
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 autoload -Uz vcs_info
 autoload zed
@@ -51,14 +50,20 @@ if ! zgen saved; then
 
     # zgen oh-my-zsh
 
-    zgen load zsh-users/zsh-syntax-highlighting
+    zgen prezto 
+    zgen prezto git
+    zgen prezto tmux
+    zgen prezto syntax-highlighting
+    # zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-completions
     zgen load zsh-users/zaw
-    # zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+    # zgen load bhilburn/powerlevel9k powerlevel9k
+    zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+    zgen load b4b4r07/emoji-cli
+    zgen load Treri/fzf-zsh
 
     zgen save
 fi
-
 
 ##
 ## key bind
@@ -71,7 +76,7 @@ bindkey '^P' zaw-process
 bindkey '^G^F' zaw-git-files
 bindkey '^G^B' zaw-git-branches
 bindkey '^G^L' zaw-git-log
-
+# bindkey "^^" zaw-
 
 ##
 ## command history
@@ -79,6 +84,7 @@ bindkey '^G^L' zaw-git-log
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
+setopt hist_ignore_dups
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
@@ -161,9 +167,10 @@ case ${UID} in
 	PROMPT="${PROMPT}# "
     ;;
 *)
-	PROMPT="${PROMPT}$ "
+	PROMPT="%{${fg[green]}%}${PROMPT}$%{${reset_color}%} "
 	;;
 esac
 
 
-
+eval `dircolors $HOME/.zsh/dircolors.256dark`
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
