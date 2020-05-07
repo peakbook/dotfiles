@@ -22,16 +22,23 @@ esac
 ##
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
+##
+## load fzf
+##
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='ag --files-with-matches -S '
+export FZF_DEFAULT_OPTS='--height 40% --reverse'
+
 ## 
 ## modules
 ##
 autoload colors; colors
-#autoload predict-on; predict-on
 autoload -Uz compinit; compinit -u
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 autoload -Uz vcs_info
 autoload zed
 zmodload zsh/mathfunc
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+# autoload predict-on; predict-on
 
 
 ##
@@ -40,7 +47,7 @@ zmodload zsh/mathfunc
 if [ -e ~/.zsh/zgen/zgen.zsh ]; then
     source ~/.zsh/zgen/zgen.zsh
 else
-    echo "zgen is not found, fetch it now..." 
+    echo "zgen is not found, clone the repository now..." 
     git clone https://github.com/tarjoilija/zgen ~/.zsh/zgen
     source ~/.zsh/zgen/zgen.zsh
     echo "done!"
@@ -48,19 +55,20 @@ fi
 if ! zgen saved; then
     echo "Creating a zgen save"
 
-    # zgen oh-my-zsh
-
-    zgen prezto 
-    zgen prezto git
-    zgen prezto tmux
-    zgen prezto syntax-highlighting
-    # zgen load zsh-users/zsh-syntax-highlighting
+    # zgen prezto 
     zgen load zsh-users/zsh-completions
-    zgen load zsh-users/zaw
-    # zgen load bhilburn/powerlevel9k powerlevel9k
-    zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
     zgen load b4b4r07/emoji-cli
-    zgen load Treri/fzf-zsh
+    # zgen load Treri/fzf-zsh
+    zgen load ytet5uy4/fzf-widgets
+    zgen load zsh-users/zaw
+    # zgen load pierpo/fzf-docker
+    # zgen oh-my-zsh
+    # zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+    # zgen prezto git
+    # zgen prezto tmux
+    # zgen prezto syntax-highlighting
+    # zgen load zsh-users/zsh-syntax-highlighting
+    # zgen load bhilburn/powerlevel9k powerlevel9k
 
     zgen save
 fi
@@ -69,12 +77,12 @@ fi
 ## key bind
 ##
 bindkey -v
-bindkey "^R" zaw-history
-bindkey "^@" zaw-cdr
+bindkey "^R" fzf-history-widget #zaw-history
+bindkey "^@" fzf-change-recent-directory
 bindkey "^T" zaw-tmux
-bindkey '^P' zaw-process
+# bindkey '^P' fzf-kill-processes
 bindkey '^G^F' zaw-git-files
-bindkey '^G^B' zaw-git-branches
+bindkey '^G^B' fzf-git-checkout-branch # zaw-git-branches
 bindkey '^G^L' zaw-git-log
 # bindkey "^^" zaw-
 
@@ -82,8 +90,8 @@ bindkey '^G^L' zaw-git-log
 ## command history
 ##
 HISTFILE=~/.zsh_history
-HISTSIZE=50000
-SAVEHIST=50000
+HISTSIZE=10000
+SAVEHIST=10000
 setopt hist_ignore_dups
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -130,22 +138,6 @@ fi
 
 
 ##
-## colored man
-##
-man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-        man "$@"
-}
-
-
-##
 ## prompt
 ##
 zstyle ':vcs_info:*' enable git
@@ -173,4 +165,5 @@ esac
 
 
 eval `dircolors $HOME/.zsh/dircolors.256dark`
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+plugins=(... fzf-docker ...)
