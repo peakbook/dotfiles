@@ -46,7 +46,7 @@ Plug 'posva/vim-vue'
 Plug 'rhysd/vim-grammarous'
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 Plug 'shemerey/vim-project'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/denite.nvim'
@@ -59,6 +59,7 @@ Plug 'Shougo/vimproc', {'do': 'make'}
 Plug 'Shougo/vimshell'
 Plug 't9md/vim-choosewin'
 Plug 't9md/vim-quickhl'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'thinca/vim-fontzoom'
 Plug 'thinca/vim-qfreplace'
 Plug 'thinca/vim-quickrun'
@@ -71,7 +72,6 @@ Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/gtags.vim'
 Plug 'vim-scripts/ifdef-highlighting'
 Plug 'vim-scripts/TagHighlight'
-Plug 'vim-scripts/taglist.vim'
 Plug 'w0rp/ale'
 Plug 'zchee/deoplete-jedi'
 Plug 'autozimu/LanguageClient-neovim', {
@@ -83,12 +83,13 @@ Plug 'sheerun/vim-polyglot'
 Plug 'wtsnjp/vim-expl3'
 Plug 'luochen1990/rainbow'
 Plug 'easymotion/vim-easymotion'
-Plug 'OmniSharp/omnisharp-vim'
+" Plug 'OmniSharp/omnisharp-vim'
 Plug 'SkyLeach/pudb.vim'
 Plug 'majutsushi/tagbar'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+Plug 'voldikss/vim-floaterm'
 
 
 " Plug 'justmao945/vim-clang'
@@ -128,9 +129,9 @@ endif
 
 " neosnippet {{{
 " key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
@@ -154,16 +155,6 @@ let g:neosnippet#snippets_directory = [
     \]
 " }}}
 
-
-" taglist
-nnoremap <silent> <F8> :TlistToggle<CR>
-
-
-" quickfix
-augroup quickfixopen
-    autocmd!
-    autocmd QuickFixCmdPost make,vimgrep cw
-augroup END
 
 
 " quickrun {{{
@@ -244,160 +235,32 @@ noremap <Space>k <C-b>
 
 " terminal escape
 if has('nvim')
-    tnoremap <silent> <C-[><C-n> <C-\><C-n>
+    tnoremap <silent><C-[> <C-\><C-n>:FloatermToggle<CR>
 endif
 
 
-" denite {{{
-" show recently used file list
-noremap <C-u><C-r> :History<CR>
-noremap <C-u><C-y> :FZFYanks<CR>
-noremap <C-u><C-h> :History<CR>
-noremap <C-u><C-b> :Buffers<CR>
-noremap <C-u><C-e> :Denite -resume<CR>
-noremap <C-u><C-g> :Ag<CR>
-noremap <C-u><C-l> :Lines<CR>
-noremap <C-u><C-o> :Files<CR>
-noremap <C-u><C-m> :Marks<CR>
-" noremap <C-u><C-g> :Denite -buffer-name=denite_grep grep::: -no-quit<CR>
-let g:denite_source_grep_max_candidates = 50000
+" fzf
+let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+let $FZF_DEFAULT_OPTS='--layout=reverse  --margin=1,2'
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'border': 'sharp' } }
 
-nnoremap <silent> ,g  :<C-u>Denite grep:. -buffer-name=search-buffer<CR>
-nnoremap <silent> ,cg :<C-u>Denite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-nnoremap <silent> ,r  :<C-u>DeniteResume search-buffer<CR>
+noremap <silent><C-u><C-b> :Buffers<CR>
+noremap <silent><C-u><C-c> :History:<CR>
+noremap <silent><C-u><C-g> :Ag<CR>
+noremap <silent><C-u><C-h> :History<CR>
+noremap <silent><C-u><C-l> :Lines<CR>
+noremap <silent><C-u><C-m> :Marks<CR>
+noremap <silent><C-u><C-o> :Files<CR>
+noremap <silent><C-u><C-r> :BTags<CR>
+noremap <silent><C-u><C-s> :History/<CR>
+noremap <silent><C-u><C-w> :Windows<CR>
 
-" Define mappings
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> <CR>
-                \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> d
-                \ denite#do_map('do_action', 'delete')
-    nnoremap <silent><buffer><expr> p
-                \ denite#do_map('do_action', 'preview')
-    nnoremap <silent><buffer><expr> q
-                \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> i
-                \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <Space>
-                \ denite#do_map('toggle_select').'j'
-endfunction
-
-autocmd FileType denite-filter call s:denite_filter_my_settings()
-function! s:denite_filter_my_settings() abort
-    imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
-endfunction
-
-" Change file/rec command.
-call denite#custom#var('file/rec', 'command',
-            \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
-" Change default action.
-call denite#custom#kind('file', 'default_action', 'split')
-
-" Add custom menus
-let s:menus = {}
-
-let s:menus.zsh = {
-            \ 'description': 'Edit your import zsh configuration'
-            \ }
-let s:menus.zsh.file_candidates = [
-            \ ['zshrc', '~/.zshrc'],
-            \ ['zshenv', '~/.zshenv'],
-            \ ]
-
-let s:menus.my_commands = {
-            \ 'description': 'Example commands'
-            \ }
-let s:menus.my_commands.command_candidates = [
-            \ ['Split the window', 'vnew'],
-            \ ['Open zsh menu', 'Denite menu:zsh'],
-            \ ['Format code', 'FormatCode', 'go,python'],
-            \ ]
-
-call denite#custom#var('menu', 'menus', s:menus)
-
-" Ag command on grep source
-call denite#custom#var('grep', 'command', ['ag'])
-call denite#custom#var('grep', 'default_opts',
-            \ ['-i', '--vimgrep'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', [])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-" Define alias
-call denite#custom#alias('source', 'file/rec/git', 'file/rec')
-call denite#custom#var('file/rec/git', 'command',
-            \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
-            \ [ '.git/', '.ropeproject/', '__pycache__/',
-            \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
-
-" }}}
-"
-
-" vp doesn't replace paste buffer {{{
-function! RestoreRegister()
-    let @" = s:restore_reg
-    return ''
-endfunction
-function! s:Repl()
-    let s:restore_reg = @"
-    return "p@=RestoreRegister()\<cr>"
-endfunction
-vmap <silent> <expr> p <sid>Repl()
-" }}}
-
-" Set "-no-quit" automatically in grep unite source.
-" call denite#custom#profile('source/grep', 'context',
-            " \ {'no_quit' : 1})
 
 " my commands
 command! ReloadVimrc source $MYVIMRC
 
 
-" grep command {{{
-let g:denite_enable_ignore_case = 1
-let g:denite_enable_smart_case = 1
-if executable('pt')
-    set grepprg=pt
-    let g:denite_source_grep_command = 'pt'
-    let g:denite_source_grep_default_opts = '--nogroup --nocolor --column'
-    let g:denite_source_grep_recursive_opt = ''
-elseif executable('ag')
-    set grepprg=ag
-    let g:denite_source_grep_command = 'ag'
-    let g:denite_source_grep_default_opts = '--nogroup --nocolor --column'
-    let g:denite_source_grep_recursive_opt = ''
-elseif executable('jvgrep')
-    set grepprg=jvgrep
-    let g:denite_source_grep_command = 'jvgrep'
-    let g:denite_source_grep_default_opts = "--exclude '\.(git|svn|hg|bzr|metadata|neocomplcache)'"
-    let g:denite_source_grep_recursive_opt = '-R'
-endif
-" }}}
-
-
-" zenkaku space highlight {{{
-augroup highligntJpSpace
-    autocmd!
-    autocmd Colorscheme * highlight JpSpace term=underline ctermbg=DarkGreen guibg=DarkGray
-    autocmd! VimEnter,WinEnter * match JpSpace /　/
-augroup END
-" }}}
-
-
 " gtags {{{
-" nmap <leader>g <Nop>
-" nmap <leader>gt :Gtags -t <C-R>=expand("<cword>")<CR><CR>
-" nmap <leader>gs :Gtags -s <C-R>=expand("<cword>")<CR><CR>
-" nmap <leader>gg :Gtags -g <C-R>=expand("<cword>")<CR><CR>
-" nmap <leader>gr :Gtags -r <C-R>=expand("<cword>")<CR><CR>
-" nmap <leader>gf :Gtags -f %<CR>
-" nmap <leader>gd :CCTreeTraceForward <C-R>=expand("<cword>")<CR><CR>
-" map <C-g> :Gtags
 nnoremap <leader>g <Nop>
 nnoremap <leader>ga :DeniteCursorWord -buffer-name=gtags_context gtags_context<cr>
 nnoremap <leader>gd :DeniteCursorWord -buffer-name=gtags_def gtags_def<cr>
@@ -422,26 +285,18 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 " }}}
 
 
-" syntastic {{{
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_enable_signs = 1
-" let g:syntastic_enable_highlighting = 0
-" let g:syntastic_c_check_header = 1
-" let g:sytnastic_check_on_wq = 0
-" let g:sytnastic_check_on_open = 1
-"
-" let g:syntastic_error_symbol = "❕"
-" let g:syntastic_warning_symbol = "💬"
-" let g:syntastic_style_error_symbol = "❕"
-" let g:syntastic_style_warning_symbol = "💬"
-" }}}
-
-" w3m vim
-"let g:w3m#search_engine = 'http://www.google.co.jp/search?hl=ja&lr=lang_ja&q='
-
-
 " vinarize
 let g:vinarise_enable_auto_detect = 1
+
+" " vim-multiple-cursol {{{
+" let g:multi_cursor_use_default_mapping=0
+" let g:multi_cursor_next_key='<C-n>'
+" let g:multi_cursor_prev_key='<C-p>'
+" let g:multi_cursor_skip_key='<C-x>'
+" let g:multi_cursor_quit_key='<Esc>'
+" " Map start key separately from next key
+" let g:multi_cursor_start_key='<F6>'
+" " }}}
 
 
 " vim-choosewin
@@ -483,19 +338,13 @@ let g:lightline = {
     \ 'component_function': {
     \   'filetype': 'MyFiletype',
     \ },
-    \ 'separator': { 'left': "\ue0b8", 'right': "\ue0ba" },
-    \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bb" }
+    \ 'separator': { 'left': "󾂰", 'right': "󾂲" },
+    \ 'subseparator': { 'left': "󾂱", 'right': "󾂳" }
     \ }
 function! MyFiletype()
   return winwidth(0) > 70 ? (WebDevIconsGetFileFormatSymbol().WebDevIconsGetFileTypeSymbol()):''
 endfunction
 " }}}
-
-
-" quickhl
-" let g:quickhl_manual_colors = [
-" \ "gui=bold ctermfg=16  ctermbg=153 guifg=#ffffff guibg=#0a7383",
-" \ ]
 
 
 " submode {{{
@@ -509,10 +358,6 @@ call submode#map('winsize', 'n', '', '+', '<C-w>-')
 call submode#map('winsize', 'n', '', '-', '<C-w>+')
 " }}}
 
-
-" japanese ime
-let IM_CtrlIBusPython = 1
-let g:IM_CtrlBufLocalMode = 1
 
 " disable tex conceal
 let g:tex_conceal = ""
@@ -580,10 +425,6 @@ let g:gitgutter_sign_modified = '🔨'
 " let g:gitgutter_sign_modified_removed = 'ww'
 
 " easy-align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
 xmap ga <Plug>(EasyAlign)
 
 " previm
@@ -598,13 +439,7 @@ let g:webdevicons_enable = 1
 let g:webdevicons_enable_denite = 1
 let g:WebDevIconsUnicodeDecorateFileNodes = 1
 
-" denite
-call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-call denite#custom#var('grep', 'command', ['ag'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', [])
-call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
-
+" R
 au BufNewFile,BufRead *.R setl ep=R\ --quiet\ -s\ -e\ 'library(styler);f=file(\"stdin\");style_text(readLines(f));close(f);'
 
 " vimtable
@@ -618,13 +453,13 @@ let g:default_julia_version = '1.4'
 
 " language server
 let g:LanguageClient_autoStart = 1
-" \   'javascript': ['javascript-typescript-stdio'],
-" \   'typescript': ['javascript-typescript-stdio'],
-" \   'vue': ['vls'],
 let g:LanguageClient_serverCommands = {
+\   'vue': ['vls'],
 \   'r': ['R', '--slave', '-e', 'languageserver::run()'],
 \   'html': [],
 \   'css': [],
+\   'javascript': ['javascript-typescript-stdio'],
+\   'typescript': ['javascript-typescript-stdio'],
 \   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
 \       using LanguageServer;
 \       using Pkg;
@@ -632,7 +467,6 @@ let g:LanguageClient_serverCommands = {
 \       import SymbolServer;
 \       env_path = dirname(Pkg.Types.Context().env.project_file);
 \       debug = false; 
-\       
 \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
 \       server.runlinter = true;
 \       run(server);
@@ -645,19 +479,16 @@ nnoremap <Leader>ld :call LanguageClient_textDocument_definition()<CR>
 nnoremap <Leader>lr :call LanguageClient_textDocument_rename()<CR>
 nnoremap <Leader>lf :call LanguageClient_textDocument_formatting()<CR>
 
-setlocal iskeyword+=$
-setlocal iskeyword+=-
-
 autocmd FileType vue syntax sync fromstart
 
 " ale
 let g:ale_fix_on_save = 0
-let g:ale_completion_enabled = 0
+let g:ale_completion_enabled = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
-\   'python': ['autopep8','black','isort'],
+\   'python': ['autopep8'],
 \}
 " \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 let g:ale_linters = {
@@ -669,7 +500,6 @@ let g:ale_linters = {
 \   'vue': ['eslint', 'vls'],
 \   'css': ['stylelint'],
 \   'json': ['textlint'],
-\   'adoc': ['textlint'],
 \   'zsh': ['shell'],
 \   'txt': ['textlint'],
 \}
@@ -680,12 +510,13 @@ let g:ale_sign_error = '🔥'
 let g:ale_sign_warning = "⚠️"
 
 " call deoplete#custom#option('sources', {
-    " \ '_': ['file', 'buffer'],
-    " \ 'r': ['LanguageClient', 'omni'],
-    " \ 'julia': ['LanguageClient']
+"     \ '_': ['ale', 'file', 'buffer'],
 " \})
+" \ 'r': ['LanguageClient', 'omni'],
+" \ 'julia': ['LanguageClient']
 
 " defx {{{
+" let g:defx_icons_enable_syntax_highlight = 0
 call defx#custom#column('icon', {
             \ 'directory_icon': '',
             \ 'mark_icon': '',
@@ -695,16 +526,16 @@ call defx#custom#column('icon', {
             \ })
 
 call defx#custom#column('mark', {
-            \ 'length': 1,
+            \ 'length': 2,
             \ 'readonly_icon': '🔑',
-            \ 'selected_icon': '✓',
+            \ 'selected_icon': '',
             \ })
 
 call defx#custom#option('_', {
             \ 'columns': 'indent:mark:icons:filename:type:size:time',
             \ })
 
-noremap <silent><C-u><C-f> :Defx -toggle -direction=topleft -split=vertical -winwidth=40<CR>
+noremap <silent><C-u><C-f> :Defx<CR>
 autocmd FileType defx call s:defx_my_settings()
 function! AppendMRU(context) abort
     call neomru#append(a:context.targets[0])
@@ -779,10 +610,6 @@ let g:rainbow_active = 1
 " terminal
 autocmd TermOpen * setlocal nonu
 
-"
-let g:OmniSharp_server_use_mono = 1
-let g:OmniSharp_selector_ui = 'fzf'
-
 " pudb
 let g:python3_host_prog=$PYBASEHOME
 let g:pudb_python=$PYBASEHOME
@@ -808,15 +635,19 @@ command! FZFYanks call fzf#run({
 \ 'source': <sid>yank_list(),
 \ 'sink': function('<sid>yank_handler'),
 \ 'options': '-m',
-\ 'down': 12
+\ 'down': 12,
+\ 'window': { 'width': 0.8, 'height': 0.6, 'border': 'sharp' } 
 \ })
+noremap <silent><C-u><C-y> :FZFYanks<CR>
 
 au FileType markdown setl conceallevel=0
 
 " prettier
 nmap <Leader>f <Plug>(Prettier)
 
-
+" floaterm
+noremap <silent><C-u><C-t> :FloatermToggle<CR>
+command! Vifm FloatermNew vifm
 
 " other settings {{{
 " tab
@@ -828,7 +659,8 @@ set history=100
 
 " command completion
 set wildmenu
-set wildmode=list:longest,full
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 
 " search
 set notagbsearch
@@ -848,7 +680,7 @@ set nowrap
 set list
 set listchars=tab:>-
 set cursorline
-" set cursorcolumn
+set cursorcolumn
 
 " swap
 set noswapfile
@@ -867,12 +699,10 @@ set noerrorbells
 set ambiwidth=double
 set synmaxcol=320
 set cursorcolumn
-
 set ttyfast
 set lazyredraw
 " set mouse=a
 " }}}
-
 
 
 syntax on
@@ -888,6 +718,5 @@ highlight ALEWarningSign cterm=none
 
 filetype plugin on
 
-" set termguicolors
-
+set termguicolors
 " vim:set foldmethod=marker:
