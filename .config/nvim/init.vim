@@ -158,7 +158,7 @@ let g:neosnippet#snippets_directory = [
 
 
 " quickrun {{{
-nmap <silent> <leader>r :QuickRun<CR>
+nnoremap <silent> <leader>r :QuickRun<CR>
 
 let g:quickrun_config = {}
 
@@ -201,23 +201,16 @@ map H <Plug>(operator-quickhl-manual-this-motion)
 
 " tab operations {{{
 nnoremap <leader>t <Nop>
-nnoremap <leader>tn :<C-u>tabnew<CR>
-nnoremap <leader>tq :<C-u>tabclose<CR>
-nnoremap <leader>to :<C-u>tabonly<CR>
-nnoremap <leader>te :<C-u>tabnew<CR>:terminal<CR>a
-map <C-Tab> :tabn<CR>
-map <S-Tab> :tabp<CR>
-map <leader>n :tabn<CR>
-map <leader>p :tabp<CR>
+nnoremap <leader>tn :tabnew<CR>
+nnoremap <leader>tq :tabclose<CR>
+nnoremap <leader>to :tabonly<CR>
+nnoremap <leader>te :tabnew<CR>:terminal<CR>a
+nnoremap <leader>n :tabn<CR>
+nnoremap <leader>p :tabp<CR>
 " }}}
 
-nnoremap t  <Nop>
-nnoremap tt <C-]>
-nnoremap tj :<C-u>tag<CR>
-nnoremap tk :<C-u>pop<CR>
-nnoremap tl :<C-u>tags<CR>
-map <C-j> :cn<CR>
-map <C-k> :cp<CR>
+noremap <C-j> :cn<CR>
+noremap <C-k> :cp<CR>
 nnoremap / /\v
 noremap <S-h> ^
 noremap <S-l> $
@@ -229,31 +222,32 @@ nnoremap ZQ <Nop>
 " }}}
 
 " screen up/down {{{
-noremap <Space>j <C-f>
-noremap <Space>k <C-b>
+nnoremap <leader>j <C-f>
+nnoremap <leader>k <C-b>
 " }}}
 
 " terminal escape
 if has('nvim')
-    tnoremap <silent><C-[> <C-\><C-n>:FloatermToggle<CR>
+    tnoremap <silent><C-[><C-n> <C-\><C-n>:FloatermToggle<CR>
 endif
 
 
 " fzf
-let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path '__pycache__' -prune -o -type f -print -o -type l -print 2> /dev/null"
 let $FZF_DEFAULT_OPTS='--layout=reverse  --margin=1,2'
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'border': 'sharp' } }
 
-noremap <silent><C-u><C-b> :Buffers<CR>
-noremap <silent><C-u><C-c> :History:<CR>
-noremap <silent><C-u><C-g> :Ag<CR>
-noremap <silent><C-u><C-h> :History<CR>
-noremap <silent><C-u><C-l> :Lines<CR>
-noremap <silent><C-u><C-m> :Marks<CR>
-noremap <silent><C-u><C-o> :Files<CR>
-noremap <silent><C-u><C-r> :BTags<CR>
-noremap <silent><C-u><C-s> :History/<CR>
-noremap <silent><C-u><C-w> :Windows<CR>
+nnoremap <silent><C-u><C-b> :Buffers<CR>
+nnoremap <silent><C-u><C-c> :History:<CR>
+nnoremap <silent><C-u><C-g> :Ag<CR>
+nnoremap <silent><C-u><C-h> :History<CR>
+nnoremap <silent><C-u><C-l> :Lines<CR>
+nnoremap <silent><C-u><C-m> :Marks<CR>
+nnoremap <silent><C-u><C-o> :Files<CR>
+nnoremap <silent><C-u><C-r> :BTags<CR>
+nnoremap <silent><C-u><C-n> :Tags<CR>
+nnoremap <silent><C-u><C-s> :History/<CR>
+nnoremap <silent><C-u><C-w> :Windows<CR>
 
 
 " my commands
@@ -261,14 +255,14 @@ command! ReloadVimrc source $MYVIMRC
 
 
 " gtags {{{
-nnoremap <leader>g <Nop>
-nnoremap <leader>ga :DeniteCursorWord -buffer-name=gtags_context gtags_context<cr>
-nnoremap <leader>gd :DeniteCursorWord -buffer-name=gtags_def gtags_def<cr>
-nnoremap <leader>gr :DeniteCursorWord -buffer-name=gtags_ref gtags_ref<cr>
-nnoremap <leader>gg :DeniteCursorWord -buffer-name=gtags_grep gtags_grep<cr>
-nnoremap <leader>gf :Denite -buffer-name=gtags_file gtags_file<cr>
-nnoremap <leader>gt :Denite -buffer-name=gtags_completion gtags_completion<cr>
-nnoremap <leader>gp :Denite -buffer-name=gtags_path gtags_path<cr>
+" nnoremap <leader>g <Nop>
+" nnoremap <leader>ga :DeniteCursorWord -buffer-name=gtags_context gtags_context<cr>
+" nnoremap <leader>gd :DeniteCursorWord -buffer-name=gtags_def gtags_def<cr>
+" nnoremap <leader>gr :DeniteCursorWord -buffer-name=gtags_ref gtags_ref<cr>
+" nnoremap <leader>gg :DeniteCursorWord -buffer-name=gtags_grep gtags_grep<cr>
+" nnoremap <leader>gf :Denite -buffer-name=gtags_file gtags_file<cr>
+" nnoremap <leader>gt :Denite -buffer-name=gtags_completion gtags_completion<cr>
+" nnoremap <leader>gp :Denite -buffer-name=gtags_path gtags_path<cr>
 " }}}
 
 
@@ -345,6 +339,7 @@ function! MyFiletype()
   return winwidth(0) > 70 ? (WebDevIconsGetFileFormatSymbol().WebDevIconsGetFileTypeSymbol()):''
 endfunction
 " }}}
+"
 
 
 " submode {{{
@@ -417,7 +412,6 @@ endif
 
 " vim-gutguitter
 let g:gitgutter_highlight_lines = 0
-nmap <leader>hh <Plug>GitGuitterToggle
 let g:gitgutter_sign_added = '➕'
 let g:gitgutter_sign_modified = '🔨'
 " let g:gitgutter_sign_removed = 'zz'
@@ -509,6 +503,11 @@ let g:ale_set_highlights = 0
 let g:ale_sign_error = '🔥'
 let g:ale_sign_warning = "⚠️"
 
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_infos = "\uf129"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_ok = "\uf00c"
 " call deoplete#custom#option('sources', {
 "     \ '_': ['ale', 'file', 'buffer'],
 " \})
@@ -535,7 +534,7 @@ call defx#custom#option('_', {
             \ 'columns': 'indent:mark:icons:filename:type:size:time',
             \ })
 
-noremap <silent><C-u><C-f> :Defx<CR>
+nnoremap <silent><C-u><C-f> :Defx<CR>
 autocmd FileType defx call s:defx_my_settings()
 function! AppendMRU(context) abort
     call neomru#append(a:context.targets[0])
@@ -638,16 +637,28 @@ command! FZFYanks call fzf#run({
 \ 'down': 12,
 \ 'window': { 'width': 0.8, 'height': 0.6, 'border': 'sharp' } 
 \ })
-noremap <silent><C-u><C-y> :FZFYanks<CR>
+nnoremap <silent><C-u><C-y> :FZFYanks<CR>
 
 au FileType markdown setl conceallevel=0
 
 " prettier
-nmap <Leader>f <Plug>(Prettier)
+nnoremap <leader>fo <Plug>(Prettier)
 
 " floaterm
-noremap <silent><C-u><C-t> :FloatermToggle<CR>
+highlight FloatermBorder cterm=none ctermfg=235 ctermbg=237
+let g:floaterm_width=0.8
+let g:floaterm_height=0.6
+nnoremap <silent><C-u><C-t> :FloatermToggle<CR>
+nnoremap <silent><leader>f <Nop>
+nnoremap <silent><leader>ff :FloatermNew<CR>
+nnoremap <silent><leader>ft :FloatermToggle<CR>
+nnoremap <silent><leader>fn :FloatermNext<CR>
+nnoremap <silent><leader>fp :FloatermPrev<CR>
+nnoremap <silent><leader>fk :FloatermKill<CR>
+nnoremap <silent><leader>fh :FloatermHide<CR>
+nnoremap <silent><leader>fs :FloatermShow<CR>
 command! Vifm FloatermNew vifm
+nnoremap <silent><C-u><C-v> :Vifm<CR>
 
 " other settings {{{
 " tab
