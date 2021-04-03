@@ -13,9 +13,8 @@ set $right l
 set $term alacritty
 
 ## Application launcher
-set $launcher "alauncher"
-for_window [title=$launcher] floating enable, border pixel 5, sticky enable
-set $menu exec alacritty --class $launcher -t $launcher -d 55 18 -e sway-launcher-desktop
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 35 ppt 60 ppt, border pixel 2
+set $menu exec $term --class=launcher -e sway-launcher-desktop
 
 
 ### Output configuration
@@ -159,6 +158,10 @@ bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
 bindsym XF86AudioMute exec pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
+
+## ScreenShot
+bindsym $mod+p exec grim ~/picture/$(date +'%s_grim.png')
+bindsym $mod+Shift+p exec grim -g "$(slurp)" ~/picture/$(date +'%s_grim.png')
 
 bar {
   swaybar_command waybar
