@@ -168,6 +168,6 @@ bar {
 }
 
 include /etc/sway/config.d/*
-exec fcitx-autostart
+exec_always fcitx5 -d --replace
 exec xrdb -load ~/.Xresources
 

@@ -4,11 +4,11 @@
 case "${OSTYPE}" in
 	linux*)
 		export LANG=en_US.UTF-8
-		export TERM=xterm-256color
+		export TERM=screen-256color
         ;;
 	cygwin*)
 		export LANG=ja_JP.UTF-8
-		export TERM=xterm-256color
+		export TERM=screen-256color
 		;;
 esac
 case ${UID} in
@@ -28,6 +28,7 @@ esac
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='ag --files-with-matches -S '
 export FZF_DEFAULT_OPTS='--height 40% --reverse'
+export FZF_TMUX_OPTS="-p"
 
 ## 
 ## modules
@@ -77,7 +78,7 @@ fi
 ## key bind
 ##
 bindkey -v
-bindkey "^R" fzf-history-widget #zaw-history
+bindkey "^R" fzf-insert-history
 bindkey "^@" fzf-change-recent-directory
 bindkey "^T" zaw-tmux
 # bindkey '^P' fzf-kill-processes
@@ -167,3 +168,6 @@ esac
 eval `dircolors $HOME/.zsh/dircolors.256dark`
 
 plugins=(... fzf-docker ...)
+
+
+
