@@ -1,5 +1,7 @@
 # My config for sway
 
+default_border pixel 2
+
 ## Logo key
 set $mod Mod4
 

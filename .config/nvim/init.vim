@@ -1,22 +1,26 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'JuliaEditorSupport/julia-vim'
 Plug 'LeafCage/yankround.vim'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'vim-denops/denops.vim'
+Plug 'Shougo/ddc.vim'
+Plug 'Shougo/ddc-matcher_head'
+Plug 'Shougo/ddc-sorter_rank'
+Plug 'Shougo/ddc-around'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'Shougo/deoppet.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'Shougo/neosnippet-snippets'
+Plug 'nvim-lua/lsp-status.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'Shougo/ddc-nvim-lsp'
+Plug 'matsui54/ddc-nvim-lsp-doc'
+Plug 'matsui54/ddc-dictionary'
+Plug 'shun/ddc-vim-lsp'
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'neomake/neomake'
-Plug 'Chiel92/vim-autoformat'
 Plug 'ryanoasis/vim-devicons'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'flazz/vim-colorschemes'
-Plug 'fszymanski/deoplete-emoji'
 Plug 'gregsexton/gitv'
 Plug 'h1mesuke/vim-alignta'
 Plug 'honza/vim-snippets'
@@ -24,7 +28,6 @@ Plug 'itchyny/calendar.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'jceb/vim-hier'
 Plug 'jpalardy/vim-slime'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'svermeulen/vim-easyclip'
@@ -47,11 +50,6 @@ Plug 'shemerey/vim-project'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoppet.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neomru.vim'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neossh.vim' " Plug 'Shougo/neoyank.vim'
-Plug 'Shougo/vimproc', {'do': 'make'}
-Plug 'Shougo/vimshell'
 Plug 't9md/vim-choosewin'
 Plug 't9md/vim-quickhl'
 Plug 'terryma/vim-multiple-cursors'
@@ -60,106 +58,75 @@ Plug 'thinca/vim-qfreplace'
 Plug 'thinca/vim-quickrun'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'ujihisa/neco-look'
 Plug 'vim-jp/vimdoc-ja'
 Plug 'vim-scripts/ditaa'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/gtags.vim'
 Plug 'vim-scripts/ifdef-highlighting'
 Plug 'vim-scripts/TagHighlight'
-Plug 'zchee/deoplete-jedi'
 Plug 'sheerun/vim-polyglot'
 Plug 'wtsnjp/vim-expl3'
 Plug 'luochen1990/rainbow'
 Plug 'easymotion/vim-easymotion'
 Plug 'SkyLeach/pudb.vim'
 Plug 'majutsushi/tagbar'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'voldikss/vim-floaterm'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
-Plug 'lighttiger2505/deoplete-vim-lsp'
-Plug 'thomasfaingnaert/vim-lsp-neosnippet'
+Plug 'junegunn/goyo.vim'
+Plug 'terryma/vim-expand-region'
 
-
-" Plug 'mattn/vim-lsp-icons'
-" Plug 'gnperdue/vim-asciidoc'
-" Plug 'habamax/vim-asciidoctor'
-" Plug 'jalvesaq/nvim-r'
-" Plug 'maximbaz/lightline-ale'
-" Plug 'ncm2/ncm2'
-" Plug 'scrooloose/nerdtree'
-" Plug 'w0rp/ale'
-" Plug 'autozimu/LanguageClient-neovim', {
-    " \ 'branch': 'next',
-    " \ 'do': 'bash install.sh',
-    " \ }
-" Plug 'zchee/deoplete-clang'
-" Plug 'OmniSharp/omnisharp-vim'
-" Plug 'justmao945/vim-clang'
-" Plug 'chrisbra/csv.vim'
-" Plug 'hewes/unite-gtags'
-" Plug 'hrsh7th/vim-unite-vcs'
-" Plug 'JuliaEditorSupport/deoplete-julia'
-" Plug 'kannokanno/previm'
-" Plug 'kurkale6ka/vim-sequence'
-" Plug 'osyo-manga/unite-fold'
-" Plug 'ryanoasis/vim-devicons'
-" Plug 'scrooloose/syntastic'
-" Plug 'sgur/unite-qf'
-" Plug 'Shougo/neosnippet-snippets'
-" Plug 'Shougo/unite-build'
-" Plug 'Shougo/unite-outline'
-" Plug 'Shougo/unite.vim'
-" Plug 'Shougo/vinarise'
-" Plug 'tacroe/unite-mark'
-" Plug 'tsukkee/unite-help'
-" Plug 'tsukkee/unite-tag'
-" Plug 'ujihisa/unite-colorscheme'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" Plug 'yuratomo/w3m.vim'
-" Plug 'zyedidia/julialint.vim'
 
 call plug#end()
 
-" deoplete {{{
-let g:deoplete#enable_at_startup = 1
+" ddc {{{
+call ddc#custom#patch_global('sources', ['vim-lsp', 'around', 'dictionary', 'deoppet'])
+
+call ddc#custom#patch_global('sourceOptions', {
+      \ '_': {
+      \   'matchers': ['matcher_head'],
+      \   'sorters': ['sorter_rank']},
+      \ 'vim-lsp': {
+      \   'mark': 'LSP',
+      \   'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
+      \ 'deoppet': {'dup': v:true, 'mark': 'SNIP'},
+      \ 'around': {'mark': '📋'},
+      \ 'dictionary': {'mark': '🔤'},
+      \ })
+
+call ddc#custom#patch_global('sourceParams', {
+      \ 'dictionary': {
+      \   'dictPaths': ['/usr/share/dict/words'],
+      \   'smartCase': v:true},
+      \ })
+
+call ddc#enable()
+call ddc_nvim_lsp_doc#enable()
 " }}}
 
-" neosnippet {{{
-" key-mappings.
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)"
-            \: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)"
-            \: "\<TAB>""
+" deoppet {{{
+call deoppet#initialize()
+call deoppet#custom#option('snippets',
+    \ map(globpath(&runtimepath, '*snippets', 1, 1),
+    \     { _, val -> { 'path': val } }))
+
+imap <C-k> <Plug>(deoppet_expand)
+imap <expr><Tab>  deoppet#expandable() ?
+      \ "\<Plug>(deoppet_expand)" : "\<Tab>"
+imap <C-f>  <Plug>(deoppet_jump_forward)
+imap <C-b>  <Plug>(deoppet_jump_backward)
+xmap <C-l>  <Plug>(deoppet_select_text)
+xmap <C-x>  <Plug>(deoppet_cut_text)
 
 " For snippet_complete marker.
 if has('conceal')
     set conceallevel=2 concealcursor=i
 endif
-
-" others
-let g:neosnippet#enable_snipmate_compatibility = 1
-let g:neosnippet#snippets_directory = [
-    \$HOME.'/.vim/snippets',
-    \$HOME.'/.vim/bundle/neosnippet-snippets/neosnippets',
-    \$HOME.'/.vim/bundle/vim-snippets/snippets',
-    \]
 " }}}
 
-" quickrun {{{
-nnoremap <silent> <leader>r :QuickRun<CR>
 
+" quickrun {{{
 let g:quickrun_config = {}
 
 let g:quickrun_config._ = {
@@ -188,6 +155,9 @@ set splitright
 
 " leader
 let mapleader = "\<Space>"
+
+nnoremap <silent> <leader>r :QuickRun<CR>
+
 
 " quickhl {{{
 nmap <leader>m <Plug>(quickhl-manual-this)
@@ -233,13 +203,13 @@ endif
 
 
 " fzf
-let $FZF_DEFAULT_COMMAND = 'ag --hidden -l -g ""'
+let $FZF_DEFAULT_COMMAND = 'rg --hidden --files -g ""'
 let $FZF_DEFAULT_OPTS='--layout=reverse  --margin=1,1'
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'border': 'sharp' } }
 
 nnoremap <silent><C-u><C-b> :Buffers<CR>
 nnoremap <silent><C-u><C-c> :History:<CR>
-nnoremap <silent><C-u><C-g> :Ag<CR>
+nnoremap <silent><C-u><C-g> :Rg<CR>
 nnoremap <silent><C-u><C-h> :History<CR>
 nnoremap <silent><C-u><C-l> :Lines<CR>
 nnoremap <silent><C-u><C-m> :Marks<CR>
@@ -293,9 +263,11 @@ let g:lightline = {
     \   'filetype': 'DevIconFiletype',
     \   'fileformat': 'DevIconFileformat'
     \ },
-    \ 'separator': { 'left': "󾂰" },
-    \ 'subseparator': { 'left': "󾂱" }
+    \ 'separator': { 'left': "\ue0b0" },
+    \ 'subseparator': { 'left': "\ue0b1" }
     \ }
+    " \ 'separator': { 'left': "󾂰" },
+    " \ 'subseparator': { 'left': "󾂱" }
 function! LightlineWebDevIcons(n)
   let l:bufnr = tabpagebuflist(a:n)[tabpagewinnr(a:n) - 1]
   return WebDevIconsGetFileTypeSymbol(bufname(l:bufnr))
@@ -366,9 +338,9 @@ endif
 
 " vim-gutguitter
 let g:gitgutter_highlight_lines = 0
-let g:gitgutter_sign_added = '➕'
-let g:gitgutter_sign_modified = '🔨'
-" let g:gitgutter_sign_removed = 'zz'
+let g:gitgutter_sign_added = " "
+let g:gitgutter_sign_modified = "🔨"
+let g:gitgutter_sign_removed = " "
 " let g:gitgutter_sign_removed_first_line = '^^'
 " let g:gitgutter_sign_modified_removed = 'ww'
 
@@ -390,11 +362,8 @@ let g:WebDevIconsUnicodeDecorateFileNodes = 1
 " vimtable
 nnoremap <leader>ta :TableModeToggle<CR>
 
-" deoplete-jedi
-let g:deoplete#sources#jedi#python_path = $PYBASEHOME
-
 " julia
-let g:default_julia_version = '1.5'
+let g:default_julia_version = '1.6'
 
 " vim-lsp {{{
 let g:lsp_preview_float = 1
@@ -402,10 +371,10 @@ let g:lsp_diagnostics_float_cursor = 1
 let g:lsp_virtual_text_enabled = 0
 
 " icon
-let g:lsp_signs_error = {'text': "\uf05e"}
-let g:lsp_signs_warning = {'text': "\uf071"}
-let g:lsp_signs_information = {'text': "\uf7fc"}
-let g:lsp_signs_hint = {'text': "\uf848"}
+let g:lsp_diagnostics_signs_error = {'text': "\uf05e"}
+let g:lsp_diagnostics_signs_warning = {'text': "\uf071"}
+let g:lsp_diagnostics_signs_information = {'text': "\uf7fc"}
+let g:lsp_diagnostics_signs_hint = {'text': "\uf848"}
 
 " folding
 set foldmethod=expr
@@ -418,12 +387,16 @@ let g:lsp_settings_filetype_vue = 'vls'
 let g:lsp_settings_filetype_html = 'html-languageserver'
 let g:lsp_settings_filetype_yaml = 'yaml-language-server'
 let g:lsp_settings_filetype_dockerfile = 'dockerfile-language-server-nodejs'
+let g:lsp_settings_filetype_xml = 'lemminx'
+let g:lsp_settings_filetype_python = 'pylsp-all'
 
 
 nnoremap <silent><leader>ld :LspDefinition<CR>
 nnoremap <silent><leader>lf :LspDocumentFormat<CR>
 nnoremap <silent><leader>lh :LspHover<CR>
 nnoremap <silent><leader>lr :LspReferences<CR>
+
+highlight link LspErrorText DiffDelete
 " }}}
 
 " defx {{{
@@ -439,14 +412,14 @@ call defx#custom#column('icon', {
 call defx#custom#column('mark', {
             \ 'length': 2,
             \ 'readonly_icon': '🔑',
-            \ 'selected_icon': '',
+            \ 'selected_icon': ' ',
             \ })
 
 call defx#custom#option('_', {
-            \ 'columns': 'indent:mark:icons:filename:type:size:time',
+            \ 'columns': 'indent:git:space:mark:space:icons:space:filename:type:size:time',
             \ })
 
-nnoremap <silent><C-u><C-f> :Defx<CR>
+nnoremap <silent><C-u><C-f> :Defx -floating-preview -vertical-preview<CR>
 autocmd FileType defx call s:defx_my_settings()
 function! AppendMRU(context) abort
     call neomru#append(a:context.targets[0])
@@ -467,7 +440,7 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> E
                 \ defx#do_action('open', 'vsplit')
     nnoremap <silent><buffer><expr> P
-                \ defx#do_action('open', 'pedit')
+                \ defx#do_action('preview')
     nnoremap <silent><buffer><expr> K
                 \ defx#do_action('new_directory')
     nnoremap <silent><buffer><expr> N
@@ -508,10 +481,6 @@ endfunction
 " }}}
 
 
-" vim-clang
-let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so.10'
-
 " csv
 let g:csv_no_conceal = 1
 
@@ -522,8 +491,6 @@ let g:rainbow_active = 1
 autocmd TermOpen * setlocal nonu
 
 " pudb
-let g:python3_host_prog=$PYBASEHOME
-let g:pudb_python=$PYBASEHOME
 let g:pudb_breakpoint_symbol='🔴'
 
 function! s:yank_list()
@@ -553,8 +520,6 @@ nnoremap <silent><C-u><C-y> :FZFYanks<CR>
 
 au FileType markdown setl conceallevel=0
 
-" prettier
-nnoremap <leader>fo <Plug>(Prettier)
 
 " floaterm
 highlight FloatermBorder cterm=none ctermfg=235 ctermbg=237
@@ -574,6 +539,11 @@ nnoremap <silent><leader>fh :FloatermHide<CR>
 nnoremap <silent><leader>fs :FloatermShow<CR>
 command! Vifm FloatermNew vifm
 nnoremap <silent><C-u><C-v> :Vifm<CR>
+
+" vim-expand-region
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
 
 " other settings {{{
 " tab
@@ -636,5 +606,5 @@ colorscheme Atelier_SavannaDark
 
 filetype plugin on
 
-" set termguicolors
+set termguicolors
 " vim:set foldmethod=marker:

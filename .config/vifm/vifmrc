@@ -1,5 +1,5 @@
-colorscheme dracula
-set timefmt=" %Y/%m/%d %H:%M:%S"
+colorscheme gruvbox
+set timefmt=" %Y-%m-%d %H:%M:%S"
 set statusline="  %t  [%T]%= %A %10u:%-7g %15s %20d [%a free]"
 set viewcolumns=-45%{name}..,10{size},12{perms},21{mtime}
 set sizefmt=units:iec,precision:2
@@ -7,6 +7,7 @@ set trash
 set norunexec
 set wildmenu
 set wildstyle=popup
+set vicmd=nvim
 
 
 " Ranger devicons for ViFM
@@ -79,4 +80,3 @@ set classify+=' ::*.log::'
 set classify+=' ::*.doc,,*.docx,,*.adoc::'
 set classify+=' ::*.xls,,*.xls,,*.xlsmx::'
 set classify+=' ::*.pptx,,*.ppt::'
-
