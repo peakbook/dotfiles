@@ -8,6 +8,7 @@ set norunexec
 set wildmenu
 set wildstyle=popup
 set vicmd=nvim
+filetype *.sshfs FUSE_MOUNT2|sshfs %PARAM %DESTINATION_DIR
 
 
 " Ranger devicons for ViFM
@@ -80,3 +81,4 @@ set classify+=' ::*.log::'
 set classify+=' ::*.doc,,*.docx,,*.adoc::'
 set classify+=' ::*.xls,,*.xls,,*.xlsmx::'
 set classify+=' ::*.pptx,,*.ppt::'
+set classify+=' ::*.sshfs::'
