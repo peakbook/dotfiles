@@ -9,6 +9,14 @@ set wildmenu
 set wildstyle=popup
 set vicmd=nvim
 filetype *.sshfs FUSE_MOUNT2|sshfs %PARAM %DESTINATION_DIR
+filextype *.jpg,*.jpeg,*.png,*.gif {View in feh} feh -FZ %d --start-at %d/%c 2>/dev/null
+fileviewer *.pdf pdftotext %c -
+fileviewer *.tar,*.tar.gz,*.tgz tar -tvf %c
+fileviewer *.zip unzip -l %c
+fileviewer *.html w3m %c
+fileviewer *.jl,*.py,*.[ch],*.[ch]pp,*.[ch]xx bat --color always --wrap never --pager never %c -p
+
+
 
 
 " Ranger devicons for ViFM

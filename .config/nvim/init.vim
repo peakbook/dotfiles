@@ -50,7 +50,6 @@ Plug 'shemerey/vim-project'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoppet.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 't9md/vim-choosewin'
 Plug 't9md/vim-quickhl'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'thinca/vim-fontzoom'
@@ -75,9 +74,15 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'junegunn/goyo.vim'
 Plug 'terryma/vim-expand-region'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'VonHeikemen/searchbox.nvim'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'iberianpig/tig-explorer.vim'
 
 
 call plug#end()
+
+colorscheme gruvbox
 
 " ddc {{{
 call ddc#custom#patch_global('sources', ['vim-lsp', 'around', 'dictionary', 'deoppet'])
@@ -205,7 +210,7 @@ endif
 " fzf
 let $FZF_DEFAULT_COMMAND = 'rg --hidden --files -g ""'
 let $FZF_DEFAULT_OPTS='--layout=reverse  --margin=1,1'
-let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'border': 'sharp' } }
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'border': 'sharp', 'highlight': 'Identifier' } }
 
 nnoremap <silent><C-u><C-b> :Buffers<CR>
 nnoremap <silent><C-u><C-c> :History:<CR>
@@ -228,15 +233,12 @@ let NERDSpaceDelims = 1
 
 " rooter {{{
 let g:rooter_manual_only = 1
-let g:rooter_patterns = ['.latexmkrc','GTAGS','tags','cscope.out','.git/']
+let g:rooter_patterns = ['.latexmkrc','GTAGS','tags','cscope.out','.git/', 'Pipfile']
 let g:rooter_cd_cmd = "lcd"
 let g:rooter_resolve_links = 1
 let g:rooter_change_directory_for_non_project_files = 'current'
 " }}}
 
-" vim-choosewin
-nmap - <Plug>(choosewin)
-let g:choosewin_overlay_enable = 1
 
 " lightline {{{
 let g:lightline = {
@@ -363,7 +365,7 @@ let g:WebDevIconsUnicodeDecorateFileNodes = 1
 nnoremap <leader>ta :TableModeToggle<CR>
 
 " julia
-let g:default_julia_version = '1.6'
+let g:default_julia_version = '1.7'
 
 " vim-lsp {{{
 let g:lsp_preview_float = 1
@@ -396,7 +398,8 @@ nnoremap <silent><leader>lf :LspDocumentFormat<CR>
 nnoremap <silent><leader>lh :LspHover<CR>
 nnoremap <silent><leader>lr :LspReferences<CR>
 
-highlight link LspErrorText DiffDelete
+highlight link LspErrorText GruvboxRedSign
+highlight link LspWarningText GruvboxYellowSign
 " }}}
 
 " defx {{{
@@ -416,7 +419,7 @@ call defx#custom#column('mark', {
             \ })
 
 call defx#custom#option('_', {
-            \ 'columns': 'indent:git:space:mark:space:icons:space:filename:type:size:time',
+            \ 'columns': 'indent:git:mark:icons:space:filename:type:size:time',
             \ })
 
 nnoremap <silent><C-u><C-f> :Defx -floating-preview -vertical-preview<CR>
@@ -491,7 +494,7 @@ let g:rainbow_active = 1
 autocmd TermOpen * setlocal nonu
 
 " pudb
-let g:pudb_breakpoint_symbol='🔴'
+let g:pudb_breakpoint_symbol=''
 
 function! s:yank_list()
   redir => ys
@@ -522,11 +525,11 @@ au FileType markdown setl conceallevel=0
 
 
 " floaterm
-highlight FloatermBorder cterm=none ctermfg=235 ctermbg=237
+highlight FloatermBorder cterm=none ctermbg=none ctermfg=black
 let g:floaterm_width=0.8
 let g:floaterm_height=0.6
-let g:floaterm_title=""
-" let g:floaterm_borderchars=['─', '│', '─', '│', '┌', '┐', '┘', '└']
+let g:floaterm_title=""
+let g:floaterm_borderchars=['─', '│', '─', '│', '╭', '╮', '╯', '╰']
 
 nnoremap <silent><C-u><C-t> :FloatermToggle<CR>
 nnoremap <silent><leader>f <Nop>
@@ -537,12 +540,16 @@ nnoremap <silent><leader>fp :FloatermPrev<CR>
 nnoremap <silent><leader>fk :FloatermKill<CR>
 nnoremap <silent><leader>fh :FloatermHide<CR>
 nnoremap <silent><leader>fs :FloatermShow<CR>
-command! Vifm FloatermNew vifm
+command! Vifm FloatermNew --title= vifm
 nnoremap <silent><C-u><C-v> :Vifm<CR>
 
 " vim-expand-region
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
+
+" searchbox
+nnoremap <silent><leader>ss :SearchBoxIncSearch<CR>
+nnoremap <silent><leader>sr :SearchBoxReplace confirm=menu<CR>
 
 
 " other settings {{{
@@ -597,14 +604,10 @@ set synmaxcol=320
 set cursorcolumn
 set ttyfast
 set lazyredraw
+set termguicolors
 " set mouse=a
 " }}}
 
-
 syntax on
-colorscheme Atelier_SavannaDark
-
 filetype plugin on
-
-set termguicolors
 " vim:set foldmethod=marker:

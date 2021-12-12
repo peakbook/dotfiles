@@ -1,11 +1,13 @@
+window:
+  dynamic_padding: true
 font:
   normal:
-    family: Ricty Nerd Font
+    family: HackGen Console
     style: Regular
   bold:
-    family: Ricty Nerd Font
+    family: HackGen Console
     style: Bold
-  size: 14
+  size: 13
 graphics:
   sixel:
     enabled: true
