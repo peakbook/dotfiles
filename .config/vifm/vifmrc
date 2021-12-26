@@ -16,8 +16,13 @@ fileviewer *.zip unzip -l %c
 fileviewer *.html w3m %c
 fileviewer *.jl,*.py,*.[ch],*.[ch]pp,*.[ch]xx bat --color always --wrap never --pager never %c -p
 
+command! FZFfind : set noquickview
+                \| let $FZF_PICK = term('find | fzf 2>/dev/tty')
+                \| if $FZF_PICK != ''
+                \|     execute 'goto' fnameescape($FZF_PICK)
+                \| endif
 
-
+nnoremap <c-f> :FZFfind<cr>
 
 " Ranger devicons for ViFM
 " https://github.com/cirala/vifm_devicons
