@@ -1,3 +1,12 @@
+view
+" keybind
+nnoremap w :if layoutis('only') | vsplit | endif | view<cr>
+nnoremap o :only<cr>
+nnoremap J 5j
+nnoremap K 5k
+nnoremap Q :q<cr>
+nnoremap B :bmarks<cr>
+
 colorscheme gruvbox
 set timefmt=" %Y-%m-%d %H:%M:%S"
 set statusline="  %t  [%T]%= %A %10u:%-7g %15s %20d [%a free]"
@@ -9,12 +18,23 @@ set wildmenu
 set wildstyle=popup
 set vicmd=nvim
 filetype *.sshfs FUSE_MOUNT2|sshfs %PARAM %DESTINATION_DIR
+fileviewer */ exa -T -L 1 --icons %c
 filextype *.jpg,*.jpeg,*.png,*.gif {View in feh} feh -FZ %d --start-at %d/%c 2>/dev/null
+fileviewer <image/*>
+        \ vifm-sixel draw %pw %ph %c %pd
+        \ %pc
+        \ vifm-sixel clear
 fileviewer *.pdf pdftotext %c -
 fileviewer *.tar,*.tar.gz,*.tgz tar -tvf %c
 fileviewer *.zip unzip -l %c
 fileviewer *.html w3m %c
 fileviewer *.jl,*.py,*.[ch],*.[ch]pp,*.[ch]xx bat --color always --wrap never --pager never %c -p
+fileviewer *.yml,*.yaml bat --color always --wrap never --pager never %c -p
+fileviewer *.json bat --color always --wrap never --pager never %c -p
+fileviewer *.xml,*.graphml bat --color always --wrap never --pager never %c -p
+fileviewer *.csv bat --color always --wrap never --pager never %c -p
+" fileviewer */,.*/ exa --icons %c
+
 
 command! FZFfind : set noquickview
                 \| let $FZF_PICK = term('find | fzf 2>/dev/tty')

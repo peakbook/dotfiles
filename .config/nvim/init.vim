@@ -28,6 +28,7 @@ Plug 'itchyny/calendar.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'jceb/vim-hier'
 Plug 'jpalardy/vim-slime'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'svermeulen/vim-easyclip'
@@ -208,7 +209,6 @@ endif
 
 
 " fzf
-let $FZF_DEFAULT_COMMAND = 'rg --hidden --files -g ""'
 let $FZF_DEFAULT_OPTS='--layout=reverse  --margin=1,1'
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'border': 'sharp', 'highlight': 'Identifier' } }
 
@@ -246,7 +246,8 @@ let g:lightline = {
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
     \             [ 'fugitive', 'readonly', 'modified' ]],
-    \   'right': [ [ 'lineinfo', 'percent'], [ 'fileencoding', 'fileformat', 'filetype' ] ]
+    \   'right': [ [ 'lineinfo', 'percent'],
+    \              [ 'fileencoding', 'fileformat', 'filetype' ]],
     \ },
     \ 'tab_component_function': {
     \   'tabnum': 'LightlineWebDevIcons',
@@ -268,8 +269,7 @@ let g:lightline = {
     \ 'separator': { 'left': "\ue0b0" },
     \ 'subseparator': { 'left': "\ue0b1" }
     \ }
-    " \ 'separator': { 'left': "󾂰" },
-    " \ 'subseparator': { 'left': "󾂱" }
+
 function! LightlineWebDevIcons(n)
   let l:bufnr = tabpagebuflist(a:n)[tabpagewinnr(a:n) - 1]
   return WebDevIconsGetFileTypeSymbol(bufname(l:bufnr))
@@ -370,7 +370,7 @@ let g:default_julia_version = '1.7'
 " vim-lsp {{{
 let g:lsp_preview_float = 1
 let g:lsp_diagnostics_float_cursor = 1
-let g:lsp_virtual_text_enabled = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
 
 " icon
 let g:lsp_diagnostics_signs_error = {'text': "\uf05e"}
