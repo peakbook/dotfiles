@@ -6,6 +6,7 @@ nnoremap J 5j
 nnoremap K 5k
 nnoremap Q :q<cr>
 nnoremap B :bmarks<cr>
+nnoremap <C-c> :q<cr>
 
 colorscheme gruvbox
 set timefmt=" %Y-%m-%d %H:%M:%S"

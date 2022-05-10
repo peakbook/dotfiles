@@ -12,7 +12,7 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'Shougo/ddc-nvim-lsp'
-Plug 'matsui54/ddc-nvim-lsp-doc'
+Plug 'matsui54/denops-popup-preview.vim'
 Plug 'matsui54/ddc-dictionary'
 Plug 'shun/ddc-vim-lsp'
 Plug 'airblade/vim-gitgutter'
@@ -21,7 +21,6 @@ Plug 'neomake/neomake'
 Plug 'ryanoasis/vim-devicons'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'flazz/vim-colorschemes'
-Plug 'gregsexton/gitv'
 Plug 'h1mesuke/vim-alignta'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/calendar.vim'
@@ -34,12 +33,11 @@ Plug 'junegunn/vim-easy-align'
 Plug 'svermeulen/vim-easyclip'
 Plug 'kana/vim-grex'
 Plug 'kana/vim-submode'
-Plug 'kana/vim-tabpagecd'
 Plug 'kristijanhusak/defx-git'
 Plug 'kristijanhusak/defx-icons'
 Plug 'lervag/vimtex'
 Plug 'mattn/learn-vimscript'
-Plug 'matze/vim-tex-fold'
+" Plug 'matze/vim-tex-fold'
 Plug 'maverickg/stan.vim'
 Plug 'osyo-manga/vim-over'
 Plug 'ozelentok/denite-gtags'
@@ -53,7 +51,6 @@ Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoppet.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 't9md/vim-quickhl'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'thinca/vim-fontzoom'
 Plug 'thinca/vim-qfreplace'
 Plug 'thinca/vim-quickrun'
 Plug 'tpope/vim-fugitive'
@@ -62,12 +59,9 @@ Plug 'vim-jp/vimdoc-ja'
 Plug 'vim-scripts/ditaa'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/gtags.vim'
-Plug 'vim-scripts/ifdef-highlighting'
-Plug 'vim-scripts/TagHighlight'
 Plug 'sheerun/vim-polyglot'
 Plug 'wtsnjp/vim-expl3'
 Plug 'luochen1990/rainbow'
-Plug 'easymotion/vim-easymotion'
 Plug 'SkyLeach/pudb.vim'
 Plug 'majutsushi/tagbar'
 Plug 'voldikss/vim-floaterm'
@@ -79,11 +73,27 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'VonHeikemen/searchbox.nvim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'iberianpig/tig-explorer.vim'
+Plug 'rcarriga/nvim-notify'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'petertriho/nvim-scrollbar'
+Plug 'akinsho/toggleterm.nvim'
+Plug 'Shougo/ddu.vim'
+Plug 'Shougo/pum.vim'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'rmagatti/auto-session'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'sainnhe/gruvbox-material'
+Plug 'halkn/lightline-lsp'
+Plug 'kevinhwang91/nvim-hlslens'
+Plug 'karb94/neoscroll.nvim'
+Plug 'phaazon/hop.nvim'
+
 
 
 call plug#end()
 
-colorscheme gruvbox
+colorscheme gruvbox-material
 
 " ddc {{{
 call ddc#custom#patch_global('sources', ['vim-lsp', 'around', 'dictionary', 'deoppet'])
@@ -107,7 +117,7 @@ call ddc#custom#patch_global('sourceParams', {
       \ })
 
 call ddc#enable()
-call ddc_nvim_lsp_doc#enable()
+call popup_preview#enable()
 " }}}
 
 
@@ -185,6 +195,13 @@ nnoremap <leader>n :tabn<CR>
 nnoremap <leader>p :tabp<CR>
 " }}}
 
+" hop {{{
+nnoremap <silent><leader><leader>j :HopLineAC<CR>
+nnoremap <silent><leader><leader>k :HopLineBC<CR>
+nnoremap <silent><leader><leader>w :HopWordAC<CR>
+nnoremap <silent><leader><leader>W :HopWordBC<CR>
+" }}}
+
 noremap <C-j> :cn<CR>
 noremap <C-k> :cp<CR>
 nnoremap / /\v
@@ -242,10 +259,11 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 
 " lightline {{{
 let g:lightline = {
-    \ 'colorscheme': 'seoul256',
+    \ 'colorscheme': 'srcery_drk',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'fugitive', 'readonly', 'modified' ]],
+    \             [ 'fugitive', 'readonly', 'modified' ],
+    \             [ 'lsp_errors', 'lsp_warnings', 'lsp_ok' ]],
     \   'right': [ [ 'lineinfo', 'percent'],
     \              [ 'fileencoding', 'fileformat', 'filetype' ]],
     \ },
@@ -265,6 +283,16 @@ let g:lightline = {
     \ 'component_function': {
     \   'filetype': 'DevIconFiletype',
     \   'fileformat': 'DevIconFileformat'
+    \ },
+    \ 'component_expand': {
+    \   'lsp_warnings': 'lightline_lsp#warnings',
+    \   'lsp_errors':   'lightline_lsp#errors',
+    \   'lsp_ok':       'lightline_lsp#ok',
+    \ },
+    \ 'component_type': {
+    \   'lsp_warnings': 'warning',
+    \   'lsp_errors':   'error',
+    \   'lsp_ok':       'middle',
     \ },
     \ 'separator': { 'left': "\ue0b0" },
     \ 'subseparator': { 'left': "\ue0b1" }
@@ -300,7 +328,7 @@ call submode#map('winsize', 'n', '', '-', '<C-w>+')
 let g:tex_conceal = ""
 
 " tex-folds
-let g:tex_fold_override_foldtext = 1
+" let g:tex_fold_override_foldtext = 1
 
 " yankround {{{
 nmap p <Plug>(yankround-p)
@@ -370,13 +398,21 @@ let g:default_julia_version = '1.7'
 " vim-lsp {{{
 let g:lsp_preview_float = 1
 let g:lsp_diagnostics_float_cursor = 1
-let g:lsp_diagnostics_virtual_text_enabled = 0
+let g:lsp_diagnostics_virtual_text_enabled = 1
+let g:lsp_diagnostics_virtual_text_prefix = ' ‣ '
+let g:lsp_hover_ui = 'float'
+
 
 " icon
-let g:lsp_diagnostics_signs_error = {'text': "\uf05e"}
-let g:lsp_diagnostics_signs_warning = {'text': "\uf071"}
-let g:lsp_diagnostics_signs_information = {'text': "\uf7fc"}
-let g:lsp_diagnostics_signs_hint = {'text': "\uf848"}
+let g:lsp_diagnostics_signs_error = {'text': "\uf05e "}
+let g:lsp_diagnostics_signs_warning = {'text': "\uf071 "}
+let g:lsp_diagnostics_signs_information = {'text': "\uf7fc "}
+let g:lsp_diagnostics_signs_hint = {'text': "\uf848 "}
+highlight link LspErrorText RedSign
+highlight link LspWarningText YellowSign
+highlight link LspInformationText GreenSign
+highlight link LspHintText BlueSign
+
 
 " folding
 set foldmethod=expr
@@ -398,8 +434,6 @@ nnoremap <silent><leader>lf :LspDocumentFormat<CR>
 nnoremap <silent><leader>lh :LspHover<CR>
 nnoremap <silent><leader>lr :LspReferences<CR>
 
-highlight link LspErrorText GruvboxRedSign
-highlight link LspWarningText GruvboxYellowSign
 " }}}
 
 " defx {{{
@@ -530,6 +564,7 @@ let g:floaterm_width=0.8
 let g:floaterm_height=0.6
 let g:floaterm_title=""
 let g:floaterm_borderchars=['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+let g:floaterm_opener='edit'
 
 nnoremap <silent><C-u><C-t> :FloatermToggle<CR>
 nnoremap <silent><leader>f <Nop>
@@ -551,6 +586,13 @@ vmap <C-v> <Plug>(expand_region_shrink)
 nnoremap <silent><leader>ss :SearchBoxIncSearch<CR>
 nnoremap <silent><leader>sr :SearchBoxReplace confirm=menu<CR>
 
+lua require("scrollbar").setup({folds=false, marks={Search={color="#446699"}}})
+lua require("scrollbar.handlers.search").setup()
+lua require("telescope").load_extension("notify")
+lua require("neoscroll").setup()
+lua vim.notify = require("notify")
+lua require('auto-session').setup({auto_save_enabled = false,})
+lua require("hop").setup()
 
 " other settings {{{
 " tab
@@ -562,7 +604,7 @@ set history=100
 
 " command completion
 set wildmenu
-set wildmode=list:longest,list:full
+set wildmode=longest:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 
 " search
@@ -572,7 +614,6 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
-nohlsearch
 
 " display
 set number
@@ -590,9 +631,8 @@ set noswapfile
 set nobackup
 
 set backspace=indent,eol,start
-" set foldmethod=syntax
-set foldlevel=1
-set foldnestmax=2
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 set shellslash
 set switchbuf=usetab
 set expandtab
@@ -602,7 +642,6 @@ set noerrorbells
 " set ambiwidth=double
 set synmaxcol=320
 set cursorcolumn
-set ttyfast
 set lazyredraw
 set termguicolors
 " set mouse=a
