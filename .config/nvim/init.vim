@@ -12,7 +12,6 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'Shougo/ddc-nvim-lsp'
-Plug 'matsui54/denops-popup-preview.vim'
 Plug 'matsui54/ddc-dictionary'
 Plug 'shun/ddc-vim-lsp'
 Plug 'airblade/vim-gitgutter'
@@ -30,7 +29,7 @@ Plug 'jpalardy/vim-slime'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'svermeulen/vim-easyclip'
+Plug 'svermeulen/vim-cutlass'
 Plug 'kana/vim-grex'
 Plug 'kana/vim-submode'
 Plug 'kristijanhusak/defx-git'
@@ -117,7 +116,7 @@ call ddc#custom#patch_global('sourceParams', {
       \ })
 
 call ddc#enable()
-call popup_preview#enable()
+" call popup_preview#enable()
 " }}}
 
 
@@ -365,7 +364,6 @@ endif
 " julia-vim
 " let g:latex_to_unicode_tab = 0
 
-
 " vim-gutguitter
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_sign_added = " "
@@ -396,7 +394,7 @@ nnoremap <leader>ta :TableModeToggle<CR>
 let g:default_julia_version = '1.7'
 
 " vim-lsp {{{
-let g:lsp_preview_float = 1
+let g:lsp_preview_float = 0
 let g:lsp_diagnostics_float_cursor = 1
 let g:lsp_diagnostics_virtual_text_enabled = 1
 let g:lsp_diagnostics_virtual_text_prefix = ' ‣ '
@@ -585,6 +583,12 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " searchbox
 nnoremap <silent><leader>ss :SearchBoxIncSearch<CR>
 nnoremap <silent><leader>sr :SearchBoxReplace confirm=menu<CR>
+
+" cutlass
+nnoremap m d
+xnoremap m d
+nnoremap mm dd
+nnoremap M D
 
 lua require("scrollbar").setup({folds=false, marks={Search={color="#446699"}}})
 lua require("scrollbar.handlers.search").setup()
