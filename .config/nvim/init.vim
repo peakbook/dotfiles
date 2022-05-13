@@ -87,6 +87,13 @@ Plug 'halkn/lightline-lsp'
 Plug 'kevinhwang91/nvim-hlslens'
 Plug 'karb94/neoscroll.nvim'
 Plug 'phaazon/hop.nvim'
+Plug 'vim-skk/denops-skkeleton.vim'
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'mfussenegger/nvim-dap-python'
+Plug 'skanehira/denops-gh.vim'
+" Plug 'simrat39/rust-tools.nvim'
 
 
 
@@ -95,7 +102,7 @@ call plug#end()
 colorscheme gruvbox-material
 
 " ddc {{{
-call ddc#custom#patch_global('sources', ['vim-lsp', 'around', 'dictionary', 'deoppet'])
+call ddc#custom#patch_global('sources', ['skkeleton', 'vim-lsp', 'around', 'dictionary', 'deoppet'])
 
 call ddc#custom#patch_global('sourceOptions', {
       \ '_': {
@@ -107,6 +114,11 @@ call ddc#custom#patch_global('sourceOptions', {
       \ 'deoppet': {'dup': v:true, 'mark': 'SNIP'},
       \ 'around': {'mark': '📋'},
       \ 'dictionary': {'mark': '🔤'},
+      \ 'skkeleton': {
+      \   'mark': 'SKK',
+      \   'matchers': ['skkeleton'],
+      \   'sorters': []
+      \},
       \ })
 
 call ddc#custom#patch_global('sourceParams', {
@@ -116,7 +128,6 @@ call ddc#custom#patch_global('sourceParams', {
       \ })
 
 call ddc#enable()
-" call popup_preview#enable()
 " }}}
 
 
@@ -406,10 +417,12 @@ let g:lsp_diagnostics_signs_error = {'text': "\uf05e "}
 let g:lsp_diagnostics_signs_warning = {'text': "\uf071 "}
 let g:lsp_diagnostics_signs_information = {'text': "\uf7fc "}
 let g:lsp_diagnostics_signs_hint = {'text': "\uf848 "}
+let g:lsp_document_code_action_signs_hint = {'text': "\uf848 "}
 highlight link LspErrorText RedSign
 highlight link LspWarningText YellowSign
 highlight link LspInformationText GreenSign
 highlight link LspHintText BlueSign
+highlight link LspCodeActionText BlueSign
 
 
 " folding
@@ -597,6 +610,125 @@ lua require("neoscroll").setup()
 lua vim.notify = require("notify")
 lua require('auto-session').setup({auto_save_enabled = false,})
 lua require("hop").setup()
+" lua require('rust-tools').setup()
+
+
+" skk {{{
+imap <C-j> <Plug>(skkeleton-toggle)
+cmap <C-j> <Plug>(skkeleton-toggle)
+call skkeleton#config({
+      \'eggLikeNewline':v:true,
+      \'globalJisyo': '~/.skk-jisyo',
+      \'completionRankFile': '~/.local/share/skk/rankfile',
+      \'markerHenkan': '',
+      \'markerHenkanSelect': '',
+\})
+" }}}
+
+" dap {{{
+nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
+nnoremap <silent> <F9> :lua require'dapui'.toggle()<CR>
+nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
+nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
+nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+lua << EOF
+require('nvim-dap-virtual-text').setup()
+local dap = require('dap')
+vim.fn.sign_define('DapBreakpoint', {text='ﭦ', texthl='LspWarningText', linehl='', numhl=''})
+vim.fn.sign_define('DapStopped', {text='', texthl='LspWarningText', linehl='', numhl=''})
+dap.adapters.lldb = {
+  type = 'executable',
+  command = '/usr/bin/lldb-vscode',
+  name = "lldb"
+}
+dap.configurations.cpp = {
+  {
+    name = "Launch",
+    type = "lldb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+    --
+    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    --
+    -- Otherwise you might get the following error:
+    --
+    --    Error on launch: Failed to attach to the target process
+    --
+    -- But you should be aware of the implications:
+    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+    runInTerminal = false,
+  },
+}
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
+
+require('dap-python').setup('/usr/bin/python')
+require("dapui").setup({
+  icons = { expanded = "▾", collapsed = "▸" },
+  mappings = {
+    -- Use a table to apply multiple mappings
+    expand = { "<CR>", "<2-LeftMouse>" },
+    open = "o",
+    remove = "d",
+    edit = "e",
+    repl = "r",
+    toggle = "t",
+  },
+  sidebar = {
+    -- You can change the order of elements in the sidebar
+    elements = {
+      -- Provide as ID strings or tables with "id" and "size" keys
+      {
+        id = "scopes",
+        size = 0.25, -- Can be float or integer > 1
+      },
+      { id = "breakpoints", size = 0.25 },
+      { id = "stacks", size = 0.25 },
+      { id = "watches", size = 00.25 },
+    },
+    size = 40,
+    position = "left", -- Can be "left", "right", "top", "bottom"
+  },
+  tray = {
+    elements = { "repl" },
+    size = 10,
+    position = "bottom", -- Can be "left", "right", "top", "bottom"
+  },
+  floating = {
+    max_height = nil, -- These can be integers or a float between 0 and 1.
+    max_width = nil, -- Floats will be treated as percentage of your screen.
+    border = "single", -- Border style. Can be "single", "double" or "rounded"
+    mappings = {
+      close = { "q", "<Esc>" },
+    },
+  },
+  windows = { indent = 1 },
+})
+EOF
+" }}}
+
+" skk {{{
+imap <C-j> <Plug>(skkeleton-toggle)
+cmap <C-j> <Plug>(skkeleton-toggle)
+call skkeleton#config({
+      \'eggLikeNewline':v:true,
+      \'globalJisyo': '~/.skk-jisyo',
+      \'completionRankFile': '~/.local/share/skk/rankfile',
+      \'markerHenkan': '',
+      \'markerHenkanSelect': '',
+\})
+" }}}
 
 " other settings {{{
 " tab
