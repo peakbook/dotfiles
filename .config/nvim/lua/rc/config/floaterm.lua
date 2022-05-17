@@ -6,3 +6,6 @@ vim.g.floaterm_opener = "edit"
 
 vim.api.nvim_command("hi! link NormalFloat Normal")
 vim.api.nvim_command("hi! link FloatermBorder NormalFloat")
+
+vim.api.nvim_command("autocmd TermOpen * setlocal nonu")
+

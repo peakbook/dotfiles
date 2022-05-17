@@ -1,6 +1,15 @@
 local status, lualine = pcall(require, "lualine")
 if (not status) then return end
 
+local myfilename = {
+  "filename",
+  path = 0,
+  symbols = {
+    modified = " +",
+    readonly = " ",
+    unnamed = "[NoName]",
+  }
+}
 local mydiagnostics = {
   "diagnostics",
   sources = { "vim_lsp" },
@@ -28,20 +37,20 @@ lualine.setup({
     lualine_z = { "location" },
   },
   inactive_sections = {
-    lualine_a = {},
+    lualine_a = { myfilename },
     lualine_b = {},
-    lualine_c = { "filename" },
+    lualine_c = {},
     lualine_x = {},
     lualine_y = {},
     lualine_z = {},
   },
   tabline = {
-    lualine_a = { "buffers" },
+    lualine_a = { "tabs" },
     lualine_b = {},
-    lualine_c = {},
+    lualine_c = { myfilename },
     lualine_x = {},
     lualine_y = {},
-    lualine_z = { "tabs" }
+    lualine_z = {}
   },
   extensions = {},
 })
