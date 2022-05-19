@@ -30,4 +30,5 @@ vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.listchars = "tab:>-"
 
 vim.opt.wildmenu = true
+vim.opt.wildignorecase = true
 vim.opt.wildmode = "longest:full"

@@ -1,7 +1,14 @@
-vim.cmd [[packadd packer.nvim]]
+local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if vim.fn.empty(vim.fn.glob(install_path)) == 1 then
+  vim.fn.system({
+    "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path
+  })
+end
+
+--vim.cmd [[packadd packer.nvim]]
 
 require("packer").startup(function(use)
-  use({ "wbthomason/packer.nvim", opt = true })
+  use({ "wbthomason/packer.nvim" })
 
   use("vim-denops/denops.vim")
   use({ "Shougo/ddc-matcher_head" })
@@ -10,13 +17,16 @@ require("packer").startup(function(use)
   use({ "shun/ddc-vim-lsp" })
   use({ "matsui54/ddc-dictionary" })
   use({ "prabirshrestha/vim-lsp", config = function() require("rc/config/vim-lsp") end })
-  use({ "mattn/vim-lsp-settings" })
+  use({ "mattn/vim-lsp-settings", config = function() require("rc/config/vim-lsp-settings") end })
   --use({ "Shougo/ddc-nvim-lsp" })
-  --use("neovim/nvim-lspconfig")
+  --use({"neovim/nvim-lspconfig", config = function() require("rc/config/nvim-lspconfig") end })
   use({ "Shougo/ddc.vim", config = function() require("rc/config/ddc") end })
   use({ "tami5/lspsaga.nvim", config = function() require("rc/config/lspsaga") end })
 
-  use({ "Shougo/deoppet.nvim", run = ":UpdateRemotePlugins" })
+  use({ "Shougo/deoppet.nvim",
+    run = ":UpdateRemotePlugins",
+    config = function() require("rc/config/deoppet") end
+  })
   use("Shougo/neosnippet-snippets")
   use("honza/vim-snippets")
 
@@ -32,7 +42,7 @@ require("packer").startup(function(use)
   })
 
   use({ "nvim-lualine/lualine.nvim",
-    after = { "gruvbox-material.nvim" },
+    after = "gruvbox-material.nvim",
     requires = {
       { "kyazdani42/nvim-web-devicons", config = function() require("nvim-web-devicons").setup() end }
     },
@@ -89,7 +99,7 @@ require("packer").startup(function(use)
   use({ "kevinhwang91/nvim-hlslens", config = function() require("hlslens").setup({ calm_down = true, nearest_only = true }) end })
   use({ "karb94/neoscroll.nvim", config = function() require("neoscroll").setup({ easing_function = "sine" }) end })
   use({ "phaazon/hop.nvim", config = function() require("hop").setup() end })
-  use("vim-skk/denops-skkeleton.vim")
+  use({ "vim-skk/denops-skkeleton.vim", config = function() require("rc/config/skkeleton") end })
   use({ "mfussenegger/nvim-dap",
     requires = {
       { "rcarriga/nvim-dap-ui", config = function() require("rc/config/dap-ui") end },
@@ -115,5 +125,4 @@ require("packer").startup(function(use)
   -- colorscheme
   use({ "WIttyJudge/gruvbox-material.nvim", config = function() require("gruvbox-material").setup() end })
   use({ "flazz/vim-colorschemes", opt = true })
-
 end)

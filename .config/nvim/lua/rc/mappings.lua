@@ -51,6 +51,14 @@ local tnoremap = function(lhs, rhs, silent)
   vim.api.nvim_set_keymap("t", lhs, rhs, { noremap = true, silent = silent })
 end
 
+local cmap = function(lhs, rhs)
+  vim.api.nvim_set_keymap("c", lhs, rhs, { noremap = false })
+end
+
+local smap = function(lhs, rhs)
+  vim.api.nvim_set_keymap("s", lhs, rhs, { noremap = false })
+end
+
 
 vim.g.mapleader = " "
 
@@ -154,6 +162,15 @@ nnoremap("<leader>ld", ":LspDefinition<CR>", true)
 nnoremap("<leader>lf", ":LspDocumentFormat<CR>", true)
 nnoremap("<leader>lh", ":LspHover<CR>", true)
 nnoremap("<leader>lr", ":LspReferences<CR>", true)
+
+-- snippets
+imap("<C-k>", "<Plug>(deoppet_expand)")
+imap("<C-l>", "<Plug>(deoppet_jump_forward)")
+smap("<C-l>", "<Plug>(deoppet_jump_forward)")
+
+-- skk
+imap("<C-j>", "<Plug>(skkeleton-toggle)")
+cmap("<C-j>", "<Plug>(skkeleton-toggle)")
 
 -- dap
 nnoremap("<leader>d", "<Nop>", true)

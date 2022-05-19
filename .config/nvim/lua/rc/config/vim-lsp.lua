@@ -27,12 +27,3 @@ set foldmethod=expr
       \ foldexpr=lsp#ui#vim#folding#foldexpr()
       \ foldtext=lsp#ui#vim#folding#foldtext() ]])
 
-vim.g.lsp_settings_filetype_typescript = 'typescript-language-server'
-vim.g.lsp_settings_filetype_javascript = 'typescript-language-server'
-vim.g.lsp_settings_filetype_vue = 'vls'
-vim.g.lsp_settings_filetype_html = 'html-languageserver'
-vim.g.lsp_settings_filetype_yaml = 'yaml-language-server'
-vim.g.lsp_settings_filetype_dockerfile = 'dockerfile-language-server-nodejs'
-vim.g.lsp_settings_filetype_xml = 'lemminx'
-vim.g.lsp_settings_filetype_python = 'pylsp-all'
-vim.g.lsp_settings_filetype_lua = 'sumneko-lua-language-server'
