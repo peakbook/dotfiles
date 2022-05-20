@@ -12,7 +12,7 @@ local myfilename = {
 }
 local mydiagnostics = {
   "diagnostics",
-  sources = { "vim_lsp" },
+  sources = { "nvim_lsp" },
   sections = { "error", "warn", "info", "hint" },
   diagnostics_color = {},
   symbols = { error = " ", warn = " ", info = " ", hint = " " },

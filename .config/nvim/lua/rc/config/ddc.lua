@@ -1,6 +1,6 @@
 vim.fn["ddc#custom#patch_global"]("sources", {
   "skkeleton",
-  "vim-lsp",
+  "nvim-lsp",
   "around",
   "deoppet",
   "dictionary",
@@ -11,7 +11,7 @@ vim.fn["ddc#custom#patch_global"]("sourceOptions", {
     matchers = { "matcher_head" },
     sorters = { "sorter_rank" }
   },
-  ["vim-lsp"] = {
+  ["nvim-lsp"] = {
     mark = "LSP",
     forceCompletionPattern = [[\.\w*|:\w*|->\w*]],
   },
@@ -36,7 +36,36 @@ vim.fn["ddc#custom#patch_global"]("sourceParams", {
   dictionary = {
     dictPaths = { "/usr/share/dict/words" },
     smartCase = true
-  }
+  },
+  ["nvim-lsp"] = {
+    kindLabels = {
+      Text = "",
+      Method = "",
+      Function = "",
+      Constructor = "",
+      Field = "ﰠ",
+      Variable = "",
+      Class = "ﴯ",
+      Interface = "",
+      Module = "",
+      Property = "ﰠ",
+      Unit = "塞",
+      Value = "",
+      Enum = "",
+      Keyword = "",
+      Snippet = "",
+      Color = "",
+      File = "",
+      Reference = "",
+      Folder = "",
+      EnumMember = "",
+      Constant = "",
+      Struct = "פּ",
+      Event = "",
+      Operator = "",
+      TypeParameter = ""
+    }
+  },
 })
 
 vim.fn["ddc#enable"]()
