@@ -17,6 +17,10 @@ local mydiagnostics = {
   diagnostics_color = {},
   symbols = { error = " ", warn = " ", info = " ", hint = " " },
 }
+local mydiff = {
+  "diff",
+  symbols = { added = " ", modified = "🔨", removed = " " }
+}
 
 lualine.setup({
   options = {
@@ -30,7 +34,7 @@ lualine.setup({
   },
   sections = {
     lualine_a = { "mode" },
-    lualine_b = { "branch", "diff" },
+    lualine_b = { "branch", mydiff },
     lualine_c = { "require('nvim-gps').get_location()" },
     lualine_x = { mydiagnostics },
     lualine_y = { "encoding", "fileformat", "filetype" },

@@ -158,10 +158,17 @@ nnoremap("M", "D")
 xmap("ga", "<Plug>(EasyAlign)")
 
 -- lsp
-nnoremap("<leader>ld", ":LspDefinition<CR>", true)
-nnoremap("<leader>lf", ":LspDocumentFormat<CR>", true)
-nnoremap("<leader>lh", ":LspHover<CR>", true)
-nnoremap("<leader>lr", ":LspReferences<CR>", true)
+nnoremap("<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", true)
+nnoremap("<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", true)
+nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", true)
+--nnoremap("<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", true)
+nnoremap("<leader>lh", "<cmd>Lspsaga hover_doc<CR>", true)
+nnoremap("<leader>lg", "<cmd>Lspsaga show_cursor_diagnostics<CR>", true)
+nnoremap("<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", true)
+nnoremap("<leader>ltd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", true)
+nnoremap("<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>", true)
+nnoremap("<leader>lrn", "<cmd>lua vim.lsp.buf.rename()<CR>", true)
+nnoremap("<leader>lca", "<cmd>lua vim.lsp.buf.code_action()<CR>", true)
 
 -- snippets
 imap("<C-k>", "<Plug>(deoppet_expand)")
@@ -185,9 +192,13 @@ nnoremap("<leader>dp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input(
 nnoremap("<leader>dr", ":lua require'dap'.repl.open()<CR>", true)
 nnoremap("<leader>dl", ":lua require'dap'.run_last()<CR>", true)
 
+-- grammer
+nnoremap("<leader>gc", ":GrammarousCheck<CR>", true)
+nnoremap("<leader>gr", ":GrammarousReset<CR>", true)
+
 -- others
-vim.api.nvim_set_keymap("", "<C-j>", ":cn<CR>", { noremap = true })
-vim.api.nvim_set_keymap("", "<C-p>", ":cp<CR>", { noremap = true })
+--vim.api.nvim_set_keymap("", "<C-j>", ":cn<CR>", { noremap = true })
+--vim.api.nvim_set_keymap("", "<C-p>", ":cp<CR>", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-h>", "^", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-l>", "$", { noremap = true })
 

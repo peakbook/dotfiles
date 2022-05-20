@@ -31,4 +31,4 @@ vim.opt.listchars = "tab:>-"
 
 vim.opt.wildmenu = true
 vim.opt.wildignorecase = true
-vim.opt.wildmode = "longest:full"
+vim.opt.wildmode = "longest"

@@ -1,7 +1,8 @@
 require("scrollbar").setup({
-      folds = false,
-      marks = {
-            Search = { color = "#446699" }
-      }
+  marks = {
+    Search = {
+      highlight = "GreenSign"
+    }
+  }
 })
 require("scrollbar.handlers.search").setup()
