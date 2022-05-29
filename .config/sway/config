@@ -17,7 +17,8 @@ set $term footclient
 
 ## Application launcher
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 35 ppt 60 ppt, border pixel 2
-set $menu exec alacritty --class=launcher -e sway-launcher-desktop
+#set $menu exec alacritty --class=launcher -e sway-launcher-desktop
+set $menu exec footclient -a launcher -e sway-launcher-desktop
 
 
 ### Output configuration
