@@ -19,6 +19,7 @@ require("packer").startup(function(use)
   --use({ "prabirshrestha/vim-lsp", config = function() require("rc/config/vim-lsp") end })
   --use({ "mattn/vim-lsp-settings", config = function() require("rc/config/vim-lsp-settings") end })
   use({ "Shougo/ddc-nvim-lsp" })
+  use({ "matsui54/denops-signature_help", config = function() require("rc/config/denops-signature_help") end })
   use({ "williamboman/nvim-lsp-installer",
     { "neovim/nvim-lspconfig", config = function() require("rc/config/nvim-lspconfig") end }
   })
