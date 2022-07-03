@@ -1,67 +1,100 @@
 {
   "layer": "top",
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["cpu", "memory", "temperature", "battery", "network", "pulseaudio", "clock", "custom/power"],
-    "sway/window": {
-      "max-length": 40
+  "modules-left": [
+    "sway/workspaces",
+    "sway/mode"
+  ],
+  "modules-center": [
+    "sway/window"
+  ],
+  "modules-right": [
+    "custom/ime",
+    "cpu",
+    "memory",
+    "temperature",
+    "battery",
+    "network",
+    "pulseaudio",
+    "clock",
+    "custom/power"
+  ],
+  "sway/window": {
+    "max-length": 40
+  },
+  "sway/language": {
+    "format": "{}"
+  },
+  "battery": {
+    "format": "{icon}{capacity}%",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "clock": {
+    "interval": 60,
+    "format": "{:%H:%M}",
+    "tooltip-format": "{:%Y/%m/%d %a %H:%M}",
+    "max-length": 30
+  },
+  "cpu": {
+    "interval": 10,
+    "format": "{usage}%",
+  },
+  "memory": {
+    "interval": 30,
+    "format": "{}%",
+    "tooltip-format": "Total: {total:0.1f}G\nUsed : {used:0.1f}G",
+    "max-length": 10
+  },
+  "network": {
+    "interface": "wlan0",
+    "format": "{ifname}",
+    "format-wifi": "",
+    "format-ethernet": "{ifname} ",
+    "format-disconnected": "", //An empty format will hide the module.
+    "tooltip-format": "{ifname}",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}\n⬆{bandwidthUpBits}/⬇{bandwidthDownBits}",
+    "tooltip-format-ethernet": "{ifname} ",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50
+  },
+  "temperature": {
+    "thermal-zone": 3,
+    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+    "critical-threshold": 80,
+    "format-critical": "{temperatureC}°C",
+    "format": "{temperatureC}°C"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-bluetooth": "{volume}% {icon}",
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        ""
+      ]
     },
-    "battery": {
-      "format": "{icon}{capacity}%",
-      "format-icons": ["", "", "", "", ""]
-    },
-    "clock": {
-      "format-alt": "{%H:%M}"
-    },
-    "cpu": {
-      "interval": 10,
-      "format": "{usage}%",
-      "max-lenth": 10
-    },
-    "memory": {
-      "interval": 30,
-      "format": "{}%",
-      "max-length": 10
-    },
-    "network": {
-      "interface": "wlan0",
-      "format": "{ifname}",
-      "format-wifi": "",
-      "format-ethernet": "{ifname} ",
-      "format-disconnected": "", //An empty format will hide the module.
-      "tooltip-format": "{ifname}",
-      "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-      "tooltip-format-ethernet": "{ifname} ",
-      "tooltip-format-disconnected": "Disconnected",
-      "max-length": 50
-    },
-    "temperature": {
-      "thermal-zone": 3,
-      // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-      "critical-threshold": 80,
-      "format-critical": "{temperatureC}°C",
-      "format": "{temperatureC}°C"
-    },
-    "pulseaudio": {
-      "format": "{icon}",
-      "format-bluetooth": "{volume}% {icon}",
-      "format-muted": "",
-      "format-icons": {
-        "headphone": "",
-        "hands-free": "",
-        "headset": "",
-        "phone": "",
-        "portable": "",
-        "car": "",
-        "default": ["", ""]
-      },
-      "scroll-step": 1,
-      "on-click": "pavucontrol"
-    },
-    "custom/power":{
-      "format":"", 
-      "on-click":"swaynag -t warning -m 'Power Menu Options' -b 'Logout' 'swaymsg exit' -b 'Suspend' 'swaymsg exec systemctl suspend' -b 'poweroff' 'systemctl poweroff' -b 'reboot' 'systemctl reboot'"
-    }
+    "scroll-step": 1,
+    "on-click": "pavucontrol"
+  },
+  "custom/power": {
+    "format": "",
+    "on-click": "swaynag -t warning -m 'Power Menu Options' -b 'Logout' 'swaymsg exit' -b 'Suspend' 'swaymsg exec systemctl suspend' -b 'poweroff' 'systemctl poweroff' -b 'reboot' 'systemctl reboot'"
+  },
+  "custom/ime": {
+    "interval": 1,
+    "exec": "fcitx5-remote | grep 2",
+    "format": "JP"
+  }
 }
-
-
