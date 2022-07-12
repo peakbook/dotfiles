@@ -116,7 +116,7 @@ nnoremap("<leader>fp", ":FloatermPrev<CR>", true)
 nnoremap("<leader>fk", ":FloatermKill<CR>", true)
 nnoremap("<leader>fh", ":FloatermHide<CR>", true)
 nnoremap("<leader>fs", ":FloatermShow<CR>", true)
-vim.cmd("command! Vifm FloatermNew --title= vifm")
+vim.cmd("command! Vifm FloatermNew --title= vifm -c only")
 nnoremap("<C-u><C-v>", ":Vifm<CR>")
 
 -- vim-expand-region
@@ -164,11 +164,14 @@ nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", true)
 --nnoremap("<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", true)
 nnoremap("<leader>lh", "<cmd>Lspsaga hover_doc<CR>", true)
 nnoremap("<leader>lg", "<cmd>Lspsaga show_cursor_diagnostics<CR>", true)
+nnoremap("<leader>la", "<cmd>Lspsaga code_action<CR>", true)
 nnoremap("<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", true)
 nnoremap("<leader>ltd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", true)
 nnoremap("<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>", true)
 nnoremap("<leader>lrn", "<cmd>lua vim.lsp.buf.rename()<CR>", true)
 nnoremap("<leader>lca", "<cmd>lua vim.lsp.buf.code_action()<CR>", true)
+
+
 
 -- snippets
 imap("<C-k>", "<Plug>(deoppet_expand)")
@@ -201,6 +204,7 @@ nnoremap("<leader>gr", ":GrammarousReset<CR>", true)
 --vim.api.nvim_set_keymap("", "<C-p>", ":cp<CR>", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-h>", "^", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-l>", "$", { noremap = true })
+xnoremap("p", "\"_dP", true)
 
 nnoremap("ZZ", "<Nop>")
 nnoremap("ZQ", "<Nop>")
