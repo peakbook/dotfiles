@@ -2,7 +2,7 @@ local status, dap = pcall(require, "dap")
 if (not status) then return end
 
 vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'LspWarningText', linehl = '', numhl = '' })
-vim.fn.sign_define('DapStopped', { text = '', texthl = 'LspWarningText', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '', texthl = 'LspWarningText', linehl = 'Visual', numhl = 'Visual' })
 dap.adapters.lldb = {
   type = 'executable',
   command = '/usr/bin/lldb-vscode',

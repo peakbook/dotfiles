@@ -2,6 +2,7 @@ vim.fn["ddc#custom#patch_global"]("sources", {
   "skkeleton",
   "nvim-lsp",
   "around",
+  "file",
   "deoppet",
   "dictionary",
 })
@@ -29,7 +30,11 @@ vim.fn["ddc#custom#patch_global"]("sourceOptions", {
     mark = "SKK",
     matchers = { "skkeleton" },
     sorters = {}
-  }
+  },
+  file = {
+    mark = "FILE",
+    forceCompletionPattern = [[\S/\S*]],
+  },
 })
 
 vim.fn["ddc#custom#patch_global"]("sourceParams", {

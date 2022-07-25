@@ -10,19 +10,18 @@ end
 require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
 
-  use("vim-denops/denops.vim")
+  use({ "vim-denops/denops.vim" })
   use({ "Shougo/ddc-matcher_head" })
   use({ "Shougo/ddc-sorter_rank" })
   use({ "Shougo/ddc-around" })
+  use({ "Shougo/ddu-kind-file" })
+  use({ "LumaKernel/ddc-file" })
   use({ "matsui54/ddc-dictionary" })
-  --use({ "shun/ddc-vim-lsp" })
-  --use({ "prabirshrestha/vim-lsp", config = function() require("rc/config/vim-lsp") end })
-  --use({ "mattn/vim-lsp-settings", config = function() require("rc/config/vim-lsp-settings") end })
   use({ "Shougo/ddc-nvim-lsp" })
   use({ "matsui54/denops-signature_help", config = function() require("rc/config/denops-signature_help") end })
-  use({ "williamboman/nvim-lsp-installer",
-    { "neovim/nvim-lspconfig", config = function() require("rc/config/nvim-lspconfig") end }
-  })
+  use({ "williamboman/mason.nvim" })
+  use({ "williamboman/mason-lspconfig.nvim" })
+  use({ "neovim/nvim-lspconfig", after = { "mason.nvim" }, config = function() require("rc/config/nvim-lspconfig") end })
   use({ "Shougo/ddc.vim", config = function() require("rc/config/ddc") end })
   use({ "tami5/lspsaga.nvim", config = function() require("rc/config/lspsaga") end })
 
@@ -83,7 +82,9 @@ require("packer").startup(function(use)
   use("luochen1990/rainbow")
   use("SkyLeach/pudb.vim")
   use("majutsushi/tagbar")
-  use({ "voldikss/vim-floaterm", config = function() require("rc/config/floaterm") end })
+  use({ "voldikss/vim-floaterm",
+    after = "gruvbox-material.nvim",
+    config = function() require("rc/config/floaterm") end })
   use("junegunn/goyo.vim")
   use("terryma/vim-expand-region")
   use("MunifTanjim/nui.nvim")
@@ -132,4 +133,6 @@ require("packer").startup(function(use)
   -- colorscheme
   use({ "WIttyJudge/gruvbox-material.nvim", config = function() require("gruvbox-material").setup() end })
   use({ "flazz/vim-colorschemes", opt = true })
+
+  use({ "tpope/vim-repeat" })
 end)
