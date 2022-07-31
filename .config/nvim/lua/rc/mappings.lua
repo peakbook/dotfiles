@@ -142,9 +142,11 @@ nnoremap("<C-u><C-y>", ":YankHistoryRgPaste<CR>", true)
 nmap("p", "<Plug>(yankround-p)")
 xmap("p", "<Plug>(yankround-p)")
 nmap("P", "<Plug>(yankround-P)")
+xmap("P", "<Plug>(yankround-P)")
 nmap("gp", "<Plug>(yankround-gp)")
 xmap("gp", "<Plug>(yankround-gp)")
 nmap("gP", "<Plug>(yankround-gP)")
+xmap("gP", "<Plug>(yankround-gP)")
 nmap("<C-p>", "<Plug>(yankround-prev)")
 nmap("<C-n>", "<Plug>(yankround-next)")
 
@@ -171,6 +173,11 @@ nnoremap("<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>", true)
 nnoremap("<leader>lrn", "<cmd>lua vim.lsp.buf.rename()<CR>", true)
 nnoremap("<leader>lca", "<cmd>lua vim.lsp.buf.code_action()<CR>", true)
 
+-- neogen
+nnoremap("<leader>lnf", ":lua require('neogen').generate({ type = 'func' })<CR>", true)
+nnoremap("<leader>lnc", ":lua require('neogen').generate({ type = 'class' })<CR>", true)
+nnoremap("<leader>lnt", ":lua require('neogen').generate({ type = 'type' })<CR>", true)
+nnoremap("<leader>lni", ":lua require('neogen').generate({ type = 'file' })<CR>", true)
 
 
 -- snippets

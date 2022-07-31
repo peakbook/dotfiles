@@ -1,0 +1,63 @@
+[core]
+  # excludesfile = ~/.config/git/gitignore
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+
+[init]
+  defaultBranch = main
+
+[color]
+  ui = auto
+
+[status]
+  showUntrackedFiles = all
+
+[commit]
+  verbose = true
+
+[push]
+  default = current
+
+[diff]
+  noprefix = true
+  renames = true
+  colorMoved = default
+
+[grep]
+  lineNumber = true
+  patternType = extended
+
+[fetch]
+  prune = true
+
+[rebase]
+  autostash = true
+
+[pull]
+  rebase = true
+  ff = only
+
+[alias]
+  aliases = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\ -> \\2/'
+  amend = commit --amend
+  branch = branch --sort=-authordate
+  branch-activity = for-each-ref --format='%(authordate) %(refname)' --sort=-committerdate refs/heads refs/remotes
+  branches = branch -a --sort=-authordate
+  graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  ignored = ls-files . --ignored --exclude-standard --others
+  logline = log --oneline --stat --branches
+  refresh = fetch --prune
+  remotes = remote -v
+  stashes = stash list
+  tags = tag
+  tree = log --graph --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)? %an%C(reset)%C(bold yellow)%d%C(reset)\" --abbrev-commit --date=relative
+  uncommit = reset --mixed HEAD~
+  unmerged = diff --name-only --diff-filter=U
+  unstage = reset -q HEAD --
+  untracked = ls-files . --exclude-standard --others
