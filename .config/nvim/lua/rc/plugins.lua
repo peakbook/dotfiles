@@ -24,6 +24,9 @@ require("packer").startup(function(use)
   use({ "neovim/nvim-lspconfig", after = { "mason.nvim" }, config = function() require("rc/config/nvim-lspconfig") end })
   use({ "Shougo/ddc.vim", config = function() require("rc/config/ddc") end })
   use({ "tami5/lspsaga.nvim", config = function() require("rc/config/lspsaga") end })
+  use({ "folke/trouble.nvim", config = function() require("trouble").setup() end })
+  use({ "folke/lsp-colors.nvim", config = function() require("lsp-colors").setup() end })
+  use({ "j-hui/fidget.nvim", config = function() require("fidget").setup() end })
 
   use({ "Shougo/deoppet.nvim",
     run = ":UpdateRemotePlugins",
@@ -36,6 +39,18 @@ require("packer").startup(function(use)
     run = ':TSUpdate',
     event = 'BufEnter',
     config = function() require("rc/config/nvim-treesitter") end,
+  })
+  use({ "windwp/nvim-ts-autotag",
+    after = "nvim-treesitter",
+    requires = "nvim-treesitter/nvim-treesitter",
+  })
+  use({ "yioneko/nvim-yati",
+    after = "nvim-treesitter",
+    requires = "nvim-treesitter/nvim-treesitter",
+  })
+  use({ "nvim-treesitter/nvim-treesitter-context",
+    after = "nvim-treesitter",
+    requires = "nvim-treesitter/nvim-treesitter",
   })
 
   use({ "SmiteshP/nvim-gps",
@@ -117,6 +132,8 @@ require("packer").startup(function(use)
   use("skanehira/denops-gh.vim")
   use("antoinemadec/FixCursorHold.nvim")
   use({ "liuchengxu/vim-which-key", on = { "WhichKey", "WhichKey!" } })
+  use("deris/vim-rengbang")
+  use("AndrewRadev/linediff.vim")
 
   -- quickrun
   use({ "is0n/jaq-nvim", config = function() require("rc/config/jaq") end })
@@ -127,6 +144,7 @@ require("packer").startup(function(use)
   -- yank
   use("yazgoo/yank-history")
   use({ "LeafCage/yankround.vim", config = function() require("rc/config/yankround") end })
+  use("haya14busa/vim-asterisk")
 
   -- colorscheme
   use({ "WIttyJudge/gruvbox-material.nvim", config = function() require("gruvbox-material").setup() end })

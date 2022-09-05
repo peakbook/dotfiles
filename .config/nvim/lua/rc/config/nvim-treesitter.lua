@@ -14,6 +14,7 @@ ts.setup({
       'help',
       'html',
       'http',
+      'javascript',
       'json',
       'latex',
       'llvm',
@@ -39,6 +40,12 @@ ts.setup({
       enable = true,
       extended_mode = true,
       max_file_lines = 1000,
+    },
+    autotag = {
+      enable = true,
+    },
+    yati = {
+      enable = true
     },
   })
 vim.cmd([[

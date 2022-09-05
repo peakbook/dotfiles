@@ -172,6 +172,7 @@ nnoremap("<leader>ltd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", true)
 nnoremap("<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>", true)
 nnoremap("<leader>lrn", "<cmd>lua vim.lsp.buf.rename()<CR>", true)
 nnoremap("<leader>lca", "<cmd>lua vim.lsp.buf.code_action()<CR>", true)
+nnoremap("<leader>ltt", ":TroubleToggle<CR>", true)
 
 -- neogen
 nnoremap("<leader>lnf", ":lua require('neogen').generate({ type = 'func' })<CR>", true)
@@ -187,7 +188,7 @@ smap("<C-l>", "<Plug>(deoppet_jump_forward)")
 
 -- skk
 imap("<C-j>", "<Plug>(skkeleton-toggle)")
-cmap("<C-j>", "<Plug>(skkeleton-toggle)")
+--cmap("<C-j>", "<Plug>(skkeleton-toggle)")
 
 -- dap
 nnoremap("<leader>d", "<Nop>", true)
@@ -213,11 +214,16 @@ nnoremap("<leader>gc", ":GrammarousCheck<CR>", true)
 nnoremap("<leader>gr", ":GrammarousReset<CR>", true)
 
 -- others
---vim.api.nvim_set_keymap("", "<C-j>", ":cn<CR>", { noremap = true })
---vim.api.nvim_set_keymap("", "<C-p>", ":cp<CR>", { noremap = true })
+vim.api.nvim_set_keymap("", "<C-j>", ":cn<CR>", { noremap = true })
+vim.api.nvim_set_keymap("", "<C-p>", ":cp<CR>", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-h>", "^", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-l>", "$", { noremap = true })
 xnoremap("p", "\"_dP", true)
+
+vim.api.nvim_set_keymap("", "*", "<Plug>(asterisk-z*)", { noremap = false })
+vim.api.nvim_set_keymap("", "#", "<Plug>(asterisk-z#)", { noremap = false })
+vim.api.nvim_set_keymap("", "g*", "<Plug>(asterisk-gz*)", { noremap = false })
+vim.api.nvim_set_keymap("", "g#", "<Plug>(asterisk-gz#)", { noremap = false })
 
 nnoremap("ZZ", "<Nop>")
 nnoremap("ZQ", "<Nop>")
