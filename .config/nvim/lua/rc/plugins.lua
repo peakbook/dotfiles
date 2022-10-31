@@ -15,6 +15,7 @@ require("packer").startup(function(use)
   use({ "Shougo/ddc-sorter_rank" })
   use({ "Shougo/ddc-around" })
   use({ "Shougo/ddu-kind-file" })
+  use({ "Shougo/ddc-ui-native" })
   use({ "LumaKernel/ddc-file" })
   use({ "matsui54/ddc-dictionary" })
   use({ "Shougo/ddc-nvim-lsp" })
@@ -27,6 +28,8 @@ require("packer").startup(function(use)
   use({ "folke/trouble.nvim", config = function() require("trouble").setup() end })
   use({ "folke/lsp-colors.nvim", config = function() require("lsp-colors").setup() end })
   use({ "j-hui/fidget.nvim", config = function() require("fidget").setup() end })
+  use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim",
+    config = function() require("rc/config/null-ls") end })
 
   use({ "Shougo/deoppet.nvim",
     run = ":UpdateRemotePlugins",
@@ -66,10 +69,10 @@ require("packer").startup(function(use)
     config = function() require("rc/config/lualine") end,
   })
 
-  use({ "airblade/vim-gitgutter", config = function() require("rc/config/gitgutter") end })
+  --use({ "airblade/vim-gitgutter", config = function() require("rc/config/gitgutter") end })
+  use({ "lewis6991/gitsigns.nvim", config = function() require("rc/config/gitsigns") end })
   use({ "notjedi/nvim-rooter.lua", config = function() require "nvim-rooter".setup() end })
   use("dhruvasagar/vim-table-mode")
-  use("h1mesuke/vim-alignta")
   use("itchyny/calendar.vim")
   use("jceb/vim-hier")
   use("jpalardy/vim-slime")
@@ -112,9 +115,9 @@ require("packer").startup(function(use)
     config = function() require("rc/config/nvim-scrollbar") end
   })
   use("akinsho/toggleterm.nvim")
-  use("Shougo/ddu.vim")
-  use("Shougo/pum.vim")
-  use("lukas-reineke/indent-blankline.nvim")
+  use({ "Shougo/ddu.vim" })
+  use({ "Shougo/pum.vim" })
+  use({ "lukas-reineke/indent-blankline.nvim" })
   use({ "rmagatti/auto-session", config = function() require("auto-session").setup({ auto_save_enabled = false }) end })
   use({ "kevinhwang91/nvim-hlslens",
     config = function() require("hlslens").setup({ calm_down = true, nearest_only = true }) end })
@@ -142,8 +145,9 @@ require("packer").startup(function(use)
   use({ "gelguy/wilder.nvim", config = function() require("rc/config/wilder") end })
 
   -- yank
-  use("yazgoo/yank-history")
-  use({ "LeafCage/yankround.vim", config = function() require("rc/config/yankround") end })
+  --use("yazgoo/yank-history")
+  --use({ "LeafCage/yankround.vim", config = function() require("rc/config/yankround") end })
+  use({ "gbprod/yanky.nvim", config = function() require("rc/config/yanky") end })
   use("haya14busa/vim-asterisk")
 
   -- colorscheme

@@ -33,3 +33,4 @@ vim.opt.wildmenu = true
 vim.opt.wildignorecase = true
 vim.opt.wildmode = "longest"
 
+vim.opt.cmdheight = 0

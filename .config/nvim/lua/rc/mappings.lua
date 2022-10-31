@@ -94,6 +94,7 @@ nnoremap("<leader>k", "<C-b>")
 tnoremap("<C-[><C-n>", "<C-\\><C-n>:FloatermToggle<CR>", true)
 
 -- fzf keybinds
+nnoremap("<C-u>", "<Nop>", true)
 nnoremap("<C-u><C-b>", ":Buffers<CR>", true)
 nnoremap("<C-u><C-c>", ":History:<CR>", true)
 nnoremap("<C-u><C-g>", ":Rg<CR>", true)
@@ -117,7 +118,7 @@ nnoremap("<leader>fk", ":FloatermKill<CR>", true)
 nnoremap("<leader>fh", ":FloatermHide<CR>", true)
 nnoremap("<leader>fs", ":FloatermShow<CR>", true)
 vim.cmd("command! Vifm FloatermNew --title= vifm -c only")
-nnoremap("<C-u><C-v>", ":Vifm<CR>")
+nnoremap("<C-u><C-f>", ":Vifm<CR>")
 
 -- vim-expand-region
 vmap("v", "<Plug>(expand_region_expand)")
@@ -130,25 +131,15 @@ nnoremap("<leader>sr", ":SearchBoxReplace confirm=menu<CR>", true)
 -- vimtable
 nnoremap("<leader>ta", ":tableModeToggle<CR>")
 
--- lsp
-nnoremap("<leader>ld", ":LspDefinition<CR>", true)
-nnoremap("<leader>lf", ":LspDocumentFormat<CR>", true)
-nnoremap("<leader>lh", ":LspHover<CR>", true)
-nnoremap("<leader>lr", ":LspReferences<CR>", true)
-
 -- yank
-nnoremap("<C-u><C-y>", ":YankHistoryRgPaste<CR>", true)
+nnoremap("<C-u><C-y>", ":Telescope yank_history<CR>", true)
 
-nmap("p", "<Plug>(yankround-p)")
-xmap("p", "<Plug>(yankround-p)")
-nmap("P", "<Plug>(yankround-P)")
-xmap("P", "<Plug>(yankround-P)")
-nmap("gp", "<Plug>(yankround-gp)")
-xmap("gp", "<Plug>(yankround-gp)")
-nmap("gP", "<Plug>(yankround-gP)")
-xmap("gP", "<Plug>(yankround-gP)")
-nmap("<C-p>", "<Plug>(yankround-prev)")
-nmap("<C-n>", "<Plug>(yankround-next)")
+nmap("p", "<Plug>(YankyPutAfter)")
+nmap("P", "<Plug>(YankyPutBefore)")
+nmap("gp", "<Plug>(YankyGPutAfter)")
+nmap("gP", "<Plug>(YankyGPutBefore)")
+nmap("<C-p>", "<Plug>(YankyCycleForward)")
+nmap("<C-n>", "<Plug>(YankyCycleBackward)")
 
 -- cutlass
 nnoremap("m", "d")
@@ -162,12 +153,13 @@ xmap("ga", "<Plug>(EasyAlign)")
 -- lsp
 nnoremap("<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", true)
 nnoremap("<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", true)
-nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", true)
+nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", true)
+nnoremap("<leader>lr", "<cmd>lua vim.lsp.buf.references()<CR>", true)
 --nnoremap("<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", true)
 nnoremap("<leader>lh", "<cmd>Lspsaga hover_doc<CR>", true)
 nnoremap("<leader>lg", "<cmd>Lspsaga show_cursor_diagnostics<CR>", true)
 nnoremap("<leader>la", "<cmd>Lspsaga code_action<CR>", true)
-nnoremap("<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", true)
+nnoremap("<leader>ls",  "<cmd>lua vim.lsp.buf.signature_help()<CR>", true)
 nnoremap("<leader>ltd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", true)
 nnoremap("<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>", true)
 nnoremap("<leader>lrn", "<cmd>lua vim.lsp.buf.rename()<CR>", true)
@@ -214,8 +206,8 @@ nnoremap("<leader>gc", ":GrammarousCheck<CR>", true)
 nnoremap("<leader>gr", ":GrammarousReset<CR>", true)
 
 -- others
-vim.api.nvim_set_keymap("", "<C-j>", ":cn<CR>", { noremap = true })
-vim.api.nvim_set_keymap("", "<C-p>", ":cp<CR>", { noremap = true })
+--vim.api.nvim_set_keymap("", "<C-j>", ":cn<CR>", { noremap = true })
+--vim.api.nvim_set_keymap("", "<C-p>", ":cp<CR>", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-h>", "^", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-l>", "$", { noremap = true })
 xnoremap("p", "\"_dP", true)

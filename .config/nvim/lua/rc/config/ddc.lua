@@ -1,9 +1,10 @@
+vim.fn["ddc#custom#patch_global"]("ui", "native")
 vim.fn["ddc#custom#patch_global"]("sources", {
   "skkeleton",
   "nvim-lsp",
   "around",
   "file",
-  "deoppet",
+  --"deoppet",
   "dictionary",
 })
 
@@ -16,10 +17,10 @@ vim.fn["ddc#custom#patch_global"]("sourceOptions", {
     mark = "LSP",
     forceCompletionPattern = [[\.\w*|:\w*|->\w*]],
   },
-  deoppet = {
-    dup = true,
-    mark = "SNP"
-  },
+  --deoppet = {
+    --dup = true,
+    --mark = "SNP"
+  --},
   around = {
     mark = "ARD"
   },
