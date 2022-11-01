@@ -133,6 +133,7 @@ require("packer").startup(function(use)
     },
     config = function() require("rc/config/dap") end,
   })
+  use({ "nvim-telescope/telescope-dap.nvim", config = function() require("telescope").load_extension("dap") end })
   use("skanehira/denops-gh.vim")
   use("antoinemadec/FixCursorHold.nvim")
   use({ "liuchengxu/vim-which-key", on = { "WhichKey", "WhichKey!" } })
