@@ -129,7 +129,7 @@ nnoremap("<leader>ss", ":SearchBoxIncSearch<CR>", true)
 nnoremap("<leader>sr", ":SearchBoxReplace confirm=menu<CR>", true)
 
 -- vimtable
-nnoremap("<leader>ta", ":tableModeToggle<CR>")
+nnoremap("<leader>ta", ":TableModeToggle<CR>")
 
 -- yank
 nnoremap("<C-u><C-y>", ":Telescope yank_history<CR>", true)
@@ -159,7 +159,7 @@ nnoremap("<leader>lr", "<cmd>lua vim.lsp.buf.references()<CR>", true)
 nnoremap("<leader>lh", "<cmd>Lspsaga hover_doc<CR>", true)
 nnoremap("<leader>lg", "<cmd>Lspsaga show_cursor_diagnostics<CR>", true)
 nnoremap("<leader>la", "<cmd>Lspsaga code_action<CR>", true)
-nnoremap("<leader>ls",  "<cmd>lua vim.lsp.buf.signature_help()<CR>", true)
+nnoremap("<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", true)
 nnoremap("<leader>ltd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", true)
 nnoremap("<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>", true)
 nnoremap("<leader>lrn", "<cmd>lua vim.lsp.buf.rename()<CR>", true)
@@ -192,7 +192,7 @@ nnoremap("<leader>do", ":lua require'dap'.step_out()<CR>", true)
 nnoremap("<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", true)
 nnoremap("<f5>", ":lua require'dap'.continue()<CR>", true)
 nnoremap("<f8>", ":lua require'dapui'.toggle()<CR>", true)
-nnoremap("<f10>", ":lua require'dap'.step_over()<CR>", true)
+nnoremap("<f10>", ":lua require'dap'.step_over()<CR>:lua require('neoscroll').zz(250)<CR>", true)
 nnoremap("<f11>", ":lua require'dap'.step_into()<CR>", true)
 nnoremap("<f12>", ":lua require'dap'.step_out()<CR>", true)
 nnoremap("<f9>", ":lua require'dap'.toggle_breakpoint()<CR>", true)
@@ -200,10 +200,16 @@ nnoremap("<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoin
 nnoremap("<leader>dp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", true)
 nnoremap("<leader>dr", ":lua require'dap'.repl.open()<CR>", true)
 nnoremap("<leader>dl", ":lua require'dap'.run_last()<CR>", true)
+nnoremap("<leader>dv", ":lua require('dap.ext.vscode').load_launchjs(nil, {cppdbg = {'c', 'cpp'}})<CR>", true)
 
 -- grammer
 nnoremap("<leader>gc", ":GrammarousCheck<CR>", true)
 nnoremap("<leader>gr", ":GrammarousReset<CR>", true)
+
+
+-- taskrunner
+nnoremap("<leader>tr", ":OverseerRun<CR>", true)
+nnoremap("<leader>tg", ":OverseerToggle<CR>", true)
 
 -- others
 --vim.api.nvim_set_keymap("", "<C-j>", ":cn<CR>", { noremap = true })

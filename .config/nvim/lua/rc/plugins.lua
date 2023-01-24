@@ -1,15 +1,10 @@
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if vim.fn.empty(vim.fn.glob(install_path)) == 1 then
-  vim.fn.system({
-    "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path
-  })
-end
-
---vim.cmd [[packadd packer.nvim]]
+vim.cmd [[packadd packer.nvim]]
 
 require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
-
+  use("MunifTanjim/nui.nvim")
+  use("nvim-lua/plenary.nvim")
+  use("VonHeikemen/searchbox.nvim")
   use({ "vim-denops/denops.vim" })
   use({ "Shougo/ddc-matcher_head" })
   use({ "Shougo/ddc-sorter_rank" })
@@ -70,9 +65,9 @@ require("packer").startup(function(use)
     config = function() require("rc/config/lualine") end,
   })
 
-  --use({ "airblade/vim-gitgutter", config = function() require("rc/config/gitgutter") end })
   use({ "lewis6991/gitsigns.nvim", config = function() require("rc/config/gitsigns") end })
-  use({ "notjedi/nvim-rooter.lua", config = function() require "nvim-rooter".setup() end })
+  use({ "ahmedkhalf/project.nvim", event = "BufWinEnter", config = function() require("rc/config/project") end })
+  --use({ "notjedi/nvim-rooter.lua", config = function() require "nvim-rooter".setup() end })
   use("dhruvasagar/vim-table-mode")
   use("itchyny/calendar.vim")
   use("jceb/vim-hier")
@@ -104,18 +99,15 @@ require("packer").startup(function(use)
     config = function() require("rc/config/floaterm") end })
   use("junegunn/goyo.vim")
   use("terryma/vim-expand-region")
-  use("MunifTanjim/nui.nvim")
-  use("VonHeikemen/searchbox.nvim")
   use("rbgrouleff/bclose.vim")
   use("iberianpig/tig-explorer.vim")
   use({ "nvim-telescope/telescope.nvim", config = function() require("telescope").load_extension("notify") end })
   use({ "rcarriga/nvim-notify", config = function() vim.notify = require("notify") end })
-  use("nvim-lua/plenary.nvim")
   use({ "petertriho/nvim-scrollbar",
     after = "nvim-hlslens",
     config = function() require("rc/config/nvim-scrollbar") end
   })
-  use("akinsho/toggleterm.nvim")
+  use({ "akinsho/toggleterm.nvim", config = function() require("toggleterm").setup() end })
   use({ "Shougo/ddu.vim" })
   use({ "Shougo/pum.vim" })
   use({ "lukas-reineke/indent-blankline.nvim" })
@@ -134,11 +126,12 @@ require("packer").startup(function(use)
     config = function() require("rc/config/dap") end,
   })
   use({ "nvim-telescope/telescope-dap.nvim", config = function() require("telescope").load_extension("dap") end })
-  use("skanehira/denops-gh.vim")
   use("antoinemadec/FixCursorHold.nvim")
   use({ "liuchengxu/vim-which-key", on = { "WhichKey", "WhichKey!" } })
   use("deris/vim-rengbang")
   use("AndrewRadev/linediff.vim")
+  use({ "stevearc/overseer.nvim", config = function() require("rc/config/overseer") end })
+  use({ "stevearc/dressing.nvim" })
 
   -- quickrun
   use({ "is0n/jaq-nvim", config = function() require("rc/config/jaq") end })
@@ -147,15 +140,18 @@ require("packer").startup(function(use)
   use({ "gelguy/wilder.nvim", config = function() require("rc/config/wilder") end })
 
   -- yank
-  --use("yazgoo/yank-history")
-  --use({ "LeafCage/yankround.vim", config = function() require("rc/config/yankround") end })
   use({ "gbprod/yanky.nvim", config = function() require("rc/config/yanky") end })
   use("haya14busa/vim-asterisk")
 
   -- colorscheme
   use({ "WIttyJudge/gruvbox-material.nvim", config = function() require("gruvbox-material").setup() end })
+  --use({"EdenEast/nightfox.nvim", config = function() require("nightfox").setup() end})
   use({ "flazz/vim-colorschemes", opt = true })
 
   use({ "tpope/vim-repeat" })
   use({ "danymat/neogen", config = function() require('neogen').setup {} end, requires = "nvim-treesitter" })
+  use({ "folke/todo-comments.nvim",
+    after = "gruvbox-material.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function() require("rc/config/todo-comments") end })
 end)

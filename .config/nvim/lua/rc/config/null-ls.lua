@@ -11,6 +11,7 @@ require("null-ls").setup({
     require("null-ls").builtins.formatting.beautysh,
     require("null-ls").builtins.formatting.xmllint,
     require("null-ls").builtins.formatting.textlint,
+    require("null-ls").builtins.formatting.jq,
     --require("null-ls").builtins.formatting.stylua,
   },
 })
