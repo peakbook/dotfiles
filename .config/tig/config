@@ -1,0 +1,56 @@
+# color scheme
+color default           250             234
+color 'Author '         15              default
+color 'Commit: '        242             default
+color 'Merge: '         45              default
+color id                167             default
+color date              242             default
+color graph-commit      161             default
+color status            15              default
+color delimiter         90              default
+color cursor            234             7
+color help-group        161             default
+color main-tracked      105             default             bold
+color cursor            226             94
+color title-focus       234             250
+color title-blur        234             250
+color diff-stat         45              default
+color diff-index        14              default
+color diff-add          40              default
+color diff-del          161             default
+color diff-chunk        190             default
+
+set main-view   = id date author:email-user commit-title:graph=yes,refs=yes
+set blame-view  = date:default author:email-user id:yes,color line-number:yes,interval=1 text
+set pager-view  = line-number:yes,interval=1 text
+set stage-view  = line-number:yes,interval=1 text
+set log-view    = line-number:yes,interval=1 text
+set blob-view   = line-number:yes,interval=1 text
+set diff-view   = line-number:yes,interval=1 text:yes,commit-title-overflow=no
+
+set diff-options = -m --first-parent  # show merge diff
+set vertical-split = no
+set line-graphics = utf-8
+set tab-size = 4
+# set diff-highlight = true
+
+# key bindings
+bind generic g        move-first-line
+bind generic E        view-grep
+bind generic G        move-last-line
+bind main    G        move-last-line
+bind main    <Esc>g   :toggle commit-title-graph
+bind generic U        ?git pull %(remote)
+bind generic P        ?git push -u %(remote) %(repo:head)
+bind main    !        ?git revert %(commit)
+bind refs    M        ?git merge %(branch)
+bind status  <Ctrl-r> ?gh pr create --fill --web --assignee "@me"
+bind generic <Ctrl-g> refresh
+
+bind main    R      ?git reset --soft %(commit)
+bind diff    R      ?git reset --soft %(commit)
+bind refs    R      ?git reset --soft %(branch)
+bind status  R      ?git reset --soft HEAD
+
+bind main    <Ctrl-r>      ?git rebase -i %(commit)
+bind diff    <Ctrl-r>      ?git rebase -i %(commit)
