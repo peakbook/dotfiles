@@ -12,6 +12,8 @@ require("null-ls").setup({
     require("null-ls").builtins.formatting.xmllint,
     require("null-ls").builtins.formatting.textlint,
     require("null-ls").builtins.formatting.jq,
+    require("null-ls").builtins.formatting.latexindent,
+    require("null-ls").builtins.diagnostics.mypy,
     --require("null-ls").builtins.formatting.stylua,
   },
 })

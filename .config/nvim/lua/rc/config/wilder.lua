@@ -1,19 +1,16 @@
-local status, wilder = pcall(require, "wilder")
-if (not status) then return end
-
-wilder.setup({
+require("wilder").setup({
   modes = { ':' },
   next_key = '<C-n>',
   previous_key = '<C-p>',
   accept_key = '<Tab>',
 })
 
-wilder.set_option('renderer', wilder.popupmenu_renderer(
-  wilder.popupmenu_border_theme({
-    highlighter = wilder.basic_highlighter(),
+require("wilder").set_option('renderer', require("wilder").popupmenu_renderer(
+  require("wilder").popupmenu_border_theme({
+    highlighter = require("wilder").basic_highlighter(),
     pumblend = 10,
-    left = { ' ', wilder.popupmenu_devicons() },
-    right = { ' ', wilder.popupmenu_scrollbar() },
+    left = { ' ', require("wilder").popupmenu_devicons() },
+    right = { ' ', require("wilder").popupmenu_scrollbar() },
     border = 'rounded',
   })
 ))

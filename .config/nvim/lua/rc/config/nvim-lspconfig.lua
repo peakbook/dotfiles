@@ -3,7 +3,7 @@ require("mason-lspconfig").setup({
   automatic_installation = false,
 })
 
-require("lspconfig").sumneko_lua.setup({
+require("lspconfig").lua_ls.setup({
   settings = {
     Lua = {
       diagnostics = {

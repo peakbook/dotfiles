@@ -1,7 +1,4 @@
-local status, jaq = pcall(require, "jaq-nvim")
-if (not status) then return end
-
-jaq.setup({
+require("jaq-nvim").setup({
       cmds = {
             default = "float",
             external = {

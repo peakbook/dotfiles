@@ -1,9 +1,6 @@
-local status, lualine = pcall(require, "lualine")
-if (not status) then return end
-
 local myfilename = {
   "filename",
-  path = 0,
+  path = 4,
   symbols = {
     modified = " +",
     readonly = " ",
@@ -22,7 +19,7 @@ local mydiff = {
   symbols = { added = " ", modified = "🔨", removed = " " }
 }
 
-lualine.setup({
+require("lualine").setup({
   options = {
     icons_enabled = true,
     theme = "auto",
