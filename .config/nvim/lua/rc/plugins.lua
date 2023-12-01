@@ -36,7 +36,7 @@ require("lazy").setup({
     dependencies = "Shougo/ddc.vim",
   },
   {
-    "Shougo/ddc-nvim-lsp",
+    "Shougo/ddc-source-lsp",
     dependencies = "Shougo/ddc.vim",
   },
   {
@@ -74,13 +74,14 @@ require("lazy").setup({
     config = function() require("fidget").setup() end
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "neovim-stuff/null-ls.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     config = function() require("rc/config/null-ls") end
   },
   {
     "Shougo/deoppet.nvim",
     --run = ":UpdateRemotePlugins",
+    -- dependencies = "rcarriga/nvim-notify",
     config = function() require("rc/config/deoppet") end
   },
   { "Shougo/neosnippet-snippets" },
@@ -113,9 +114,9 @@ require("lazy").setup({
   },
 
   {
-    "SmiteshP/nvim-gps",
-    after = "nvim-treesitter",
-    config = function() require("nvim-gps").setup() end,
+    "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig",
+    config = function() require("nvim-navic").setup({lsp={auto_attach=true}}) end,
   },
 
   {
@@ -309,4 +310,8 @@ require("lazy").setup({
     "klen/nvim-config-local",
     config = function() require("rc/config/nvim-config-local") end
   },
+  {
+    "terrortylor/nvim-comment",
+    config = function() require("nvim_comment").setup() end
+  }
 })

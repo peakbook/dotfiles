@@ -1,7 +1,12 @@
+local capabilities = require("ddc_source_lsp").make_client_capabilities()
+require("lspconfig").denols.setup({
+  capabilities = capabilities,
+})
+
 vim.fn["ddc#custom#patch_global"]("ui", "native")
 vim.fn["ddc#custom#patch_global"]("sources", {
   "skkeleton",
-  "nvim-lsp",
+  "lsp",
   "around",
   "file",
   --"deoppet",
@@ -13,7 +18,7 @@ vim.fn["ddc#custom#patch_global"]("sourceOptions", {
     matchers = { "matcher_head" },
     sorters = { "sorter_rank" }
   },
-  ["nvim-lsp"] = {
+  ["lsp"] = {
     mark = "LSP",
     forceCompletionPattern = [[\.\w*|:\w*|->\w*]],
   },
@@ -43,7 +48,7 @@ vim.fn["ddc#custom#patch_global"]("sourceParams", {
     dictPaths = { "/usr/share/dict/words" },
     smartCase = true
   },
-  ["nvim-lsp"] = {
+  ["lsp"] = {
     kindLabels = {
       Text = "",
       Method = "",

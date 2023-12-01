@@ -2,7 +2,7 @@ require("null-ls").setup({
   sources = {
     require("null-ls").builtins.diagnostics.yamllint,
     require("null-ls").builtins.formatting.yamlfmt,
-    require("null-ls").builtins.diagnostics.markdownlint,
+    -- require("null-ls").builtins.diagnostics.markdownlint,
     require("null-ls").builtins.formatting.cmake_format,
     require("null-ls").builtins.diagnostics.clang_check,
     require("null-ls").builtins.formatting.clang_format,

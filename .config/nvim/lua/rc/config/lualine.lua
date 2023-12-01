@@ -18,6 +18,11 @@ local mydiff = {
   "diff",
   symbols = { added = " ", modified = "🔨", removed = " " }
 }
+local navic = {
+  "navic",
+  color_correction = nil,
+  navic_opts = nil
+}
 
 require("lualine").setup({
   options = {
@@ -32,7 +37,7 @@ require("lualine").setup({
   sections = {
     lualine_a = { "mode" },
     lualine_b = { "branch", mydiff },
-    lualine_c = { "require('nvim-gps').get_location()" },
+    lualine_c = { navic },
     lualine_x = { mydiagnostics },
     lualine_y = { "encoding", "fileformat", "filetype" },
     lualine_z = { "location" },

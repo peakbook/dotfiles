@@ -106,6 +106,7 @@ nnoremap("<C-u><C-r>", ":BTags<CR>", true)
 nnoremap("<C-u><C-n>", ":Tags<CR>", true)
 nnoremap("<C-u><C-s>", ":History/<CR>", true)
 nnoremap("<C-u><C-w>", ":Windows<CR>", true)
+nnoremap("<C-u><C-p>", ":Telescope projects<CR>", true)
 
 -- floaterm
 nnoremap("<C-u><C-t>", ":FloatermToggle<CR>", true)
@@ -206,6 +207,7 @@ nnoremap("<leader>dv", ":lua require('dap.ext.vscode').load_launchjs(nil, {cppdb
 nnoremap("<leader>gc", ":GrammarousCheck<CR>", true)
 nnoremap("<leader>gr", ":GrammarousReset<CR>", true)
 
+nnoremap("<leader>cd", ":ProjectRoot<CR>", true)
 
 -- taskrunner
 nnoremap("<leader>tr", ":OverseerRun<CR>", true)
@@ -226,3 +228,6 @@ vim.api.nvim_set_keymap("", "g#", "<Plug>(asterisk-gz#)", { noremap = false })
 nnoremap("ZZ", "<Nop>")
 nnoremap("ZQ", "<Nop>")
 nnoremap("<leader>/", ":nohl<CR>", true)
+
+nnoremap("<leader>c<leader>", ":CommentToggle<CR>", true)
+vnoremap("<leader>c<leader>", ":CommentToggle<CR>", true)

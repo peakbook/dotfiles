@@ -7,7 +7,7 @@ require("dap").adapters.lldb = {
 }
 require("dap").adapters.cppdbg = {
   type = "executable",
-  command = os.getenv("HOME") .. "/.local/share/cpptools/extension/debugAdapters/bin/OpenDebugAD7",
+  command = os.getenv("HOME") .. "/.local/share/nvim/mason/bin/OpenDebugAD7",
   id = "cppdbg",
   options = {
     detached = false

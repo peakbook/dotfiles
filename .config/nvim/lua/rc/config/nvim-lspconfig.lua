@@ -34,7 +34,7 @@ capabilities.offsetEncoding = { "utf-16" }
 require("lspconfig").clangd.setup({
   capabilities = capabilities,
   --cmd = {"clangd", "--offset-encoding=utf-16"}
-  cmd = {"clangd"}
+  cmd = { "clangd" }
 })
 --require("lspconfig").clangd.setup({})
 require("lspconfig").r_language_server.setup({})
@@ -46,3 +46,5 @@ require("lspconfig").cssls.setup({})
 require("lspconfig").zls.setup({})
 require("lspconfig").eslint.setup({})
 --require("lspconfig").grammerly.setup({})
+require('lspconfig').ruff_lsp.setup({})
+require('lspconfig').marksman.setup({})
