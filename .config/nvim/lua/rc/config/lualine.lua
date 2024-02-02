@@ -12,7 +12,7 @@ local mydiagnostics = {
   sources = { "nvim_lsp" },
   sections = { "error", "warn", "info", "hint" },
   diagnostics_color = {},
-  symbols = { error = " ", warn = " ", info = " ", hint = " " },
+  symbols = { error = " ", warn = " ", info = " " , hint = " " },
 }
 local mydiff = {
   "diff",

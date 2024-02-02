@@ -1,3 +1,7 @@
+require("mason-null-ls").setup({
+    ensure_installed = { "stylua", "jq" }
+})
+
 require("null-ls").setup({
   sources = {
     require("null-ls").builtins.diagnostics.yamllint,

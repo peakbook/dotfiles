@@ -74,9 +74,17 @@ require("lazy").setup({
     config = function() require("fidget").setup() end
   },
   {
-    "neovim-stuff/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     dependencies = "nvim-lua/plenary.nvim",
-    config = function() require("rc/config/null-ls") end
+  },
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls.nvim",
+    },
+    config = function() require("rc/config/null-ls") end,
   },
   {
     "Shougo/deoppet.nvim",
@@ -116,7 +124,7 @@ require("lazy").setup({
   {
     "SmiteshP/nvim-navic",
     requires = "neovim/nvim-lspconfig",
-    config = function() require("nvim-navic").setup({lsp={auto_attach=true}}) end,
+    config = function() require("nvim-navic").setup({ lsp = { auto_attach = true } }) end,
   },
 
   {
@@ -205,7 +213,10 @@ require("lazy").setup({
   },
   { "Shougo/ddu.vim" },
   { "Shougo/pum.vim" },
-  { "lukas-reineke/indent-blankline.nvim" },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function() require("ibl").setup() end
+  },
   {
     "rmagatti/auto-session",
     config = function() require("auto-session").setup({ auto_save_enabled = false }) end
