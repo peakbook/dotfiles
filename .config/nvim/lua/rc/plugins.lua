@@ -57,11 +57,18 @@ require("lazy").setup({
     config = function() require("rc/config/ddc") end
   },
   {
-    "tami5/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
     config = function() require("rc/config/lspsaga") end
   },
   {
     "folke/trouble.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
     config = function() require("trouble").setup() end
   },
   {
@@ -70,8 +77,7 @@ require("lazy").setup({
   },
   {
     "j-hui/fidget.nvim",
-    tag = "legacy",
-    config = function() require("fidget").setup() end
+    config = function() require("rc/config/fidget") end
   },
   {
     "nvimtools/none-ls.nvim",
@@ -89,7 +95,6 @@ require("lazy").setup({
   {
     "Shougo/deoppet.nvim",
     --run = ":UpdateRemotePlugins",
-    -- dependencies = "rcarriga/nvim-notify",
     config = function() require("rc/config/deoppet") end
   },
   { "Shougo/neosnippet-snippets" },
@@ -130,14 +135,13 @@ require("lazy").setup({
   {
     "nvim-lualine/lualine.nvim",
     dependencies = {
-      "kyazdani42/nvim-web-devicons",
-      "gruvbox-material.nvim"
+      "nvim-tree/nvim-web-devicons",
     },
     config = function() require("rc/config/lualine") end,
   },
 
   {
-    "kyazdani42/nvim-web-devicons",
+    "nvim-tree/nvim-web-devicons",
     config = function() require("nvim-web-devicons").setup() end
   },
 
@@ -187,7 +191,6 @@ require("lazy").setup({
   { "SkyLeach/pudb.vim" },
   {
     "voldikss/vim-floaterm",
-    after = "gruvbox-material.nvim",
     config = function() require("rc/config/floaterm") end
   },
   { "junegunn/goyo.vim" },
@@ -196,12 +199,12 @@ require("lazy").setup({
   { "iberianpig/tig-explorer.vim" },
   {
     "nvim-telescope/telescope.nvim",
-    config = function() require("telescope").load_extension("notify") end
+    config = function() require("telescope") end
   },
-  {
-    "rcarriga/nvim-notify",
-    config = function() require("rc/config/nvim-notify") end
-  },
+  -- {
+  --   "rcarriga/nvim-notify",
+  --   config = function() require("rc/config/nvim-notify") end
+  -- },
   {
     "petertriho/nvim-scrollbar",
     after = "nvim-hlslens",
@@ -295,14 +298,12 @@ require("lazy").setup({
   },
   { "haya14busa/vim-asterisk" },
 
-  -- colorscheme
   {
-    "WIttyJudge/gruvbox-material.nvim",
-    config = function() require("gruvbox-material").setup() end
-  },
-  {
-    "flazz/vim-colorschemes",
-    lazy = true
+    "ellisonleao/gruvbox.nvim",
+    config = function() require("rc/config/gruvbox") end,
+    lazy = false,
+    priority = 1000,
+    opts = {},
   },
 
   { "tpope/vim-repeat" },
@@ -313,8 +314,7 @@ require("lazy").setup({
   },
   {
     "folke/todo-comments.nvim",
-    after = "gruvbox-material.nvim",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     config = function() require("rc/config/todo-comments") end
   },
   {

@@ -1,5 +1,6 @@
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "LspWarningText", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "", texthl = "LspWarningText", linehl = "Visual", numhl = "Visual" })
+-- require("dap.ext.vscode").json_decode = require("json5").parse
+vim.fn.sign_define("DapBreakpoint", { text = " ", texthl = "SignColumn", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = " ", texthl = "LspWarningText", linehl = "Visual", numhl = "Visual" })
 require("dap").adapters.lldb = {
   type = "executable",
   command = "/usr/bin/lldb-vscode",
@@ -53,3 +54,6 @@ require("dap").configurations.cpp = {
 }
 require("dap").configurations.c = require("dap").configurations.cpp
 require("dap").configurations.rust = require("dap").configurations.cpp
+if vim.fn.filereadable('.vscode/launch.json') then
+  require('dap.ext.vscode').load_launchjs(nil, { cppdbg = { 'c', 'cpp' } })
+end
