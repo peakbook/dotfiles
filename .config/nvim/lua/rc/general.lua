@@ -24,7 +24,7 @@ vim.opt.background = "dark"
 vim.opt.updatetime = 300
 vim.opt.timeoutlen = 500
 
---vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus"
 vim.opt.termguicolors = true
 vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.listchars = "tab:>-"
@@ -34,3 +34,4 @@ vim.opt.wildignorecase = true
 vim.opt.wildmode = "longest"
 
 vim.opt.cmdheight = 0
+vim.opt.foldenable = false
