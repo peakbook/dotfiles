@@ -16,49 +16,48 @@
 
 -- utils
 local nnoremap = function(lhs, rhs, silent)
-  vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = silent })
+	vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = silent })
 end
 
 local nmap = function(lhs, rhs, silent)
-  vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = false, silent = silent })
+	vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = false, silent = silent })
 end
 
 local xnoremap = function(lhs, rhs, silent)
-  vim.api.nvim_set_keymap("x", lhs, rhs, { noremap = true, silent = silent })
+	vim.api.nvim_set_keymap("x", lhs, rhs, { noremap = true, silent = silent })
 end
 
 local xmap = function(lhs, rhs, silent)
-  vim.api.nvim_set_keymap("x", lhs, rhs, { noremap = false, silent = silent })
+	vim.api.nvim_set_keymap("x", lhs, rhs, { noremap = false, silent = silent })
 end
 
 local inoremap = function(lhs, rhs)
-  vim.api.nvim_set_keymap("i", lhs, rhs, { noremap = true })
+	vim.api.nvim_set_keymap("i", lhs, rhs, { noremap = true })
 end
 
 local imap = function(lhs, rhs)
-  vim.api.nvim_set_keymap("i", lhs, rhs, { noremap = false })
+	vim.api.nvim_set_keymap("i", lhs, rhs, { noremap = false })
 end
 
 local vnoremap = function(lhs, rhs)
-  vim.api.nvim_set_keymap("v", lhs, rhs, { noremap = true })
+	vim.api.nvim_set_keymap("v", lhs, rhs, { noremap = true })
 end
 
 local vmap = function(lhs, rhs)
-  vim.api.nvim_set_keymap("v", lhs, rhs, { noremap = false })
+	vim.api.nvim_set_keymap("v", lhs, rhs, { noremap = false })
 end
 
 local tnoremap = function(lhs, rhs, silent)
-  vim.api.nvim_set_keymap("t", lhs, rhs, { noremap = true, silent = silent })
+	vim.api.nvim_set_keymap("t", lhs, rhs, { noremap = true, silent = silent })
 end
 
 local cmap = function(lhs, rhs)
-  vim.api.nvim_set_keymap("c", lhs, rhs, { noremap = false })
+	vim.api.nvim_set_keymap("c", lhs, rhs, { noremap = false })
 end
 
 local smap = function(lhs, rhs)
-  vim.api.nvim_set_keymap("s", lhs, rhs, { noremap = false })
+	vim.api.nvim_set_keymap("s", lhs, rhs, { noremap = false })
 end
-
 
 vim.g.mapleader = " "
 
@@ -87,8 +86,8 @@ nnoremap("<leader><leader>w", ":HopWordAC<CR>", true)
 nnoremap("<leader><leader>W", ":HopWordBC<CR>", true)
 
 -- screen up/down
-nnoremap("<leader>j", "<C-f>")
-nnoremap("<leader>k", "<C-b>")
+nnoremap("<leader>j", ":lua require('neoscroll').scroll( vim.api.nvim_win_get_height(0), true, 550)<CR>", true)
+nnoremap("<leader>k", ":lua require('neoscroll').scroll(-vim.api.nvim_win_get_height(0), true, 550)<CR>", true)
 
 -- termnial hide
 tnoremap("<C-[><C-n>", "<C-\\><C-n>:FloatermToggle<CR>", true)
@@ -152,11 +151,10 @@ nnoremap("M", "D")
 xmap("ga", "<Plug>(EasyAlign)")
 
 -- lsp
-nnoremap("<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", true)
+nnoremap("<leader>ld", "<cmd>Lspsaga goto_definition<CR>", true)
 nnoremap("<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", true)
 nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", true)
-nnoremap("<leader>lr", "<cmd>lua vim.lsp.buf.references()<CR>", true)
---nnoremap("<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", true)
+nnoremap("<leader>lr", "<cmd>Lspsaga finder<CR>", true)
 nnoremap("<leader>lh", "<cmd>Lspsaga hover_doc<CR>", true)
 nnoremap("<leader>lg", "<cmd>Lspsaga show_cursor_diagnostics<CR>", true)
 nnoremap("<leader>la", "<cmd>Lspsaga code_action<CR>", true)
@@ -165,7 +163,6 @@ nnoremap("<leader>ln", "<cmd>Lspsaga diagnostic_jump_next<CR>", true)
 nnoremap("<leader>lp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", true)
 nnoremap("<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", true)
 nnoremap("<leader>ltd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", true)
-nnoremap("<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>", true)
 nnoremap("<leader>lrn", "<cmd>lua vim.lsp.buf.rename()<CR>", true)
 nnoremap("<leader>lca", "<cmd>lua vim.lsp.buf.code_action()<CR>", true)
 nnoremap("<leader>ltt", ":TroubleToggle<CR>", true)
@@ -175,16 +172,6 @@ nnoremap("<leader>lnf", ":lua require('neogen').generate({ type = 'func' })<CR>"
 nnoremap("<leader>lnc", ":lua require('neogen').generate({ type = 'class' })<CR>", true)
 nnoremap("<leader>lnt", ":lua require('neogen').generate({ type = 'type' })<CR>", true)
 nnoremap("<leader>lni", ":lua require('neogen').generate({ type = 'file' })<CR>", true)
-
-
--- snippets
-imap("<C-k>", "<Plug>(deoppet_expand)")
-imap("<C-l>", "<Plug>(deoppet_jump_forward)")
-smap("<C-l>", "<Plug>(deoppet_jump_forward)")
-
--- skk
-imap("<C-j>", "<Plug>(skkeleton-toggle)")
---cmap("<C-j>", "<Plug>(skkeleton-toggle)")
 
 -- dap
 nnoremap("<leader>d", "<Nop>", true)
@@ -222,7 +209,7 @@ nnoremap("<leader>tg", ":OverseerToggle<CR>", true)
 --vim.api.nvim_set_keymap("", "<C-p>", ":cp<CR>", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-h>", "^", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-l>", "$", { noremap = true })
-xnoremap("p", "\"_dP", true)
+xnoremap("p", '"_dP', true)
 
 vim.api.nvim_set_keymap("", "*", "<Plug>(asterisk-z*)", { noremap = false })
 vim.api.nvim_set_keymap("", "#", "<Plug>(asterisk-z#)", { noremap = false })
@@ -234,4 +221,5 @@ nnoremap("ZQ", "<Nop>")
 nnoremap("<leader>/", ":nohl<CR>", true)
 
 nnoremap("<leader>c<leader>", ":CommentToggle<CR>", true)
-vnoremap("<leader>c<leader>", ":CommentToggle<CR>", true)
+
+-- vim.g.tabby_keybinding_accept = "<Tab>"
