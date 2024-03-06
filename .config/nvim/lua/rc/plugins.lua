@@ -23,7 +23,6 @@ require("lazy").setup({
 	{ "williamboman/mason-lspconfig.nvim" },
 	{
 		"neovim/nvim-lspconfig",
-		after = { "mason.nvim" },
 		config = function()
 			require("rc/config/nvim-lspconfig")
 		end,
@@ -74,27 +73,13 @@ require("lazy").setup({
 			require("rc/config/null-ls")
 		end,
 	},
-	{
-		"Shougo/deoppet.nvim",
-		--run = ":UpdateRemotePlugins",
-		config = function()
-			require("rc/config/deoppet")
-		end,
-	},
 	{ "Shougo/neosnippet-snippets" },
 	{
 		"nvim-treesitter/nvim-treesitter",
-		--run = ':TSUpdate',
+		build = ":TSUpdate",
 		event = "BufEnter",
 		config = function()
 			require("rc/config/nvim-treesitter")
-		end,
-	},
-	{
-		"Shougo/deoppet.nvim",
-		--run = ":UpdateRemotePlugins",
-		config = function()
-			require("rc/config/deoppet")
 		end,
 	},
 	"Shougo/neosnippet-snippets",
@@ -105,15 +90,12 @@ require("lazy").setup({
 	},
 	{
 		"yioneko/nvim-yati",
-		after = "nvim-treesitter",
-		requires = "nvim-treesitter/nvim-treesitter",
+		dependencies = "nvim-treesitter/nvim-treesitter",
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
-		after = "nvim-treesitter",
-		requires = "nvim-treesitter/nvim-treesitter",
+		dependencies = "nvim-treesitter/nvim-treesitter",
 	},
-
 	{
 		"SmiteshP/nvim-navic",
 		requires = "neovim/nvim-lspconfig",
@@ -121,7 +103,6 @@ require("lazy").setup({
 			require("nvim-navic").setup({ lsp = { auto_attach = true } })
 		end,
 	},
-
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
@@ -131,21 +112,18 @@ require("lazy").setup({
 			require("rc/config/lualine")
 		end,
 	},
-
 	{
 		"nvim-tree/nvim-web-devicons",
 		config = function()
 			require("nvim-web-devicons").setup()
 		end,
 	},
-
 	{
 		"lewis6991/gitsigns.nvim",
 		config = function()
 			require("rc/config/gitsigns")
 		end,
 	},
-
 	{
 		"ahmedkhalf/project.nvim",
 		event = "BufWinEnter",
@@ -209,7 +187,7 @@ require("lazy").setup({
 	},
 	{
 		"petertriho/nvim-scrollbar",
-		after = "nvim-hlslens",
+		dependencies = "kevinhwang91/nvim-hlslens",
 		config = function()
 			require("rc/config/nvim-scrollbar")
 		end,
@@ -302,7 +280,6 @@ require("lazy").setup({
 	},
 	{ "stevearc/dressing.nvim" },
 
-	-- quickrun
 	{
 		"is0n/jaq-nvim",
 		config = function()
@@ -325,7 +302,6 @@ require("lazy").setup({
 		priority = 1000,
 		opts = {},
 	},
-
 	{ "tpope/vim-repeat" },
 	{
 		"danymat/neogen",
@@ -352,6 +328,13 @@ require("lazy").setup({
 		config = function()
 			require("nvim_comment").setup()
 		end,
+	},
+	{
+		"yorickpeterse/nvim-window",
+		keys = {
+			{ "-", "<cmd>lua require('nvim-window').pick()<cr>", desc = "nvim-window: Jump to window" },
+		},
+		config = true,
 	},
 	-- { "TabbyML/vim-tabby" },
 })

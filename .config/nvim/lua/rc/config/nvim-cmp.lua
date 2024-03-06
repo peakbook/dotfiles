@@ -39,9 +39,11 @@ cmp.setup({
 	}),
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
-		{ name = "buffer" },
 		{ name = "path" },
 		{ name = "snippy" },
+	}, {
+		{ name = "buffer" },
+	}, {
 		{ name = "dictionary", keyword_length = 2 },
 	}),
 	formatting = {
@@ -73,6 +75,7 @@ cmp.setup.cmdline(":", {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
 		{ name = "path" },
+	}, {
 		{ name = "cmdline" },
 	}),
 })
