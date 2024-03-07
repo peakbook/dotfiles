@@ -59,8 +59,6 @@ local smap = function(lhs, rhs)
 	vim.api.nvim_set_keymap("s", lhs, rhs, { noremap = false })
 end
 
-vim.g.mapleader = " "
-
 -- tab operations
 nnoremap("<leader>t", "<Nop>", true)
 nnoremap("<leader>tn", ":tabnew<CR>", true)
@@ -194,16 +192,6 @@ nnoremap("<leader>dr", ":lua require'dap'.repl.open()<CR>", true)
 nnoremap("<leader>dl", ":lua require'dap'.run_last()<CR>", true)
 nnoremap("<leader>dv", ":lua require('dap.ext.vscode').load_launchjs(nil, {cppdbg = {'c', 'cpp'}})<CR>", true)
 
--- grammer
-nnoremap("<leader>gc", ":GrammarousCheck<CR>", true)
-nnoremap("<leader>gr", ":GrammarousReset<CR>", true)
-
-nnoremap("<leader>cd", ":ProjectRoot<CR>", true)
-
--- taskrunner
-nnoremap("<leader>tr", ":OverseerRun<CR>", true)
-nnoremap("<leader>tg", ":OverseerToggle<CR>", true)
-
 -- others
 --vim.api.nvim_set_keymap("", "<C-j>", ":cn<CR>", { noremap = true })
 --vim.api.nvim_set_keymap("", "<C-p>", ":cp<CR>", { noremap = true })
@@ -211,15 +199,8 @@ vim.api.nvim_set_keymap("", "<S-h>", "^", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-l>", "$", { noremap = true })
 xnoremap("p", '"_dP', true)
 
-vim.api.nvim_set_keymap("", "*", "<Plug>(asterisk-z*)", { noremap = false })
-vim.api.nvim_set_keymap("", "#", "<Plug>(asterisk-z#)", { noremap = false })
-vim.api.nvim_set_keymap("", "g*", "<Plug>(asterisk-gz*)", { noremap = false })
-vim.api.nvim_set_keymap("", "g#", "<Plug>(asterisk-gz#)", { noremap = false })
-
 nnoremap("ZZ", "<Nop>")
 nnoremap("ZQ", "<Nop>")
 nnoremap("<leader>/", ":nohl<CR>", true)
-
-nnoremap("<leader>c<leader>", ":CommentToggle<CR>", true)
 
 -- vim.g.tabby_keybinding_accept = "<Tab>"

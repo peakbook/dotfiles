@@ -35,3 +35,4 @@ vim.opt.wildmode = "longest"
 
 vim.opt.cmdheight = 0
 vim.opt.foldenable = false
+vim.g.mapleader = " "

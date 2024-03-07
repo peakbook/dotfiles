@@ -130,6 +130,9 @@ require("lazy").setup({
 		config = function()
 			require("rc/config/project")
 		end,
+		keys = {
+			{ "<leader>cd", "<cmd>ProjectRoot<cr>" },
+		},
 	},
 	{ "dhruvasagar/vim-table-mode" },
 	{ "itchyny/calendar.vim" },
@@ -158,10 +161,8 @@ require("lazy").setup({
 	{ "mattn/learn-vimscript" },
 	{ "maverickg/stan.vim" },
 	{ "osyo-manga/vim-over" },
-	{ "rhysd/vim-grammarous" },
 	{ "simrat39/rust-tools.nvim" },
 	{ "scrooloose/nerdcommenter" },
-	{ "shemerey/vim-project" },
 	{ "t9md/vim-quickhl" },
 	{ "thinca/vim-qfreplace" },
 	{ "tpope/vim-fugitive" },
@@ -275,11 +276,15 @@ require("lazy").setup({
 	{
 		"stevearc/overseer.nvim",
 		config = function()
-			require("rc/config/overseer")
+			require("overseer").setup()
 		end,
+		keys = {
+			{ "<leader>tr", "<cmd>OverseerRun<cr>" },
+			{ "<leader>tg", "<cmd>OverseerToggle<cr>" },
+		},
+		lazy = false,
 	},
 	{ "stevearc/dressing.nvim" },
-
 	{
 		"is0n/jaq-nvim",
 		config = function()
@@ -292,7 +297,25 @@ require("lazy").setup({
 			require("rc/config/yanky")
 		end,
 	},
-	{ "haya14busa/vim-asterisk" },
+	{
+		"rapan931/lasterisk.nvim",
+		keys = {
+			{
+				"*",
+				function()
+					require("lasterisk").search({ silent = true })
+				end,
+				mode = "n",
+			},
+			{
+				"g*",
+				function()
+					require("lasterisk").search({ is_whole = false, silent = true })
+				end,
+				mode = { "n", "x" },
+			},
+		},
+	},
 	{
 		"ellisonleao/gruvbox.nvim",
 		config = function()
@@ -328,6 +351,9 @@ require("lazy").setup({
 		config = function()
 			require("nvim_comment").setup()
 		end,
+		keys = {
+			{ "<leader>c<leader>", "<cmd>CommentToggle<cr>", mode = { "n", "v" } },
+		},
 	},
 	{
 		"yorickpeterse/nvim-window",
