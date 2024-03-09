@@ -1,1 +1,1 @@
-set guifont=HackGen\ Console:h12
+set guifont=Sarasa\ Term\ J\ Nerd\ Font:h12
