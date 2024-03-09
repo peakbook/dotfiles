@@ -1,8 +1,0 @@
-shell_escape_commands = \
-bibtex,bibtex8,bibtexu,upbibtex,biber,pbibtex,\
-kpsewhich,\
-makeindex,texindy,\
-mpost,upmpost,\
-repstopdf,epspdf,extractbb,\
-pdflatex,platex,lualatex
-

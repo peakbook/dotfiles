@@ -1,7 +1,0 @@
-ENCODING = auto
-use_anti_alias = true
-use_scrollbar = false
-scrollbar_mode = right
-fontsize=20
-fg_color=white
-bg_color=black
