@@ -1,7 +1,13 @@
 require("lazy").setup({
 	{ "MunifTanjim/nui.nvim" },
 	{ "nvim-lua/plenary.nvim" },
-	{ "VonHeikemen/searchbox.nvim" },
+	{
+		"VonHeikemen/searchbox.nvim",
+		keys = {
+			{ "<leader>ss", "<cmd>SearchBoxIncSearch<cr>" },
+			{ "<leader>sr", "<cmd>SearchBoxReplace confirm=menu<cr>" },
+		},
+	},
 	{
 		"hrsh7th/nvim-cmp",
 		config = function()
@@ -26,6 +32,15 @@ require("lazy").setup({
 		config = function()
 			require("rc/config/nvim-lspconfig")
 		end,
+		lazy = false,
+		keys = {
+			{ "<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<cr>" },
+			{ "<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<cr>" },
+			{ "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<cr>" },
+			{ "<leader>ltd", "<cmd>lua vim.lsp.buf.type_definition()<cr>" },
+			{ "<leader>lrn", "<cmd>lua vim.lsp.buf.rename()<cr>" },
+			{ "<leader>lca", "<cmd>lua vim.lsp.buf.code_action()<cr>" },
+		},
 	},
 	{
 		"nvimdev/lspsaga.nvim",
@@ -36,6 +51,17 @@ require("lazy").setup({
 		config = function()
 			require("rc/config/lspsaga")
 		end,
+		keys = {
+			{ "<leader>ld", "<cmd>Lspsaga goto_definition<cr>" },
+			{ "<leader>lr", "<cmd>Lspsaga finder<cr>" },
+			{ "<leader>lh", "<cmd>Lspsaga hover_doc<cr>" },
+			{ "<leader>lg", "<cmd>Lspsaga show_cursor_diagnostics<cr>" },
+			{ "<leader>la", "<cmd>Lspsaga code_action<cr>" },
+			{ "<leader>lo", "<cmd>Lspsaga outline<cr>" },
+			{ "<leader>ln", "<cmd>Lspsaga diagnostic_jump_next<cr>" },
+			{ "<leader>lp", "<cmd>Lspsaga diagnostic_jump_prev<cr>" },
+		},
+		lazy = false,
 	},
 	{
 		"folke/trouble.nvim",
@@ -45,6 +71,9 @@ require("lazy").setup({
 		config = function()
 			require("trouble").setup()
 		end,
+		keys = {
+			{ "<leader>ltt", "<cmd>TroubleToggle<cr>" },
+		},
 	},
 	{
 		"folke/lsp-colors.nvim",
@@ -132,11 +161,16 @@ require("lazy").setup({
 		end,
 		keys = {
 			{ "<leader>cd", "<cmd>ProjectRoot<cr>" },
+			{ "<C-u><C-p>", "<cmd>Telescope projects<cr>" },
 		},
 	},
-	{ "dhruvasagar/vim-table-mode" },
+	{
+		"dhruvasagar/vim-table-mode",
+		keys = {
+			{ "<leader>ta", "<cmd>TableModeToggle<cr>" },
+		},
+	},
 	{ "itchyny/calendar.vim" },
-	{ "jceb/vim-hier" },
 	{ "jpalardy/vim-slime" },
 	{ "junegunn/fzf" },
 	{
@@ -144,10 +178,42 @@ require("lazy").setup({
 		config = function()
 			require("rc/config/fzf")
 		end,
+		keys = {
+			{ "<C-u>", "<Nop>" },
+			{ "<C-u><C-b>", "<cmd>Buffers<cr>" },
+			{ "<C-u><C-c>", "<cmd>History:<cr>" },
+			{ "<C-u><C-g>", "<cmd>Rg<cr>" },
+			{ "<C-u><C-h>", "<cmd>History<cr>" },
+			{ "<C-u><C-l>", "<cmd>Lines<cr>" },
+			{ "<C-u><C-m>", "<cmd>Marks<cr>" },
+			{ "<C-u><C-o>", "<cmd>Files<cr>" },
+			{ "<C-u><C-r>", "<cmd>BTags<cr>" },
+			{ "<C-u><C-n>", "<cmd>Tags<cr>" },
+			{ "<C-u><C-s>", "<cmd>History/<cr>" },
+			{ "<C-u><C-w>", "<cmd>Windows<cr>" },
+		},
 	},
-	{ "junegunn/vim-easy-align" },
-	{ "svermeulen/vim-cutlass" },
-	{ "kana/vim-grex" },
+	{
+		"junegunn/vim-easy-align",
+		keys = {
+			{ "ga", "<Plug>(EasyAlign)", mode = "x" },
+		},
+	},
+	{
+		"svermeulen/vim-cutlass",
+		keys = {
+			{ "m", "d", mode = { "n", "x" } },
+			{ "mm", "dd", mode = { "n" } },
+			{ "M", "Dd", mode = { "n" } },
+		},
+	},
+	{
+		"kana/vim-grex",
+		keys = {
+			{ "<leader>gd", "<cmd>Gred" },
+			{ "<leader>gy", "<cmd>Grey" },
+		},
+	},
 	{
 		"kana/vim-submode",
 		config = function()
@@ -163,7 +229,13 @@ require("lazy").setup({
 	{ "osyo-manga/vim-over" },
 	{ "simrat39/rust-tools.nvim" },
 	{ "scrooloose/nerdcommenter" },
-	{ "t9md/vim-quickhl" },
+	{
+		"t9md/vim-quickhl",
+		keys = {
+			{ "<leader>m", "<Plug>(quickhl-manual-this)", mode = { "n", "x" } },
+			{ "<leader>M", "<Plug>(quickhl-manual-reset)", mode = { "n", "x" } },
+		},
+	},
 	{ "thinca/vim-qfreplace" },
 	{ "tpope/vim-fugitive" },
 	{ "tpope/vim-surround" },
@@ -175,9 +247,28 @@ require("lazy").setup({
 		config = function()
 			require("rc/config/floaterm")
 		end,
+		keys = {
+			{ "<C-[><C-n>", "<C-\\><C-n>:FloatermToggle<cr>", mode = "t" },
+			{ "<C-u><C-t>", "<cmd>FloatermToggle<cr>" },
+			{ "<leader>f", "<Nop>" },
+			{ "<leader>ff", "<cmd>FloatermNew<cr>" },
+			{ "<leader>ft", "<cmd>FloatermToggle<cr>" },
+			{ "<leader>fn", "<cmd>FloatermNext<cr>" },
+			{ "<leader>fp", "<cmd>FloatermPrev<cr>" },
+			{ "<leader>fk", "<cmd>FloatermKill<cr>" },
+			{ "<leader>fh", "<cmd>FloatermHide<cr>" },
+			{ "<leader>fs", "<cmd>FloatermShow<cr>" },
+			{ "<C-u><C-f>", "<cmd>FloatermNew --title= vifm -c only<cr>" },
+		},
 	},
 	{ "junegunn/goyo.vim" },
-	{ "terryma/vim-expand-region" },
+	{
+		"terryma/vim-expand-region",
+		keys = {
+			{ "v", "<Plug>(expand_region_expand)", mode = "v" },
+			{ "<C-v>", "<Plug>(expand_region_shrink)", mode = "v" },
+		},
+	},
 	{ "rbgrouleff/bclose.vim" },
 	{ "iberianpig/tig-explorer.vim" },
 	{
@@ -199,8 +290,6 @@ require("lazy").setup({
 			require("toggleterm").setup()
 		end,
 	},
-	{ "Shougo/ddu.vim" },
-	{ "Shougo/pum.vim" },
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		config = function()
@@ -224,12 +313,22 @@ require("lazy").setup({
 		config = function()
 			require("neoscroll").setup({ easing_function = "sine" })
 		end,
+		keys = {
+			{ "<leader>j", "<cmd>lua require('neoscroll').scroll( vim.api.nvim_win_get_height(0), true, 550)<cr>" },
+			{ "<leader>k", "<cmd>lua require('neoscroll').scroll(-vim.api.nvim_win_get_height(0), true, 550)<cr>" },
+		},
 	},
 	{
 		"phaazon/hop.nvim",
 		config = function()
 			require("hop").setup()
 		end,
+		keys = {
+			{ "<leader><leader>j", "<cmd>HopLineAC<cr>" },
+			{ "<leader><leader>k", "<cmd>HopLineBC<cr>" },
+			{ "<leader><leader>w", "<cmd>HopWordAC<cr>" },
+			{ "<leader><leader>W", "<cmd>HopWordBC<cr>" },
+		},
 	},
 	{
 		"rcarriga/nvim-dap-ui",
@@ -259,6 +358,27 @@ require("lazy").setup({
 		config = function()
 			require("rc/config/dap")
 		end,
+		keys = {
+			{ "<leader>d", "<Nop>" },
+			{ "<leader>dl", "<cmd>lua require'dap.ext.vscode'.load_launchjs()<cr>" },
+			{ "<leader>dc", "<cmd>lua require'dap'.continue()<cr>" },
+			{ "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>" },
+			{ "<leader>ds", "<cmd>lua require'dap'.step_over()<cr>" },
+			{ "<leader>di", "<cmd>lua require'dap'.step_into()<cr>" },
+			{ "<leader>do", "<cmd>lua require'dap'.step_out()<cr>" },
+			{ "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>" },
+			{ "<f5>", "<cmd>lua require'dap'.continue()<cr>" },
+			{ "<f8>", "<cmd>lua require'dapui'.toggle()<cr>" },
+			{ "<f10>", "<cmd>lua require'dap'.step_over()<cr>:lua require('neoscroll').zz(250)<cr>" },
+			{ "<f11>", "<cmd>lua require'dap'.step_into()<cr>" },
+			{ "<f12>", "<cmd>lua require'dap'.step_out()<cr>" },
+			{ "<f9>", "<cmd>lua require'dap'.toggle_breakpoint()<cr>" },
+			{ "<leader>dB", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>" },
+			{ "<leader>dp", "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>" },
+			{ "<leader>dr", "<cmd>lua require'dap'.repl.open()<cr>" },
+			{ "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>" },
+			{ "<leader>dv", "<cmd>lua require('dap.ext.vscode').load_launchjs(nil, {cppdbg = {'c', 'cpp'}})<cr>" },
+		},
 	},
 	{
 		"nvim-telescope/telescope-dap.nvim",
@@ -290,12 +410,24 @@ require("lazy").setup({
 		config = function()
 			require("rc/config/jaq")
 		end,
+		keys = {
+			{ "<leader>r", "<cmd>Jaq<cr>" },
+		},
 	},
 	{
 		"gbprod/yanky.nvim",
 		config = function()
 			require("rc/config/yanky")
 		end,
+		keys = {
+			{ "p", "<Plug>(YankyPutAfter)" },
+			{ "P", "<Plug>(YankyPutBefore)" },
+			{ "gp", "<Plug>(YankyGPutAfter)" },
+			{ "gP", "<Plug>(YankyGPutBefore)" },
+			{ "<C-p>", "<Plug>(YankyCycleForward)" },
+			{ "<C-n>", "<Plug>(YankyCycleBackward)" },
+			{ "<C-u><C-y>", "<cmd>YankyRingHistory<cr>" },
+		},
 	},
 	{
 		"rapan931/lasterisk.nvim",
@@ -332,6 +464,12 @@ require("lazy").setup({
 			require("neogen").setup({})
 		end,
 		dependencies = "nvim-treesitter",
+		keys = {
+			{ "<leader>lnf", "<cmd>lua require('neogen').generate({ type = 'func' })<cr>" },
+			{ "<leader>lnc", "<cmd>lua require('neogen').generate({ type = 'class' })<cr>" },
+			{ "<leader>lnt", "<cmd>lua require('neogen').generate({ type = 'type' })<cr>" },
+			{ "<leader>lni", "<cmd>lua require('neogen').generate({ type = 'file' })<cr>" },
+		},
 	},
 	{
 		"folke/todo-comments.nvim",
