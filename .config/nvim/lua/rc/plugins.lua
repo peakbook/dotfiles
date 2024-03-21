@@ -102,7 +102,6 @@ require("lazy").setup({
 			require("rc/config/null-ls")
 		end,
 	},
-	{ "Shougo/neosnippet-snippets" },
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
@@ -111,7 +110,6 @@ require("lazy").setup({
 			require("rc/config/nvim-treesitter")
 		end,
 	},
-	"Shougo/neosnippet-snippets",
 	"honza/vim-snippets",
 	{
 		"windwp/nvim-ts-autotag",
@@ -335,26 +333,35 @@ require("lazy").setup({
 		config = function()
 			require("rc/config/dap-ui")
 		end,
+		dependencies = {
+			"mfussenegger/nvim-dap",
+			"nvim-neotest/nvim-nio",
+		},
+		keys = {
+			{ "<f8>", "<cmd>lua require'dapui'.toggle()<cr>" },
+			{ "<leader>dk", "<cmd>lua require'dapui'.eval()<cr>" },
+		},
 	},
 	{
 		"theHamsta/nvim-dap-virtual-text",
 		config = function()
 			require("nvim-dap-virtual-text").setup()
 		end,
+		dependencies = {
+			"mfussenegger/nvim-dap",
+		},
 	},
 	{
 		"mfussenegger/nvim-dap-python",
 		config = function()
 			require("dap-python").setup("/usr/bin/python")
 		end,
+		dependencies = {
+			"mfussenegger/nvim-dap",
+		},
 	},
 	{
 		"mfussenegger/nvim-dap",
-		dependencies = {
-			"rcarriga/nvim-dap-ui",
-			"theHamsta/nvim-dap-virtual-text",
-			"mfussenegger/nvim-dap-python",
-		},
 		config = function()
 			require("rc/config/dap")
 		end,
@@ -368,7 +375,6 @@ require("lazy").setup({
 			{ "<leader>do", "<cmd>lua require'dap'.step_out()<cr>" },
 			{ "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>" },
 			{ "<f5>", "<cmd>lua require'dap'.continue()<cr>" },
-			{ "<f8>", "<cmd>lua require'dapui'.toggle()<cr>" },
 			{ "<f10>", "<cmd>lua require'dap'.step_over()<cr>:lua require('neoscroll').zz(250)<cr>" },
 			{ "<f11>", "<cmd>lua require'dap'.step_into()<cr>" },
 			{ "<f12>", "<cmd>lua require'dap'.step_out()<cr>" },
