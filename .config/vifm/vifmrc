@@ -21,10 +21,7 @@ set vicmd=nvim
 filetype *.sshfs FUSE_MOUNT2|sshfs %PARAM %DESTINATION_DIR
 fileviewer */ exa -T -L 1 --icons %c
 filextype *.jpg,*.jpeg,*.png,*.gif {View in feh} feh -FZ %d --start-at %d/%c 2>/dev/null
-fileviewer <image/*>
-        \ vifm-sixel draw %pw %ph %c %pd
-        \ %pc
-        \ vifm-sixel clear
+fileviewer <image/*> chafa -f sixel --fit-width %c %pd
 fileviewer *.pdf pdftotext %c -
 fileviewer *.tar,*.tar.gz,*.tgz tar -tvf %c
 fileviewer *.zip unzip -l %c
