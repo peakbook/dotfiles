@@ -37,10 +37,10 @@ require("lualine").setup({
   sections = {
     lualine_a = { "mode" },
     lualine_b = { "branch", mydiff },
-    lualine_c = { navic },
+    lualine_c = {},
     lualine_x = { mydiagnostics },
     lualine_y = { "encoding", "fileformat", "filetype" },
-    lualine_z = { "location" },
+    lualine_z = { "selectioncount", "location" },
   },
   inactive_sections = {
     lualine_a = { myfilename },
@@ -52,9 +52,9 @@ require("lualine").setup({
   },
   tabline = {
     lualine_a = { "tabs" },
-    lualine_b = {},
-    lualine_c = { myfilename },
-    lualine_x = {},
+    lualine_b = { myfilename },
+    lualine_c = { navic },
+    lualine_x = { "overseer" },
     lualine_y = {},
     lualine_z = {}
   },

@@ -1,6 +1,8 @@
 -- require("dap.ext.vscode").json_decode = require("json5").parse
 vim.fn.sign_define("DapBreakpoint", { text = " ", texthl = "SignColumn", linehl = "", numhl = "" })
+vim.fn.sign_define("DapLogPoint", { text = "󱂅 ", texthl = "SignColumn", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = " ", texthl = "LspWarningText", linehl = "Visual", numhl = "Visual" })
+
 require("dap").adapters.lldb = {
   type = "executable",
   command = "/usr/bin/lldb-vscode",

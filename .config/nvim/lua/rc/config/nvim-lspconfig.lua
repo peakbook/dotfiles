@@ -7,10 +7,10 @@ require("lspconfig").lua_ls.setup({
   settings = {
     Lua = {
       diagnostics = {
-        globals = { 'vim' }
+        globals = { "vim" },
       },
-    }
-  }
+    },
+  },
 })
 require("lspconfig").bashls.setup({})
 require("lspconfig").yamlls.setup({})
@@ -23,18 +23,18 @@ require("lspconfig").pylsp.setup({
       plugins = {
         pycodestyle = {
           ignore = { "E203", "W503" },
-          maxLineLength = 120
-        }
-      }
-    }
-  }
+          maxLineLength = 120,
+        },
+      },
+    },
+  },
 })
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.offsetEncoding = { "utf-16" }
 require("lspconfig").clangd.setup({
   capabilities = capabilities,
   --cmd = {"clangd", "--offset-encoding=utf-16"}
-  cmd = { "clangd" }
+  cmd = { "clangd" },
 })
 --require("lspconfig").clangd.setup({})
 require("lspconfig").r_language_server.setup({})
@@ -46,13 +46,12 @@ require("lspconfig").cssls.setup({})
 require("lspconfig").zls.setup({})
 require("lspconfig").eslint.setup({})
 --require("lspconfig").grammerly.setup({})
-require('lspconfig').ruff_lsp.setup({})
-require('lspconfig').marksman.setup({})
+require("lspconfig").ruff_lsp.setup({})
+require("lspconfig").marksman.setup({})
 
 -- disable virtual_text
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
-)
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
 
 -- set signs for diagnostics
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }

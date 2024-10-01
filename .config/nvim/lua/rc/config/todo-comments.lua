@@ -5,9 +5,9 @@ require("todo-comments").setup(
       TODO = { icon = " ", color = "info" },
       HACK = { icon = " ", color = "warning" },
       WARN = { icon = " ", color = "warning", alt = { "WARNING", "CAUTION" } },
-      PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-      NOTE = { icon = " ", color = "hint", alt = { "INFO", "MEMO" } },
-      TEST = { icon = "🧪", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+      PERF = { icon = "󱤎 ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+      NOTE = { icon = "󱞁 ", color = "hint", alt = { "INFO", "MEMO" } },
+      TEST = { icon = "󰤑 ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
     },
     colors = {
       error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
