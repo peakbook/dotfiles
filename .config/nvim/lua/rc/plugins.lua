@@ -18,6 +18,7 @@ require("lazy").setup({
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-path" },
 			{ "hrsh7th/cmp-cmdline" },
+			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 			{ "dcampos/cmp-snippy" },
 			{ "dcampos/nvim-snippy" },
 			{ "uga-rosa/cmp-dictionary" },
@@ -170,7 +171,7 @@ require("lazy").setup({
 	},
 	{ "itchyny/calendar.vim" },
 	{ "jpalardy/vim-slime" },
-	{ "junegunn/fzf" },
+	{ "junegunn/fzf", dir = "~/.fzf", run = "./install --all" },
 	{
 		"junegunn/fzf.vim",
 		config = function()
@@ -208,8 +209,8 @@ require("lazy").setup({
 	{
 		"kana/vim-grex",
 		keys = {
-			{ "<leader>gd", "<cmd>Gred" },
-			{ "<leader>gy", "<cmd>Grey" },
+			{ "<leader>gd", "<cmd>Gred<cr>" },
+			{ "<leader>gy", "<cmd>Grey<cr>" },
 		},
 	},
 	{
@@ -506,5 +507,95 @@ require("lazy").setup({
 		},
 		config = true,
 	},
-	-- { "TabbyML/vim-tabby" },
+	{ "folke/neodev.nvim", opts = {} },
+	{
+		"ibhagwan/fzf-lua",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("fzf-lua").setup()
+		end,
+		keys = {
+			{ "<leader>fl", "<cmd>FzfLua<cr>" },
+		},
+	},
+	{ "github/copilot.vim" },
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		config = function()
+			require("rc/config/copilotchat")
+		end,
+		dependencies = { "github/copilot.vim", "nvim-lua/plenary.nvim" },
+		branch = "canary",
+		keys = {
+			{ "<leader>tt", "<cmd>CopilotChatToggle<cr>" },
+			{
+				"<leader>tp",
+				function()
+					local actions = require("CopilotChat.actions")
+					require("CopilotChat.integrations.fzflua").pick(actions.prompt_actions())
+				end,
+				desc = "CopilotChat - Prompt actions",
+			},
+		},
+	},
+	{
+		"monaqa/dial.nvim",
+		config = function()
+			require("rc/config/dial")
+		end,
+		keys = {
+			{
+				"<C-a>",
+				function()
+					require("dial.map").manipulate("increment", "normal")
+				end,
+			},
+			{
+				"<C-x>",
+				function()
+					require("dial.map").manipulate("decrement", "normal")
+				end,
+			},
+			{
+				"g<C-a>",
+				function()
+					require("dial.map").manipulate("increment", "gnormal")
+				end,
+			},
+			{
+				"g<C-x>",
+				function()
+					require("dial.map").manipulate("decrement", "gnormal")
+				end,
+			},
+			{
+				"<C-a>",
+				function()
+					require("dial.map").manipulate("increment", "visual")
+				end,
+				mode = { "v" },
+			},
+			{
+				"<C-x>",
+				function()
+					require("dial.map").manipulate("decrement", "visual")
+				end,
+				mode = { "v" },
+			},
+			{
+				"g<C-a>",
+				function()
+					require("dial.map").manipulate("increment", "gvisual")
+				end,
+				mode = { "v" },
+			},
+			{
+				"g<C-x>",
+				function()
+					require("dial.map").manipulate("decrement", "gvisual")
+				end,
+				mode = { "v" },
+			},
+		},
+	},
 })
