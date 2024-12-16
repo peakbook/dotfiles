@@ -46,7 +46,7 @@ require("lspconfig").cssls.setup({})
 require("lspconfig").zls.setup({})
 require("lspconfig").eslint.setup({})
 --require("lspconfig").grammerly.setup({})
-require("lspconfig").ruff_lsp.setup({})
+require("lspconfig").ruff.setup({})
 require("lspconfig").marksman.setup({})
 
 -- disable virtual_text
