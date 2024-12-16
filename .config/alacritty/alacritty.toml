@@ -1,0 +1,13 @@
+[font]
+size = 15
+normal.family = "Sarasa Term J Nerd Font"
+bold.family = "Sarasa Term J Nerd Font"
+italic.family = "Sarasa Term J Nerd Font"
+bold_italic.family = "Sarasa Term J Nerd Font"
+#normal.family = "HackGen Console NF"
+#bold.family = "HackGen Console NF"
+#italic.family = "HackGen Console NF"
+#bold_italic.family = "HackGen Console NF"
+
+[window]
+dynamic_padding = true
