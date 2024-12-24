@@ -11,14 +11,11 @@ case ${UID} in
 		;;
 esac
 
-## load local .zshrc
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
 ## set envs for fzf
-#eval "$(fzf --zsh)"
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --no-ignore-vcs -g "!{node_modules,.git,.cache}"'
 export FZF_DEFAULT_OPTS='--height 40% --reverse'
 export FZF_TMUX_OPTS="-p"
+source <(fzf --zsh)
 
 ## modules
 autoload colors; colors
@@ -29,6 +26,8 @@ zmodload zsh/mathfunc
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 #autoload predict-on; predict-on
 
+## load local .zshrc
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 ## load plugins
 if [ -e ~/.zsh/zgenom/zgenom.zsh ]; then
@@ -52,20 +51,18 @@ if ! zgenom saved; then
 fi
 
 ##
-## key bind
+## keybind
 ##
 bindkey -v
 bindkey "^R" fzf-insert-history
 bindkey "^@" fzf-change-recent-directory
 bindkey -s "^T" "tm\n"
-bindkey '^G^B' fzf-git-checkout-branch
-bindkey -s '^G^R' "fzf-git-branch\n"
-# bindkey "^^" zaw-
+bindkey -s '^G' "fzf-git-branch\n"
 
 ## command history
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=50000
+SAVEHIST=50000
 setopt hist_ignore_dups
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -98,7 +95,6 @@ alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias where='command -v'
-alias j='job -l'
 if which trash-put &> /dev/null; then
     alias rm='trash-put'
 fi
