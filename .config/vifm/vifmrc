@@ -18,7 +18,10 @@ set norunexec
 set wildmenu
 set wildstyle=popup
 set vicmd=nvim
+set grepprg=rg\ --line-number\ --color=never\ -Hn\ %i\ %a\ %s
 filetype *.sshfs FUSE_MOUNT2|sshfs %PARAM %DESTINATION_DIR
+"filetype *.zip,*.jar,*.war,*.ear FUSE_MOUNT|fuse-zip %SOURCE_FILE %DESTINATION_DIR
+filetype *.zip,*.tar,*.tar.gz,*.,*.xz FUSE_MOUNT|fuse-archive %SOURCE_FILE %DESTINATION_DIR
 fileviewer */ exa -T -L 1 --icons %c
 filextype *.jpg,*.jpeg,*.png,*.gif {View in feh} feh -FZ %d --start-at %d/%c 2>/dev/null
 fileviewer <image/*> chafa -f sixel --fit-width %c %pd
@@ -28,9 +31,11 @@ fileviewer *.zip unzip -l %c
 fileviewer *.html w3m %c
 fileviewer *.jl,*.py,*.[ch],*.[ch]pp,*.[ch]xx bat --color always --wrap never --pager never %c -p
 fileviewer *.yml,*.yaml bat --color always --wrap never --pager never %c -p
+fileviewer *.toml bat --color always --wrap never --pager never %c -p
 fileviewer *.json bat --color always --wrap never --pager never %c -p
 fileviewer *.xml,*.graphml bat --color always --wrap never --pager never %c -p
 fileviewer *.csv bat --color always --wrap never --pager never %c -p
+fileviewer .git/ git status %d %pu
 " fileviewer */,.*/ exa --icons %c
 
 
@@ -41,6 +46,7 @@ command! FZFfind : set noquickview
                 \| endif
 
 nnoremap <c-f> :FZFfind<cr>
+
 
 " Ranger devicons for ViFM
 " https://github.com/cirala/vifm_devicons
