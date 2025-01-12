@@ -13,6 +13,7 @@ esac
 
 ## set envs for fzf
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --no-ignore-vcs -g "!{node_modules,.git,.cache}"'
+#export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
 export FZF_DEFAULT_OPTS='--height 40% --reverse'
 export FZF_TMUX_OPTS="-p"
 source <(fzf --zsh)
