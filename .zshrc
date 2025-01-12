@@ -59,6 +59,7 @@ bindkey "^R" fzf-insert-history
 bindkey "^@" fzf-change-recent-directory
 bindkey -s "^T" "tm\n"
 bindkey -s '^G' "fzf-git-branch\n"
+bindkey -s '^F' 'cd "$(dirname "$(fzf)")"\n'
 
 ## command history
 HISTFILE=~/.zsh_history
