@@ -58,6 +58,22 @@ command! FZFfind : set noquickview
 
 nnoremap <c-f> :FZFfind<cr>
 
+command! zip if [ -n "%a" ]; then
+           \     zip -r '%a.zip' %f;
+           \ elif [ "%c" = "%f" ]; then
+           \     zip -r %c.zip %c;
+           \ else
+           \     zip -r %d:t.zip %f;
+           \ fi
+
+command! tar if [ -n "%a" ]; then
+           \     tar cvzf '%a.tar.gz' %f;
+           \ elif [ "%c" = "%f" ]; then
+           \     tar cvzf %c.tar.gz %c;
+           \ else
+           \     tar cvzf %d:t.tar.gz %f;
+           \ fi
+
 
 " Ranger devicons for ViFM
 " https://github.com/cirala/vifm_devicons
@@ -130,4 +146,3 @@ set classify+=' ::*.doc,,*.docx,,*.adoc::'
 set classify+=' ::*.xls,,*.xls,,*.xlsmx::'
 set classify+=' ::*.pptx,,*.ppt::'
 set classify+=' ::*.sshfs::'
-
